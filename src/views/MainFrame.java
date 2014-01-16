@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
 		//add(fileSelectorPanel, BorderLayout.WEST);
 		
 		RenderPanel renderPanel = new RenderPanel();
-		renderPanel.setStepFileAndDifficultyIndex(test, 1);
+		renderPanel.setStepFileAndDifficultyIndex(test, 0);
 		//add(new JScrollPane(renderPanel), BorderLayout.EAST);
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, filePanel, new JScrollPane(renderPanel));
@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void readStepFiles() {
-		StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
+		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
 		test = reader.generateStepFile();
 	}
 	

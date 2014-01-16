@@ -138,7 +138,7 @@ public class StepFileRenderer {
 		int usableHeight = height - 2 * COLUMN_MARGIN; 
 		int measureHeight = usableHeight / measuresPerColumn;
 		
-		List<Measure> measures = stepFile.getMeasures();
+		List<Measure> measures = difficulty.getMeasures();
 		
 		//for testing
 		drawSpaceRect(Color.GREEN, currentX, currentY, width - 2 * COLUMN_MARGIN, height - 2 * COLUMN_MARGIN);
@@ -156,7 +156,7 @@ public class StepFileRenderer {
 	private void renderMeasure(Measure measure, int measureNumber, int startX, int startY, int width, int height) {
 		float currentY = startY;
 		currentGraphics.setColor(Color.BLACK);
-		currentGraphics.drawLine(startX, startY, startX + width, startY);
+		currentGraphics.drawLine(startX, startY + 1, startX + width, startY + 1);
 		
 		//measure number
 		currentGraphics.drawString("Measure: " + Integer.toString(measureNumber + 1), startX, startY);
@@ -172,7 +172,7 @@ public class StepFileRenderer {
 	private void renderLine(StepLine line, int startX, int startY, int width, int height) {
 		Step[] steps = line.getSteps();
 		int stepWidth = width / steps.length;
-		currentGraphics.setColor(Color.BLACK);
+		currentGraphics.setColor(Color.YELLOW);
 		currentGraphics.drawLine(startX, startY, startX + width, startY);
 		for (int i = 0; i < steps.length; i++) {
 			renderStep(steps[i], startX + stepWidth * i, startY, stepWidth, stepWidth);

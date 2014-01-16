@@ -1,10 +1,7 @@
 package utilities;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -23,6 +20,8 @@ public class StepFileReader {
 	private static final String STEP_FILE_REGEX = "#.+?;";
 	
 	private File systemStepFile;
+	private Pattern metaDataRegex;
+	private Pattern stepLineRegex;
 	
 	public StepFileReader(String stepFilePath) {
 		this(new File(stepFilePath));
@@ -30,6 +29,9 @@ public class StepFileReader {
 	
 	public StepFileReader(File systemStepFile) {
 		this.systemStepFile = systemStepFile;
+		
+		metaDataRegex = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
+		stepLineRegex = Pattern.compile("\\d{4,10}");
 	}
 	
 	public StepFile generateStepFile() {
@@ -54,14 +56,14 @@ public class StepFileReader {
 	}
 	
 	private String[] splitStepFile(String fileData) {
-		Pattern p = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
-		
-		List<String> splitData = new ArrayList<String>();
-		Matcher metaDataMatcher = p.matcher(fileData);
-		while (metaDataMatcher.find()) {
-			splitData.add(metaDataMatcher.group());
-		}
-		return splitData.toArray(new String[0]);
+		//Pattern p = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
+		return getRegexMatchingList(metaDataRegex, fileData).toArray(new String[0]);
+//		List<String> splitData = new ArrayList<String>();
+//		Matcher metaDataMatcher = p.matcher(fileData);
+//		while (metaDataMatcher.find()) {
+//			splitData.add(metaDataMatcher.group());
+//		}
+//		return splitData.toArray(new String[0]);
 	}
 	
 	private void generateMetaData(String[] stepFileParts, StepFile accumulator) {
@@ -107,7 +109,7 @@ public class StepFileReader {
 		difficulty.setDifficultyMeter(difficultyParts[3].trim());
 		difficulty.setRadarValues(difficultyParts[4].trim());
 		
-		String[] measureData = difficultyParts[5].trim().split(",");
+		String[] measureData = difficultyParts[5].split(",");
 		for (String measure : measureData) {
 			difficulty.addMeasure(parseMeasure(measure));
 		}
@@ -119,13 +121,11 @@ public class StepFileReader {
 	
 	private Measure parseMeasure(String measure) {
 		Measure result = new Measure();
-		
-		//TODO use actual OS line endings
-		String[] rawLines = measure.split("\n");
-		for (String rawLine : rawLines) {		
-			if (rawLine.trim().length() > 0) {
+		List<String> rawLines = getRegexMatchingList(stepLineRegex, measure); 
+		System.out.println(rawLines.size());
+		System.out.print(measure);
+		for (String rawLine : rawLines) {
 				result.addLine(new StepLine(rawLine));
-			}
 		}
 		
 		return result;
@@ -144,9 +144,18 @@ public class StepFileReader {
 		return part.substring(part.indexOf(':') + 1, part.length() - 1).trim();
 	}
 	
+	private List<String> getRegexMatchingList(Pattern pattern, String data) {
+		Matcher match = pattern.matcher(data);
+		List<String> matches = new ArrayList<String>();
+		while (match.find()) {
+			matches.add(match.group());
+		}
+		return matches;
+	}
+	
 	public static void main(String[] args) {
-//		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
-		StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
+		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
+		//StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
 		StepFile file = reader.generateStepFile();
 		System.out.println(file);
 		for (Measure m : file.getDifficulties().get(0).getMeasures()) {
