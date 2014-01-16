@@ -42,7 +42,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void readStepFiles() {
-		StepFileReader reader = new StepFileReader("data/steps.sm");
+		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
 		test = reader.generateStepFile();
 	}
 	

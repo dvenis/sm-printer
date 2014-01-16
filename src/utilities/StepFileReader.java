@@ -129,7 +129,12 @@ public class StepFileReader {
 	}
 	
 	private String getTag(String part) {
-		return part.substring(part.indexOf('#'), part.indexOf(':'));
+		int indexHash = part.indexOf('#');
+		int indexColon = part.indexOf(':');
+		if (indexHash != -1 && indexColon != -1) {
+			return part.substring(indexHash, indexColon);
+		}
+		return "";
 	}
 	
 	private String stripTag(String part) {
@@ -137,7 +142,7 @@ public class StepFileReader {
 	}
 	
 	public static void main(String[] args) {
-		StepFileReader reader = new StepFileReader("data/steps.sm");
+		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
 		StepFile file = reader.generateStepFile();
 		System.out.println(file);
 		for (Measure m : file.getMeasures()) {
