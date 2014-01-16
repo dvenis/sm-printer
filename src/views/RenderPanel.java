@@ -3,10 +3,10 @@ package views;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import models.StepFile;
+import models.StepFileDifficultyMap;
 
 public class RenderPanel extends JPanel {
 
@@ -24,13 +24,15 @@ public class RenderPanel extends JPanel {
 		setVisible(true);
 		//setSize(5000, 5000);
 		setPreferredSize(new Dimension(1000, 1000));
-		
-		add(new JButton("This is a button"));
 	}
 	
-	public void setStepFile(StepFile stepFile) {
-		//this.stepFile = stepFile;
-		renderer.setStepFile(stepFile);
+	public void setStepFileAndDifficulty(StepFile stepFile, StepFileDifficultyMap difficulty) {
+		renderer.setStepFileAndDifficulty(stepFile, difficulty);
+		setPreferredSize(renderer.getScreenSize());
+	}
+	
+	public void setStepFileAndDifficultyIndex(StepFile stepFile, int difficultyIndex) {		
+		renderer.setStepFileAndDifficultyIndex(stepFile, difficultyIndex);
 		setPreferredSize(renderer.getScreenSize());
 	}
 	

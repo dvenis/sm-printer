@@ -3,18 +3,26 @@ package utilities;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import models.Measure;
 import models.StepFile;
+import models.StepFileDifficultyMap;
 import models.StepLine;
 
 public class StepFileReader {
-	private File systemStepFile;
+	private static final String STEP_FILE_REGEX = "#.+?;";
 	
-	//private StepFile stepFile;
+	private File systemStepFile;
 	
 	public StepFileReader(String stepFilePath) {
 		this(new File(stepFilePath));
@@ -26,34 +34,39 @@ public class StepFileReader {
 	
 	public StepFile generateStepFile() {
 		StepFile result = new StepFile();
-		String[] fileParts = splitFileData();
-		if (fileParts != null) {
+		String[] fileParts = splitStepFile(readStepFileData());
+		if (fileParts != null) {			
 			generateMetaData(fileParts, result);
 		}
 		
 		return result;
 	}
 	
-	private String[] splitFileData() {
-		String[] result = null;
+	private String readStepFileData() {
+		String result = null;
 		try {
-			//TODO deal with UTF-8
-			StringBuilder fileData = new StringBuilder();
-			BufferedReader in = new BufferedReader(new FileReader(systemStepFile));
-			String s;
-			while ((s = in.readLine()) != null) {
-				fileData.append(s).append("\n");
-			}
-			result = fileData.toString().split(";");
-			in.close();
+			byte[] fileBytes = Files.readAllBytes(Paths.get(systemStepFile.getAbsolutePath()));
+			result = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(fileBytes)).toString();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 		return result;
+	}
+	
+	private String[] splitStepFile(String fileData) {
+		Pattern p = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
+		
+		List<String> splitData = new ArrayList<String>();
+		Matcher metaDataMatcher = p.matcher(fileData);
+		while (metaDataMatcher.find()) {
+			splitData.add(metaDataMatcher.group());
+		}
+		return splitData.toArray(new String[0]);
 	}
 	
 	private void generateMetaData(String[] stepFileParts, StepFile accumulator) {
 		for (String part : stepFileParts) {
+			//System.out.println(part);
 			setDataBasedOnTag(part, accumulator);
 		}
 	}
@@ -79,48 +92,38 @@ public class StepFileReader {
 	
 	private void generateStepData(String notes, StepFile accumulator) {
 		//for all note data
-		notes = stripTag(notes).trim();
-		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(notes.getBytes())));
-			
-			in.readLine(); //notes type
-			in.readLine(); //description
-			in.readLine(); //difficulty
-			in.readLine(); //difficulty number
-			in.readLine(); //radar values
-			
-			StringBuilder noteData = new StringBuilder();
-			String s;
-			while ((s = in.readLine()) != null) {
-				//System.out.println("READ: " + s);
-				noteData.append(s).append("\n");
-			}
-			
-			String[] measures = noteData.toString().split(",");
-			for (String measure : measures) {
-				if (measure.trim().startsWith("#NOTES")) {
-					return;
-				}
-				if (measure.trim().length() > 0) {
-					accumulator.addMeasure(parseMeasure(measure));
-				}
-			}
-			
-			in.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		notes = stripTag(notes);
+		
+		String[] difficultyParts = notes.split(":");
+		if (difficultyParts.length != 6) {
+			System.err.println("there was an error reading the difficulty: expected 6 got " + difficultyParts.length);
+			return;
 		}
+		
+		StepFileDifficultyMap difficulty = new StepFileDifficultyMap();
+		difficulty.setNotesType(difficultyParts[0].trim());
+		difficulty.setDescription(difficultyParts[1].trim());
+		difficulty.setDifficultyClass(difficultyParts[2].trim());
+		difficulty.setDifficultyMeter(difficultyParts[3].trim());
+		difficulty.setRadarValues(difficultyParts[4].trim());
+		
+		String[] measureData = difficultyParts[5].trim().split(",");
+		for (String measure : measureData) {
+			difficulty.addMeasure(parseMeasure(measure));
+		}
+		
+		accumulator.addDifficulty(difficulty);
+		
+		System.out.println("SET DIFFICULTY: " + difficulty);
 	}
 	
 	private Measure parseMeasure(String measure) {
 		Measure result = new Measure();
 		
-		//TODO make it work with windows and mac
+		//TODO use actual OS line endings
 		String[] rawLines = measure.split("\n");
 		for (String rawLine : rawLines) {		
 			if (rawLine.trim().length() > 0) {
-				//System.out.println(rawLine);
 				result.addLine(new StepLine(rawLine));
 			}
 		}
@@ -138,25 +141,16 @@ public class StepFileReader {
 	}
 	
 	private String stripTag(String part) {
-		return part.substring(part.indexOf(':') + 1);
+		return part.substring(part.indexOf(':') + 1, part.length() - 1).trim();
 	}
 	
 	public static void main(String[] args) {
-		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
+//		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
+		StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
 		StepFile file = reader.generateStepFile();
 		System.out.println(file);
-		for (Measure m : file.getMeasures()) {
+		for (Measure m : file.getDifficulties().get(0).getMeasures()) {
 			System.out.println(m);
 		}
-//		StepLine line = new StepLine("0111");
-//		StepLine line2 = new StepLine("2011");
-//		StepLine line3 = new StepLine("0100");
-//		StepLine line4 = new StepLine("1001");
-//		Measure measure = new Measure();
-//		measure.addLine(line);
-//		measure.addLine(line2);
-//		measure.addLine(line3);
-//		measure.addLine(line4);
-//		System.out.println(measure);
 	}
 }

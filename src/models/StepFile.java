@@ -14,9 +14,12 @@ public class StepFile {
 	private float bpm;
 	
 	private List<Measure> measures;
+	private List<StepFileDifficultyMap> difficulties;
 	
 	public StepFile() {
 		measures = new ArrayList<Measure>();
+		//TODO get the difficulty maps working
+		difficulties = new ArrayList<StepFileDifficultyMap>();
 	}
 
 	public String getTitle() {
@@ -69,18 +72,26 @@ public class StepFile {
 		this.bpm = bpm;
 	}
 	
-	public List<Measure> getMeasures() {
-		return measures;
+	public List<StepFileDifficultyMap> getDifficulties() {
+		return difficulties;
 	}
 	
-	public void setMeasures(List<Measure> measures) {
-		this.measures = measures;
+	public void addDifficulty(StepFileDifficultyMap difficulty) {
+		difficulties.add(difficulty);
 	}
 	
-	public void addMeasure(Measure newMeasure) {
-		measures.add(newMeasure);
-		
-	}
+//	public List<Measure> getMeasures() {
+//		return measures;
+//	}
+//	
+//	public void setMeasures(List<Measure> measures) {
+//		this.measures = measures;
+//	}
+//	
+//	public void addMeasure(Measure newMeasure) {
+//		measures.add(newMeasure);
+//		
+//	}
 	
 	@Override
 	public String toString() {

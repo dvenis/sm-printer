@@ -1,8 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
-import java.io.File;
-
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -26,7 +23,7 @@ public class MainFrame extends JFrame {
 		//add(fileSelectorPanel, BorderLayout.WEST);
 		
 		RenderPanel renderPanel = new RenderPanel();
-		renderPanel.setStepFile(test);
+		renderPanel.setStepFileAndDifficultyIndex(test, 1);
 		//add(new JScrollPane(renderPanel), BorderLayout.EAST);
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, filePanel, new JScrollPane(renderPanel));
@@ -42,7 +39,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void readStepFiles() {
-		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
+		StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
 		test = reader.generateStepFile();
 	}
 	

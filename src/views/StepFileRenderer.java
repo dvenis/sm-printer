@@ -8,6 +8,7 @@ import java.util.List;
 import models.Measure;
 import models.Step;
 import models.StepFile;
+import models.StepFileDifficultyMap;
 import models.StepLine;
 
 public class StepFileRenderer {
@@ -26,6 +27,7 @@ public class StepFileRenderer {
 	private final static int PAGE_HEIGHT = 612;
 	
 	private StepFile stepFile;
+	private StepFileDifficultyMap difficulty;
 	private Graphics currentGraphics;
 	private Dimension screenSize;
 	
@@ -58,18 +60,36 @@ public class StepFileRenderer {
 		return zoom;
 	}
 	
-	public void setStepFile(StepFile stepFile) {
+	public void setStepFileAndDifficulty(StepFile stepFile, StepFileDifficultyMap difficulty) {
 		this.stepFile = stepFile;
+		this.difficulty = difficulty;
 		calculateScreenSize();
 	}
+	
+	public void setStepFileAndDifficultyIndex(StepFile stepFile, int difficultyIndex) {		
+		if (stepFile.getDifficulties().size() > difficultyIndex) {
+			this.stepFile = stepFile;
+			this.difficulty = stepFile.getDifficulties().get(difficultyIndex);
+			calculateScreenSize();
+		}
+	}
+	
+//	public void setStepFile(StepFile stepFile) {
+//		this.stepFile = stepFile;
+//		calculateScreenSize();
+//	}
 	
 	public StepFile getStepFile() {
 		return stepFile;
 	}
 	
+	public StepFileDifficultyMap getDifficulty() {
+		return difficulty;
+	}
+	
 	public int getNumberOfPages() {
 		int measuresPerPage = measuresPerColumn * columnsPerPage;
-		return (int)Math.ceil((double)stepFile.getMeasures().size() / measuresPerPage); 
+		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 	}
 	
 	private void calculateScreenSize() {
@@ -85,7 +105,7 @@ public class StepFileRenderer {
 		if (stepFile != null) {
 
 			int measuresPerPage = measuresPerColumn * columnsPerPage;
-			int pages = (int)Math.ceil((double)stepFile.getMeasures().size() / measuresPerPage); 
+			int pages = (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 			for (int i = 0; i < pages; i++) {
 				renderPage(i);
 			}
@@ -112,7 +132,7 @@ public class StepFileRenderer {
 	}
 	
 	private void renderColumn(int measureStartIndex, int startX, int startY, int width, int height) {
-		List<Measure> measures = stepFile.getMeasures();
+		List<Measure> measures = difficulty.getMeasures();
 		int currentX = startX + COLUMN_MARGIN;
 		int currentY = startY + COLUMN_MARGIN;
 		int measureHeight = (height - 2 * COLUMN_MARGIN) / measuresPerColumn;
