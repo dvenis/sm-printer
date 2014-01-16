@@ -116,7 +116,7 @@ public class StepFileRenderer {
 		int columnWidth = PRINTABLE_PAGE_WIDTH / columnsPerPage;
 		//start at the margins
 		int currentX = (PAGE_WIDTH - PRINTABLE_PAGE_WIDTH) / 2;
-		int currentY = pageNumber * PRINTABLE_PAGE_HEIGHT + (PAGE_HEIGHT - PRINTABLE_PAGE_HEIGHT) / 2;
+		int currentY = pageNumber * PAGE_HEIGHT + (PAGE_HEIGHT - PRINTABLE_PAGE_HEIGHT) / 2;
 		int measuresPerPage = measuresPerColumn * columnsPerPage;
 		
 		//for testing
@@ -132,17 +132,20 @@ public class StepFileRenderer {
 	}
 	
 	private void renderColumn(int measureStartIndex, int startX, int startY, int width, int height) {
-		List<Measure> measures = difficulty.getMeasures();
 		int currentX = startX + COLUMN_MARGIN;
 		int currentY = startY + COLUMN_MARGIN;
-		int measureHeight = (height - 2 * COLUMN_MARGIN) / measuresPerColumn;
+		int usableWidth = width - 2 * COLUMN_MARGIN;
+		int usableHeight = height - 2 * COLUMN_MARGIN; 
+		int measureHeight = usableHeight / measuresPerColumn;
+		
+		List<Measure> measures = stepFile.getMeasures();
 		
 		//for testing
 		drawSpaceRect(Color.GREEN, currentX, currentY, width - 2 * COLUMN_MARGIN, height - 2 * COLUMN_MARGIN);
 		
 		for (int i = 0; i < measuresPerColumn; i++) {
 			if (measureStartIndex + i < measures.size()) {
-				renderMeasure(measures.get(measureStartIndex + i), measureStartIndex + i, currentX, currentY);
+				renderMeasure(measures.get(measureStartIndex + i), measureStartIndex + i, currentX, currentY, usableWidth, measureHeight);
 				currentY += measureHeight;
 			} else {
 				break;
@@ -150,32 +153,36 @@ public class StepFileRenderer {
 		}
 	}
 	
-	private void renderMeasure(Measure measure, int measureNumber, int startX, int startY) {
+	private void renderMeasure(Measure measure, int measureNumber, int startX, int startY, int width, int height) {
 		float currentY = startY;
 		currentGraphics.setColor(Color.BLACK);
-		currentGraphics.drawLine(startX, startY + 7, startX + 3 * STEP_SPACING, startY + 7);
+		currentGraphics.drawLine(startX, startY, startX + width, startY);
 		
 		//measure number
 		currentGraphics.drawString("Measure: " + Integer.toString(measureNumber + 1), startX, startY);
 		
-		float stepLineHeight = (float) BASE_MEASURE_HEIGHT / measure.getLines().size();
+		float stepLineHeight = (float) height / measure.getLines().size();
+		//System.out.println("LINES: " + measure.getLines().size());
 		for (StepLine line : measure.getLines()) {
-			renderLine(line, startX, (int)currentY);
+			renderLine(line, startX, (int)currentY, width, (int)stepLineHeight);
 			currentY += stepLineHeight;
 		}
 	}
 	
-	private void renderLine(StepLine line, int startX, int startY) {
+	private void renderLine(StepLine line, int startX, int startY, int width, int height) {
 		Step[] steps = line.getSteps();
+		int stepWidth = width / steps.length;
+		currentGraphics.setColor(Color.BLACK);
+		currentGraphics.drawLine(startX, startY, startX + width, startY);
 		for (int i = 0; i < steps.length; i++) {
-			renderStep(steps[i], startX + STEP_SPACING * i, startY);
+			renderStep(steps[i], startX + stepWidth * i, startY, stepWidth, stepWidth);
 		}
 	}
 	
-	private void renderStep(Step step, int startX, int startY) {
+	private void renderStep(Step step, int startX, int startY, int width, int height) {
 		if (step.getType() != Step.Type.NONE){ 
 			currentGraphics.setColor(Color.ORANGE);
-			currentGraphics.fillRoundRect(startX - STEP_DIMENSION / 2, startY - STEP_DIMENSION / 2, (int)(zoom * (STEP_DIMENSION)), (int)(zoom * (STEP_DIMENSION)), 2, 2);	
+			currentGraphics.fillRect(startX, startY, width, height);	
 		}
 	}
 	
