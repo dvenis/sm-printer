@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -35,10 +36,20 @@ public class StepFileRenderer {
 	private final static int PAGE_WIDTH = 792;
 	private final static int PAGE_HEIGHT = 612;
 	
-	private final static String NOTES_DIR = "notes/";
-	private final static int STEP_DIM = 64;
+	private final static String NOTES_DIR = "notes/stepmania5/";
+	private final static int STEP_DIM = 128;
+	private final static int HOLD_DIM = 128;
 	private static boolean imagesLoaded = false;
 	private static BufferedImage step4th;
+	private static BufferedImage step8th;
+	private static BufferedImage step16th;
+	private static BufferedImage step32nd;
+	private static BufferedImage step64th;
+	private static BufferedImage step12th;
+	private static BufferedImage step24th;
+	private static BufferedImage step48th;
+	private static BufferedImage holdBody;
+	private static BufferedImage holdEnd;
 	
 	private StepFile stepFile;
 	private StepFileDifficultyMap difficulty;
@@ -49,18 +60,33 @@ public class StepFileRenderer {
 	
 	//printing variables
 	private int measuresPerColumn = 3;
-	private int columnsPerPage = 5;
+	private int columnsPerPage = 4;
 	private boolean horizontalOrientation = true;
 	
 	public StepFileRenderer() {
 		if (!imagesLoaded) {
 			try {
-				step4th = ImageIO.read(new File(NOTES_DIR + "4th.png"));
+				BufferedImage allNotes = ImageIO.read(new File(NOTES_DIR + "notes.png"));
+				grabNoteImages(allNotes);
+				holdBody = ImageIO.read(new File(NOTES_DIR + "hold.png"));
+				holdEnd = ImageIO.read(new File(NOTES_DIR + "hold_cap_bottom.png"));
+				
 				imagesLoaded = true;
 			} catch (IOException e) {
 				imagesLoaded = false;
 			}
 		}
+	}
+	
+	private void grabNoteImages(BufferedImage allNotes) {
+		step4th = allNotes.getSubimage(0, 0, STEP_DIM, STEP_DIM);
+		step8th = allNotes.getSubimage(0, STEP_DIM, STEP_DIM, STEP_DIM);
+		step12th = allNotes.getSubimage(0, STEP_DIM * 2, STEP_DIM, STEP_DIM);
+		step16th = allNotes.getSubimage(0, STEP_DIM * 3, STEP_DIM, STEP_DIM);
+		step24th = allNotes.getSubimage(0, STEP_DIM * 4, STEP_DIM, STEP_DIM);
+		step32nd = allNotes.getSubimage(0, STEP_DIM * 5, STEP_DIM, STEP_DIM);
+		step48th = allNotes.getSubimage(0, STEP_DIM * 6, STEP_DIM, STEP_DIM);
+		step64th = allNotes.getSubimage(0, STEP_DIM * 7, STEP_DIM, STEP_DIM);
 	}
 	
 	public void setZoom(double zoom) {
@@ -200,102 +226,90 @@ public class StepFileRenderer {
 		currentGraphics.setColor(Color.YELLOW);
 		currentGraphics.drawLine(startX, startY, startX + width, startY);
 		for (int i = 0; i < steps.length; i++) {
-			renderStep(steps[i], startX + stepWidth * i, startY, stepWidth, stepWidth);
+			renderStep(steps[i], startX + stepWidth * i, startY, stepWidth, height);
 		}
 	}
 	
-	private void renderStep(Step step, int startX, int startY, int width, int height) {
-		if (step.getType() != Step.Type.NONE){ 
-			if (imagesLoaded) {
-//				currentGraphics.drawImage(step4th, startX, startY, startX + width, startY + height,
-//						STEP_DIM, STEP_DIM, 0, 0, null);
-				drawRotatedStep(step, startX, startY, width, height);
-			} else {
-				currentGraphics.setColor(Color.ORANGE);
-				currentGraphics.fillRect(startX, startY, width, height);
-			}
+	private void renderStep(Step step, int startX, int startY, int stepDim, int lineHeight) {
+		switch (step.getType()) {
+		case REGULAR:
+			drawRegularStep(step, startX, startY, stepDim);
+			break;
+		case HOLDING:
+			drawHoldingBack(step, startX, startY, stepDim, lineHeight);
+			break;
+		case HOLD_START:
+			drawHoldStartBack(step, startX, startY, stepDim, lineHeight);
+			drawRegularStep(step, startX, startY, stepDim);
+			break;
+		case HOLD_END:
+			drawHoldEnd(step, startX, startY, stepDim);
+		}
+	}
+	
+	private void drawRegularStep(Step step, int x, int y, int stepDim) {
+		if (imagesLoaded) {
+			//do the transforms
+			//note they are done in the opposite order from being called
+			AffineTransform at = new AffineTransform();
+			at.translate(x + stepDim / 2, y + stepDim / 2);
+			at.rotate(step.getAngleFromLeft());
+			at.scale((double) stepDim / STEP_DIM, (double) stepDim / STEP_DIM);
+			at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
+			
+			((Graphics2D)currentGraphics).drawImage(step4th, at, null);
+		}
+	}
+	
+	private void drawHoldStartBack(Step step, int x, int y, int stepDim, int lineHeight) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(holdBody, x, y + stepDim / 2, x + stepDim, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM / 2, null);
+		}
+	}
+	
+	private void drawHoldingBack(Step step, int x, int y, int stepWidth, int lineHeight) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(holdBody, x, y, x + stepWidth, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+		}
+	}
+	
+	private void drawHoldEnd(Step step, int x, int y, int stepWidth) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(holdEnd, x, y, x + stepWidth, y + stepWidth / 2, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
 		}
 	}
 
-	private void drawRotatedStep(Step step, int startX, int startY, int width, int height) {
-		double angle;
-		switch (step.getOrientation()) {
-		case LEFT:
-			angle = 0;
-			break;
-		case RIGHT:
-			angle = Math.PI;
-			break;
-		case DOWN:
-			angle = 3 * Math.PI / 2;
-			break;
-		case UP:
-			angle = Math.PI / 2;
-			break;
-		default:
-			angle = 0;
-		}
-		//System.out.println(angle);
-		AffineTransform at = new AffineTransform();
-		at.translate(startX + width / 2, startY + height / 2);
-		at.rotate(angle);
-		at.scale((double) width / STEP_DIM, (double) height / STEP_DIM);
-		at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
-//		Graphics2D rotatedGraphics = (Graphics2D)currentGraphics;
-//		rotatedGraphics.rotate(angle, 32, 32);
-//		rotatedGraphics.drawImage(step4th, startX, startY, startX + width, startY + height,
-//				0, STEP_DIM, STEP_DIM, 0, null);
-		//currentGraphics.drawImage(step4th, startX, startY, width, height, null);
-		((Graphics2D)currentGraphics).drawImage(step4th, at, null);
-		//rotatedGraphics.rotate(-angle, 32, 32);
-//		int srcx1;
-//		int srcy1;
-//		int srcx2;		
-//		int srcy2;
-//		switch (orientation) {
+//	private void drawRotatedStep(Step step, int startX, int startY, int width, int height) {
+//		double angle;
+//		switch (step.getOrientation()) {
 //		case LEFT:
-//			srcx1 = 0;
-//			srcy1 = 0;
-//			srcx2 = STEP_DIM;
-//			srcy2 = STEP_DIM;
+//			angle = 0;
 //			break;
 //		case RIGHT:
-//			srcx1 = STEP_DIM;
-//			srcy1 = 0;
-//			srcx2 = 0;
-//			srcy2 = STEP_DIM;
+//			angle = Math.PI;
 //			break;
 //		case DOWN:
-//			srcx1 = STEP_DIM;
-//			srcy1 = 0;
-//			srcx2 = 0;
-//			srcy2 = STEP_DIM;
+//			angle = 3 * Math.PI / 2;
 //			break;
 //		case UP:
-//			srcx1 = 0;
-//			srcy1 = 0;
-//			srcx2 = STEP_DIM;
-//			srcy2 = STEP_DIM;
+//			angle = Math.PI / 2;
 //			break;
 //		default:
-//			srcx1 = 0;
-//			srcy1 = 0;
-//			srcx2 = STEP_DIM;
-//			srcy2 = STEP_DIM;
+//			angle = 0;
 //		}
-//		currentGraphics.drawImage(step4th, startX, startY, startX + width, startY + height,
-//				STEP_DIM, STEP_DIM, 0, 0, null);
-	}
-	
-//	private void renderGrid() {
-//		currentGraphics.setColor(Color.GRAY);
-//		for (int i = 0; i < 4; i++) {
-//			currentGraphics.drawLine((int)((HORIZONTAL_OFFSET + i * STEP_SPACING) * zoom), 
-//					(int)(VERTICAL_OFFSET * zoom), 
-//					(int)((HORIZONTAL_OFFSET + i * STEP_SPACING) * zoom), 
-//					(int)(screenSize.getHeight()));			
-//		}
-//
+//		
+//		//do the transforms
+//		//note they are done in the opposite order from being called
+//		AffineTransform at = new AffineTransform();
+//		at.translate(startX + width / 2, startY + height / 2);
+//		at.rotate(angle);
+//		at.scale((double) width / STEP_DIM, (double) height / STEP_DIM);
+//		at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
+//		
+//		((Graphics2D)currentGraphics).drawImage(step4th, at, null);
 //	}
 	
 	private void drawSpaceRect(Color color, int x, int y, int width, int height) {

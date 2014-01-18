@@ -23,6 +23,8 @@ public class StepFileReader {
 	private Pattern metaDataRegex;
 	private Pattern stepLineRegex;
 	
+	private StepLine previouslyAddedLine = null;
+	
 	public StepFileReader(String stepFilePath) {
 		this(new File(stepFilePath));
 	}
@@ -40,7 +42,6 @@ public class StepFileReader {
 		if (fileParts != null) {			
 			generateMetaData(fileParts, result);
 		}
-		
 		return result;
 	}
 	
@@ -93,6 +94,7 @@ public class StepFileReader {
 	}
 	
 	private void generateStepData(String notes, StepFile accumulator) {
+		previouslyAddedLine = null;
 		//for all note data
 		notes = stripTag(notes);
 		
@@ -123,7 +125,9 @@ public class StepFileReader {
 		Measure result = new Measure();
 		List<String> rawLines = getRegexMatchingList(stepLineRegex, measure); 
 		for (String rawLine : rawLines) {
-				result.addLine(new StepLine(rawLine));
+			//create new step line given the previously added line
+			previouslyAddedLine = new StepLine(rawLine, previouslyAddedLine);
+			result.addLine(previouslyAddedLine);
 		}
 		
 		return result;
@@ -152,7 +156,7 @@ public class StepFileReader {
 	}
 	
 	public static void main(String[] args) {
-		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
+		StepFileReader reader = new StepFileReader("data/COW GIRL.sm");
 		//StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
 		StepFile file = reader.generateStepFile();
 		System.out.println(file);

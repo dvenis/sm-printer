@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
 	
 		add(centreSplitPane);
 		
-		openStepFile("data/BREAK DOWN!.sm");
+		openStepFile("data/COW GIRL.sm");
 		
 		setSize(1000, 800);
 		setLocationRelativeTo(null);
@@ -71,10 +71,10 @@ public class MainFrame extends JFrame {
 		renderPanel.setDifficulty(difficulty);
 	}
 	
-	private void readStepFiles() {
-		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
-		currentStepFile = reader.generateStepFile();
-	}
+//	private void readStepFiles() {
+//		StepFileReader reader = new StepFileReader("data/COW GIRL.sm");
+//		currentStepFile = reader.generateStepFile();
+//	}
 	
 	public static void main(String[] args) {
 		new MainFrame();
