@@ -60,6 +60,10 @@ public class StepFileRenderer {
 		return zoom;
 	}
 	
+	public void setDifficulty(StepFileDifficultyMap difficulty) {
+		this.difficulty = difficulty;
+	}
+	
 	public void setStepFileAndDifficulty(StepFile stepFile, StepFileDifficultyMap difficulty) {
 		this.stepFile = stepFile;
 		this.difficulty = difficulty;
@@ -186,16 +190,16 @@ public class StepFileRenderer {
 		}
 	}
 	
-	private void renderGrid() {
-		currentGraphics.setColor(Color.GRAY);
-		for (int i = 0; i < 4; i++) {
-			currentGraphics.drawLine((int)((HORIZONTAL_OFFSET + i * STEP_SPACING) * zoom), 
-					(int)(VERTICAL_OFFSET * zoom), 
-					(int)((HORIZONTAL_OFFSET + i * STEP_SPACING) * zoom), 
-					(int)(screenSize.getHeight()));			
-		}
-
-	}
+//	private void renderGrid() {
+//		currentGraphics.setColor(Color.GRAY);
+//		for (int i = 0; i < 4; i++) {
+//			currentGraphics.drawLine((int)((HORIZONTAL_OFFSET + i * STEP_SPACING) * zoom), 
+//					(int)(VERTICAL_OFFSET * zoom), 
+//					(int)((HORIZONTAL_OFFSET + i * STEP_SPACING) * zoom), 
+//					(int)(screenSize.getHeight()));			
+//		}
+//
+//	}
 	
 	private void drawSpaceRect(Color color, int x, int y, int width, int height) {
 		currentGraphics.setColor(color);

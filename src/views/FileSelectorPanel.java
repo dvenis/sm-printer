@@ -58,9 +58,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @version $Id: FileTree.java,v 1.9 2004/02/23 03:39:22 ian Exp $
  * @author Ian Darwin
  */
-public class FileSelectorPanel extends JPanel {
+public class FileSelectorPanel extends BasePanel {
   /** Construct a FileTree */
-  public FileSelectorPanel(File dir) {
+  public FileSelectorPanel(MainFrame main, File dir) {
+	  super(main);
     setLayout(new BorderLayout());
 
     // Make a tree list with all the nodes, and make it a JTree

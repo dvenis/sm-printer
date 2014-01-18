@@ -1,10 +1,13 @@
 package views;
 
+import java.io.File;
+
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import models.StepFile;
+import models.StepFileDifficultyMap;
 import utilities.StepFileReader;
 
 public class MainFrame extends JFrame {
@@ -13,34 +16,65 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private StepFile test;
+	private StepFile currentStepFile;
+	private StepFileDifficultyMap currentDifficulty;
+	
+	private RenderPanel renderPanel;
+	private SelectionInfoPanel selectionInfoPanel;
+	private FileSelectorPanel fileSelectorPanel;
 	
 	public MainFrame() {
-		readStepFiles();
+		//readStepFiles();
+			
+		renderPanel = new RenderPanel(this);
+		//renderPanel.setStepFileAndDifficultyIndex(test, 0);
 		
-		//FileSelectorPanel fileSelectorPanel = new FileSelectorPanel(new File("C:\\Users\\Dan\\Pictures"));
-		FilePanel filePanel = new FilePanel();
-		//add(fileSelectorPanel, BorderLayout.WEST);
+		selectionInfoPanel = new SelectionInfoPanel(this);
+		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Users\\Dan\\Pictures"));
 		
-		RenderPanel renderPanel = new RenderPanel();
-		renderPanel.setStepFileAndDifficultyIndex(test, 0);
-		//add(new JScrollPane(renderPanel), BorderLayout.EAST);
+		JSplitPane westSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fileSelectorPanel, selectionInfoPanel);
+		westSplitPane.setOneTouchExpandable(true);
+		westSplitPane.setDividerLocation(500);
 		
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, filePanel, new JScrollPane(renderPanel));
-		splitPane.setOneTouchExpandable(true);
-		splitPane.setDividerLocation(150);
+		JSplitPane centreSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, westSplitPane, new JScrollPane(renderPanel));
+		centreSplitPane.setOneTouchExpandable(true);
+		centreSplitPane.setDividerLocation(150);
 	
-		add(splitPane);
+		add(centreSplitPane);
 		
-		setSize(600, 600);
+		openStepFile("data/BREAK DOWN!.sm");
+		
+		setSize(1000, 800);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 	
+	public StepFile getCurrentStepFile() {
+		return currentStepFile;
+	}
+	
+	public StepFileDifficultyMap getCurrentDifficulty() {
+		return currentDifficulty;
+	}
+	
+	public void openStepFile(String path) {
+		StepFileReader reader = new StepFileReader(path);
+		currentStepFile = reader.generateStepFile();
+		currentDifficulty = currentStepFile.getDifficulties().get(0);
+		
+		selectionInfoPanel.setStepFileAndDifficulty(currentStepFile, currentDifficulty);
+		renderPanel.setStepFileAndDifficulty(currentStepFile, currentDifficulty);
+	}
+	
+	public void openDifficulty(StepFileDifficultyMap difficulty) {
+		currentDifficulty = difficulty;
+		renderPanel.setDifficulty(difficulty);
+	}
+	
 	private void readStepFiles() {
 		StepFileReader reader = new StepFileReader("data/BREAKDOWN_expert.sm");
-		test = reader.generateStepFile();
+		currentStepFile = reader.generateStepFile();
 	}
 	
 	public static void main(String[] args) {

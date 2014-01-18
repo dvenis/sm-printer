@@ -3,12 +3,10 @@ package views;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import models.StepFile;
 import models.StepFileDifficultyMap;
 
-public class RenderPanel extends JPanel {
+public class RenderPanel extends BasePanel {
 
 	/**
 	 * 
@@ -18,7 +16,8 @@ public class RenderPanel extends JPanel {
 	//private StepFile stepFile;
 	private StepFileRenderer renderer;
 	
-	public RenderPanel() {
+	public RenderPanel(MainFrame main) {
+		super(main);
 		renderer = new StepFileRenderer();
 		
 		setVisible(true);
@@ -26,14 +25,21 @@ public class RenderPanel extends JPanel {
 		setPreferredSize(new Dimension(1000, 1000));
 	}
 	
+	public void setDifficulty(StepFileDifficultyMap difficulty) {
+		renderer.setDifficulty(difficulty);
+		repaint();
+	}
+	
 	public void setStepFileAndDifficulty(StepFile stepFile, StepFileDifficultyMap difficulty) {
 		renderer.setStepFileAndDifficulty(stepFile, difficulty);
 		setPreferredSize(renderer.getScreenSize());
+		repaint();
 	}
 	
 	public void setStepFileAndDifficultyIndex(StepFile stepFile, int difficultyIndex) {		
 		renderer.setStepFileAndDifficultyIndex(stepFile, difficultyIndex);
 		setPreferredSize(renderer.getScreenSize());
+		repaint();
 	}
 	
 	@Override

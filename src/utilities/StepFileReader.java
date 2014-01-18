@@ -122,8 +122,6 @@ public class StepFileReader {
 	private Measure parseMeasure(String measure) {
 		Measure result = new Measure();
 		List<String> rawLines = getRegexMatchingList(stepLineRegex, measure); 
-		System.out.println(rawLines.size());
-		System.out.print(measure);
 		for (String rawLine : rawLines) {
 				result.addLine(new StepLine(rawLine));
 		}
