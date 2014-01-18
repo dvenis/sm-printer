@@ -10,34 +10,51 @@ public class StepLine {
 	public StepLine(String rawData) {
 		steps = new Step[rawData.trim().length()];
 		for (int i = 0; i < steps.length; i++) {
-			steps[i] = charToStep(rawData.charAt(i));
+			steps[i] = charAndIndexToStep(rawData.charAt(i), i);
 		}
-		
-//		left = charToStep(rawData.charAt(0));
-//		down = charToStep(rawData.charAt(1));
-//		up = charToStep(rawData.charAt(2));
-//		right = charToStep(rawData.charAt(3));
 	}
 	
-	private Step charToStep(char c) {
+	private Step charAndIndexToStep(char c, int index) {
+		Step.Type type = charToType(c);
+		Step.Orientation orientation = indexToOrientation(index);
+		return new Step(type, orientation);
+	}
+	
+	private Step.Type charToType(char c) {
 		switch (c) {
 		case '1':
-			return new Step(Step.Type.REGULAR);
+			return Step.Type.REGULAR;
 		case '2':
-			return new Step(Step.Type.HOLD_START);
+			return Step.Type.HOLD_START;
 		case '3':
-			return new Step(Step.Type.HOLD_END);
+			return Step.Type.HOLD_END;
 		case '4':
-			return new Step(Step.Type.ROLL);
+			return Step.Type.ROLL;
 		case 'M':
-			return new Step(Step.Type.MINE);
+			return Step.Type.MINE;
 		case 'L':
-			return new Step(Step.Type.LIFT);
+			return Step.Type.LIFT;
 		case 'F':
-			return new Step(Step.Type.FAKE);
+			return Step.Type.FAKE;
 		default:
-			return new Step(Step.Type.NONE);
+			return Step.Type.NONE;
 		}
+	}
+	
+	private Step.Orientation indexToOrientation(int index) {
+		if (steps.length == 4) {
+			switch (index) {
+			case 0:
+				return Step.Orientation.LEFT;
+			case 1:
+				return Step.Orientation.DOWN;
+			case 2:
+				return Step.Orientation.UP;
+			case 3:
+				return Step.Orientation.RIGHT;
+			}
+		}
+		return Step.Orientation.LEFT;
 	}
 	
 //	public StepLine(Step left, Step right, Step up, Step down) {

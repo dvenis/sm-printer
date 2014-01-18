@@ -3,7 +3,16 @@ package views;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import models.Measure;
 import models.Step;
@@ -26,6 +35,11 @@ public class StepFileRenderer {
 	private final static int PAGE_WIDTH = 792;
 	private final static int PAGE_HEIGHT = 612;
 	
+	private final static String NOTES_DIR = "notes/";
+	private final static int STEP_DIM = 64;
+	private static boolean imagesLoaded = false;
+	private static BufferedImage step4th;
+	
 	private StepFile stepFile;
 	private StepFileDifficultyMap difficulty;
 	private Graphics currentGraphics;
@@ -39,7 +53,14 @@ public class StepFileRenderer {
 	private boolean horizontalOrientation = true;
 	
 	public StepFileRenderer() {
-		
+		if (!imagesLoaded) {
+			try {
+				step4th = ImageIO.read(new File(NOTES_DIR + "4th.png"));
+				imagesLoaded = true;
+			} catch (IOException e) {
+				imagesLoaded = false;
+			}
+		}
 	}
 	
 	public void setZoom(double zoom) {
@@ -185,9 +206,85 @@ public class StepFileRenderer {
 	
 	private void renderStep(Step step, int startX, int startY, int width, int height) {
 		if (step.getType() != Step.Type.NONE){ 
-			currentGraphics.setColor(Color.ORANGE);
-			currentGraphics.fillRect(startX, startY, width, height);	
+			if (imagesLoaded) {
+//				currentGraphics.drawImage(step4th, startX, startY, startX + width, startY + height,
+//						STEP_DIM, STEP_DIM, 0, 0, null);
+				drawRotatedStep(step, startX, startY, width, height);
+			} else {
+				currentGraphics.setColor(Color.ORANGE);
+				currentGraphics.fillRect(startX, startY, width, height);
+			}
 		}
+	}
+
+	private void drawRotatedStep(Step step, int startX, int startY, int width, int height) {
+		double angle;
+		switch (step.getOrientation()) {
+		case LEFT:
+			angle = 0;
+			break;
+		case RIGHT:
+			angle = Math.PI;
+			break;
+		case DOWN:
+			angle = 3 * Math.PI / 2;
+			break;
+		case UP:
+			angle = Math.PI / 2;
+			break;
+		default:
+			angle = 0;
+		}
+		//System.out.println(angle);
+		AffineTransform at = new AffineTransform();
+		at.translate(startX + width / 2, startY + height / 2);
+		at.rotate(angle);
+		at.scale((double) width / STEP_DIM, (double) height / STEP_DIM);
+		at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
+//		Graphics2D rotatedGraphics = (Graphics2D)currentGraphics;
+//		rotatedGraphics.rotate(angle, 32, 32);
+//		rotatedGraphics.drawImage(step4th, startX, startY, startX + width, startY + height,
+//				0, STEP_DIM, STEP_DIM, 0, null);
+		//currentGraphics.drawImage(step4th, startX, startY, width, height, null);
+		((Graphics2D)currentGraphics).drawImage(step4th, at, null);
+		//rotatedGraphics.rotate(-angle, 32, 32);
+//		int srcx1;
+//		int srcy1;
+//		int srcx2;		
+//		int srcy2;
+//		switch (orientation) {
+//		case LEFT:
+//			srcx1 = 0;
+//			srcy1 = 0;
+//			srcx2 = STEP_DIM;
+//			srcy2 = STEP_DIM;
+//			break;
+//		case RIGHT:
+//			srcx1 = STEP_DIM;
+//			srcy1 = 0;
+//			srcx2 = 0;
+//			srcy2 = STEP_DIM;
+//			break;
+//		case DOWN:
+//			srcx1 = STEP_DIM;
+//			srcy1 = 0;
+//			srcx2 = 0;
+//			srcy2 = STEP_DIM;
+//			break;
+//		case UP:
+//			srcx1 = 0;
+//			srcy1 = 0;
+//			srcx2 = STEP_DIM;
+//			srcy2 = STEP_DIM;
+//			break;
+//		default:
+//			srcx1 = 0;
+//			srcy1 = 0;
+//			srcx2 = STEP_DIM;
+//			srcy2 = STEP_DIM;
+//		}
+//		currentGraphics.drawImage(step4th, startX, startY, startX + width, startY + height,
+//				STEP_DIM, STEP_DIM, 0, 0, null);
 	}
 	
 //	private void renderGrid() {

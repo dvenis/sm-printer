@@ -27,7 +27,6 @@ public class MainFrame extends JFrame {
 		//readStepFiles();
 			
 		renderPanel = new RenderPanel(this);
-		//renderPanel.setStepFileAndDifficultyIndex(test, 0);
 		
 		selectionInfoPanel = new SelectionInfoPanel(this);
 		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Users\\Dan\\Pictures"));
