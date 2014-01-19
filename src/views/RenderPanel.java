@@ -3,6 +3,7 @@ package views;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import utilities.StepFileRenderer;
 import models.StepFile;
 import models.StepFileDifficultyMap;
 

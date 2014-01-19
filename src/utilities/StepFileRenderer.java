@@ -1,4 +1,4 @@
-package views;
+package utilities;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -7,6 +7,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +24,7 @@ import models.StepFile;
 import models.StepFileDifficultyMap;
 import models.StepLine;
 
-public class StepFileRenderer {
+public class StepFileRenderer implements Printable {
 	private final static int STEP_DIMENSION = 25;
 	private final static int STEP_SPACING = 35;
 	//private final static int STEPLINE_HEIGHT = 100;
@@ -155,8 +158,12 @@ public class StepFileRenderer {
 		return screenSize;
 	}
 	
-	public void render(Graphics g) {
+	private void setCurrentGraphics(Graphics g) {
 		currentGraphics = g;
+	}
+	
+	public void render(Graphics g) {
+		setCurrentGraphics(g);
 		if (stepFile != null) {
 
 			int measuresPerPage = measuresPerColumn * columnsPerPage;
@@ -171,7 +178,7 @@ public class StepFileRenderer {
 		int columnWidth = PRINTABLE_PAGE_WIDTH / columnsPerPage;
 		//start at the margins
 		int currentX = (PAGE_WIDTH - PRINTABLE_PAGE_WIDTH) / 2;
-		int currentY = pageNumber * PAGE_HEIGHT + (PAGE_HEIGHT - PRINTABLE_PAGE_HEIGHT) / 2;
+		int currentY = 0 * PAGE_HEIGHT + (PAGE_HEIGHT - PRINTABLE_PAGE_HEIGHT) / 2;
 		int measuresPerPage = measuresPerColumn * columnsPerPage;
 		
 		//for testing
@@ -342,5 +349,17 @@ public class StepFileRenderer {
 	private void drawSpaceRect(Color color, int x, int y, int width, int height) {
 		currentGraphics.setColor(color);
 		currentGraphics.fillRect(x, y, width, height);
+	}
+
+	@Override
+	public int print(Graphics g, PageFormat pageFormat, int page) throws PrinterException {
+		setCurrentGraphics(g);
+		if (page < getNumberOfPages()) {
+			renderPage(page);
+		} else {
+			return NO_SUCH_PAGE;
+		}
+		
+		return PAGE_EXISTS;
 	}
 }

@@ -76,14 +76,6 @@ public class FileSelectorPanel extends BasePanel implements TreeSelectionListene
 		return node;
 	}
 
-	public Dimension getMinimumSize() {
-		return new Dimension(200, 400);
-	}
-
-	public Dimension getPreferredSize() {
-		return new Dimension(200, 400);
-	}
-
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.getPath().getLastPathComponent();
