@@ -50,6 +50,8 @@ public class StepFileRenderer {
 	private static BufferedImage step48th;
 	private static BufferedImage holdBody;
 	private static BufferedImage holdEnd;
+	private static BufferedImage rollBody;
+	private static BufferedImage rollEnd;
 	
 	private StepFile stepFile;
 	private StepFileDifficultyMap difficulty;
@@ -70,6 +72,8 @@ public class StepFileRenderer {
 				grabNoteImages(allNotes);
 				holdBody = ImageIO.read(new File(NOTES_DIR + "hold.png"));
 				holdEnd = ImageIO.read(new File(NOTES_DIR + "hold_cap_bottom.png"));
+				rollBody = ImageIO.read(new File(NOTES_DIR + "roll.png"));
+				rollEnd = ImageIO.read(new File(NOTES_DIR + "roll_cap_bottom.png"));
 				
 				imagesLoaded = true;
 			} catch (IOException e) {
@@ -244,6 +248,17 @@ public class StepFileRenderer {
 			break;
 		case HOLD_END:
 			drawHoldEnd(step, startX, startY, stepDim);
+			break;
+		case ROLL:
+			drawRollStartBack(step, startX, startY, stepDim, lineHeight);
+			drawRegularStep(step, startX, startY, stepDim);
+			break;
+		case ROLLING:
+			drawRollingBack(step, startX, startY, stepDim, lineHeight);
+			break;
+		case ROLL_END:
+			drawRollEnd(step, startX, startY, stepDim);
+			break;
 		}
 	}
 	
@@ -302,36 +317,27 @@ public class StepFileRenderer {
 			currentGraphics.drawImage(holdEnd, x, y, x + stepWidth, y + stepWidth / 2, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
 		}
 	}
-
-//	private void drawRotatedStep(Step step, int startX, int startY, int width, int height) {
-//		double angle;
-//		switch (step.getOrientation()) {
-//		case LEFT:
-//			angle = 0;
-//			break;
-//		case RIGHT:
-//			angle = Math.PI;
-//			break;
-//		case DOWN:
-//			angle = 3 * Math.PI / 2;
-//			break;
-//		case UP:
-//			angle = Math.PI / 2;
-//			break;
-//		default:
-//			angle = 0;
-//		}
-//		
-//		//do the transforms
-//		//note they are done in the opposite order from being called
-//		AffineTransform at = new AffineTransform();
-//		at.translate(startX + width / 2, startY + height / 2);
-//		at.rotate(angle);
-//		at.scale((double) width / STEP_DIM, (double) height / STEP_DIM);
-//		at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
-//		
-//		((Graphics2D)currentGraphics).drawImage(step4th, at, null);
-//	}
+	
+	private void drawRollStartBack(Step step, int x, int y, int stepDim, int lineHeight) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(rollBody, x, y + stepDim / 2, x + stepDim, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM / 2, null);
+		}
+	}
+	
+	private void drawRollingBack(Step step, int x, int y, int stepWidth, int lineHeight) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(rollBody, x, y, x + stepWidth, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+		}
+	}
+	
+	private void drawRollEnd(Step step, int x, int y, int stepWidth) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(rollEnd, x, y, x + stepWidth, y + stepWidth / 2, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+		}
+	}
 	
 	private void drawSpaceRect(Color color, int x, int y, int width, int height) {
 		currentGraphics.setColor(color);

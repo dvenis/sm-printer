@@ -73,7 +73,10 @@ public class StepLine {
 		case '2':
 			return Step.Type.HOLD_START;
 		case '3':
-			return Step.Type.HOLD_END;
+			if (previousStep != null && previousStep.getType() == Step.Type.HOLDING || previousStep.getType() == Step.Type.HOLD_START) {
+				return Step.Type.HOLD_END;
+			}
+			return Step.Type.ROLL_END;
 		case '4':
 			return Step.Type.ROLL;
 		case 'M':
@@ -92,6 +95,7 @@ public class StepLine {
 				case HOLDING:
 					return Step.Type.HOLDING;
 				case ROLL:
+				case ROLLING:
 					return Step.Type.ROLLING;
 				default:
 					return Step.Type.NONE;
