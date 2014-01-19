@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
 		renderPanel = new RenderPanel(this);
 		
 		selectionInfoPanel = new SelectionInfoPanel(this);
-		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Users\\Dan\\Pictures"));
+		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Users\\Dan\\EclipseWorkspace"));
 		
 		JSplitPane westSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fileSelectorPanel, selectionInfoPanel);
 		westSplitPane.setOneTouchExpandable(true);
@@ -43,6 +43,8 @@ public class MainFrame extends JFrame {
 		
 		openStepFile("data/COW GIRL.sm");
 		
+		setJMenuBar(new MainMenu(this));
+		
 		setSize(1000, 800);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,6 +57,14 @@ public class MainFrame extends JFrame {
 	
 	public StepFileDifficultyMap getCurrentDifficulty() {
 		return currentDifficulty;
+	}
+	
+	public void openFile(File file) {
+		System.out.println(file);
+		fileSelectorPanel.openFileOrDirectory(file);
+		if (file.isFile()) {
+			openStepFile(file.getAbsolutePath());
+		}
 	}
 	
 	public void openStepFile(String path) {

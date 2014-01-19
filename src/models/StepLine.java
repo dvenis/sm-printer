@@ -27,7 +27,6 @@ public class StepLine {
 	
 	
 	private Step.Length calculateLength(int lineIndex, int numberLinesInMeasure) {
-		System.out.print("(" + lineIndex + "/" + numberLinesInMeasure + ") =");
 		int length;
 		if (lineIndex != 0) {
 			int gcd = getGCD(numberLinesInMeasure, lineIndex);
@@ -36,7 +35,6 @@ public class StepLine {
 			length = 4;
 		}
 
-		System.out.println(length);
 		switch(length) {
 		case 8:
 			return Step.Length.L8TH;
@@ -83,7 +81,6 @@ public class StepLine {
 		case 'F':
 			return Step.Type.FAKE;
 		default:
-			//System.out.println("Prev step: " + previousStep);
 			if (previousStep != null) {
 
 				//check previous line to make know if user is holding or not
@@ -118,48 +115,9 @@ public class StepLine {
 		return Step.Orientation.LEFT;
 	}
 	
-//	public StepLine(Step left, Step right, Step up, Step down) {
-//		this.left = left;
-//		this.right = right;
-//		this.up = up;
-//		this.down = down;
-//	}
-	
 	public Step[] getSteps() {
 		return steps;
 	}
-
-//	public Step getLeft() {
-//		return left;
-//	}
-//
-//	public void setLeft(Step left) {
-//		this.left = left;
-//	}
-//
-//	public Step getRight() {
-//		return right;
-//	}
-//
-//	public void setRight(Step right) {
-//		this.right = right;
-//	}
-//
-//	public Step getUp() {
-//		return up;
-//	}
-//
-//	public void setUp(Step up) {
-//		this.up = up;
-//	}
-//
-//	public Step getDown() {
-//		return down;
-//	}
-//
-//	public void setDown(Step down) {
-//		this.down = down;
-//	}
 		
 	@Override
 	public String toString() {
@@ -167,10 +125,6 @@ public class StepLine {
 		for (Step step : steps) {
 			sb.append(getStepRepr(step));
 		}
-//		sb.append(getStepRepr(left));
-//		sb.append(getStepRepr(down));
-//		sb.append(getStepRepr(up));
-//		sb.append(getStepRepr(right));
 		return sb.toString();
 	}
 	
