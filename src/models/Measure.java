@@ -23,6 +23,10 @@ public class Measure {
 		lines.add(line);
 	}
 	
+	public int getNumberOfLines() {
+		return lines.size();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

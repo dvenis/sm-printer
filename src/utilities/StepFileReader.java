@@ -124,10 +124,13 @@ public class StepFileReader {
 	private Measure parseMeasure(String measure) {
 		Measure result = new Measure();
 		List<String> rawLines = getRegexMatchingList(stepLineRegex, measure); 
+		int lineIndex = 0;
+		int numberLinesInMeasure = rawLines.size();
 		for (String rawLine : rawLines) {
 			//create new step line given the previously added line
-			previouslyAddedLine = new StepLine(rawLine, previouslyAddedLine);
+			previouslyAddedLine = new StepLine(rawLine, previouslyAddedLine, lineIndex, numberLinesInMeasure);
 			result.addLine(previouslyAddedLine);
+			lineIndex++;
 		}
 		
 		return result;

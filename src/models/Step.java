@@ -13,38 +13,45 @@ public class Step {
 	public enum Orientation {
 		LEFT, RIGHT, DOWN, UP
 	}
+	
+	public enum Length {
+		L4TH, L8TH, L12TH, L16TH, L24TH, L32ND, L48TH, L64TH
+	}
 
 	private Type type;
 	private Orientation orientation;
+	private Length length;
 	
-	private double angleFromLeft;
+	private double angleFromDown;
 	private Color filterColor;
 	
-	public Step(Type type) {
-		this(type, Orientation.LEFT);
-	}
 	
 	public Step(Type type, Orientation orientation) {
+		this(type, orientation, null);
+	}
+	
+	public Step(Type type, Orientation orientation, Length length) {
 		this.type = type;
 		this.orientation = orientation;
+		this.length = length;
 		
-		calculateAngleFromLeft();
+		calculateAngleFromDown();
 		calculateFilterColor();
 	}
 	
-	private void calculateAngleFromLeft() {
+	private void calculateAngleFromDown() {
 		switch (orientation) {
 		case RIGHT:
-			angleFromLeft = Math.PI;
+			angleFromDown = 3 * Math.PI / 2;
 			break;
 		case DOWN:
-			angleFromLeft = 3 * Math.PI / 2;
+			angleFromDown = 0;
 			break;
 		case UP:
-			angleFromLeft = Math.PI / 2;
+			angleFromDown = Math.PI / 2;
 			break;
 		default:
-			angleFromLeft = 0;
+			angleFromDown = Math.PI / 2;
 		}
 	}
 	
@@ -66,10 +73,14 @@ public class Step {
 	
 	public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
-	}	
+	}
+	
+	public Length getLength() {
+		return length;
+	}
 	
 	public double getAngleFromLeft() {
-		return angleFromLeft;
+		return angleFromDown;
 	}
 	
 	public Color getFilterColor() {

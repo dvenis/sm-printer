@@ -3,24 +3,67 @@ package models;
 public class StepLine {
 	private Step[] steps;
 	
-	public StepLine(String rawData, StepLine previousLine) {
+	public StepLine(String rawData, StepLine previousLine, int lineIndex, int numberLinesInMeasure) {
 		steps = new Step[rawData.trim().length()];
 		if (previousLine != null && previousLine.steps != null) {
 			for (int i = 0; i < steps.length; i++) {
-				steps[i] = charAndIndexToStep(rawData.charAt(i), i, previousLine.getSteps()[i]);
+				steps[i] = makeStep(rawData.charAt(i), i, previousLine.getSteps()[i], lineIndex, numberLinesInMeasure);
 			}
 		} else {
 			for (int i = 0; i < steps.length; i++) {
-				steps[i] = charAndIndexToStep(rawData.charAt(i), i, null);
+				steps[i] = makeStep(rawData.charAt(i), i, null, lineIndex, numberLinesInMeasure);
 			}
 		}
 	//	System.out.println(rawData);
 	}
 	
-	private Step charAndIndexToStep(char c, int index, Step previousStep) {
-		Step.Type type = charToType(c, previousStep);
-		Step.Orientation orientation = indexToOrientation(index);
-		return new Step(type, orientation);
+	private Step makeStep(char rawCharacter, int stepIndex, Step previousStep, 
+			int lineIndex, int numberLinesInMeasure) {
+		Step.Type type = charToType(rawCharacter, previousStep);
+		Step.Orientation orientation = indexToOrientation(stepIndex);
+		Step.Length length = calculateLength(lineIndex, numberLinesInMeasure);
+		return new Step(type, orientation, length);
+	}
+	
+	
+	private Step.Length calculateLength(int lineIndex, int numberLinesInMeasure) {
+		System.out.print("(" + lineIndex + "/" + numberLinesInMeasure + ") =");
+		int length;
+		if (lineIndex != 0) {
+			int gcd = getGCD(numberLinesInMeasure, lineIndex);
+			length = numberLinesInMeasure / gcd;
+		} else {
+			length = 4;
+		}
+
+		System.out.println(length);
+		switch(length) {
+		case 8:
+			return Step.Length.L8TH;
+		case 12:
+			return Step.Length.L12TH;
+		case 16:
+			return Step.Length.L16TH;
+		case 24:
+			return Step.Length.L24TH;
+		case 32:
+			return Step.Length.L32ND;
+		case 48:
+			return Step.Length.L48TH;
+		case 64:
+			return Step.Length.L64TH;
+		default:
+			return Step.Length.L4TH;
+		}
+	}
+	
+	private int getGCD(int a, int b) {
+		while (b != 0) {
+			int temp = b;
+			b = a % b;
+			a = temp;
+		}
+		return a;
 	}
 	
 	private Step.Type charToType(char c, Step previousStep) {

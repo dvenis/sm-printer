@@ -257,7 +257,28 @@ public class StepFileRenderer {
 			at.scale((double) stepDim / STEP_DIM, (double) stepDim / STEP_DIM);
 			at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
 			
-			((Graphics2D)currentGraphics).drawImage(step4th, at, null);
+			((Graphics2D)currentGraphics).drawImage(getStepImage(step), at, null);
+		}
+	}
+	
+	private BufferedImage getStepImage(Step step) {
+		switch(step.getLength()) {
+		case L4TH:
+			return step4th;
+		case L8TH:
+			return step8th;
+		case L12TH:
+			return step12th;
+		case L16TH:
+			return step16th;
+		case L24TH:
+			return step24th;
+		case L32ND:
+			return step32nd;
+		case L48TH:
+			return step48th;
+		default:
+			return step64th;
 		}
 	}
 	
