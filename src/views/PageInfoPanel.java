@@ -13,7 +13,11 @@ import javax.swing.event.ChangeListener;
 import utilities.Settings;
 
 public class PageInfoPanel extends BasePanel implements ChangeListener {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private final static int MAX_COLUMNS_PER_PAGE = 6;
 	private final static int MIN_COLUMNS_PER_PAGE = 2;
 	private final static int MAX_MEASURES_PER_COLUMN = 10;

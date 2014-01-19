@@ -9,8 +9,6 @@ public class StepFile {
 	private String artist;
 	private String credit;
 	
-	private int stepsPerLine;
-	
 	private float bpm;
 	
 	private List<Measure> measures;
@@ -58,10 +56,6 @@ public class StepFile {
 		//TODO return steps per line, and actually parse it
 		return measures.get(0).getLines().get(0).getSteps().length;
 		//return stepsPerLine;
-	}
-	
-	public void setStepsPerLine(int stepsPerLine) {
-		this.stepsPerLine = stepsPerLine;
 	}
 
 	public float getBpm() {

@@ -5,10 +5,12 @@ import java.awt.Graphics;
 
 import utilities.Settings;
 import utilities.StepFileRenderer;
-import models.StepFile;
-import models.StepFileDifficultyMap;
 
 public class RenderPanel extends BasePanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private StepFileRenderer renderer;
 	

@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ItemEvent;
@@ -11,11 +10,14 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import utilities.Settings;
-import models.StepFile;
 import models.StepFileDifficultyMap;
 
 public class StepFileInfoPanel extends BasePanel implements ItemListener {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel titleLabel;
 	private JLabel titleFieldLabel;
 	private JLabel subtitleLabel;
@@ -82,14 +84,6 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 		add(field, c);
 	}
 	
-//	public void setStepFileAndDifficulty(StepFile stepFile, StepFileDifficultyMap difficulty) {
-//		this.stepFile = stepFile;
-//		this.difficulty = difficulty;
-//		
-//		if (stepFile != null && difficulty != null) {
-//			updateInfo();
-//		}
-//	}
 	
 	@Override
 	public void notifyCurrentStepFileChanged() {
