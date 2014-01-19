@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import utilities.Printer;
+import utilities.Settings;
 
 public class MainMenu extends JMenuBar implements ActionListener {
 	private static final String OPEN_FILE_COMMAND = "openFile";
@@ -85,7 +86,7 @@ public class MainMenu extends JMenuBar implements ActionListener {
 				main.openFile(file);
 			}
 		} else if (PRINT_COMMAND.equals(e.getActionCommand())) {
-			Printer.printSimFile(main.getCurrentStepFile(), main.getCurrentDifficulty());
+			Printer.printSimFile(Settings.currentStepFile, Settings.currentDifficulty);
 		} else if (ABOUT_COMMAND.equals(e.getActionCommand())) {
 			
 		}

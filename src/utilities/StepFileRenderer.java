@@ -1,6 +1,5 @@
 package utilities;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import models.Measure;
 import models.Step;
@@ -25,19 +22,16 @@ import models.StepFileDifficultyMap;
 import models.StepLine;
 
 public class StepFileRenderer implements Printable {
-	private final static int STEP_DIMENSION = 25;
-	private final static int STEP_SPACING = 35;
-	//private final static int STEPLINE_HEIGHT = 100;
-	private final static int BASE_MEASURE_HEIGHT = 200;
-	private final static int HORIZONTAL_OFFSET = 50;
-	private final static int VERTICAL_OFFSET = 50;
 	private final static double ZOOM_TICK = 0.05;
 	
 	private final static int COLUMN_MARGIN = 10;
-	private final static int PRINTABLE_PAGE_WIDTH = 720;
-	private final static int PRINTABLE_PAGE_HEIGHT = 540;
-	private final static int PAGE_WIDTH = 792;
-	private final static int PAGE_HEIGHT = 612;
+	private final static int PRINTABLE_PAGE_WIDTH = 960;
+	private final static int PRINTABLE_PAGE_HEIGHT = 720;
+	private final static int PAGE_WIDTH = 1056;
+	private final static int PAGE_HEIGHT = 816;
+	
+	private final static double PAGE_DPI = 96;
+	private final static double PRINTABLE_DPI = 72;
 	
 	private final static String NOTES_DIR = "notes/stepmania5/";
 	private final static int STEP_DIM = 128;
@@ -62,12 +56,7 @@ public class StepFileRenderer implements Printable {
 	private Dimension screenSize;
 	
 	private double zoom = 1.0;
-	
-	//printing variables
-	private int measuresPerColumn = 3;
-	private int columnsPerPage = 4;
-	private boolean horizontalOrientation = true;
-	
+
 	public StepFileRenderer() {
 		if (!imagesLoaded) {
 			try {
@@ -146,7 +135,7 @@ public class StepFileRenderer implements Printable {
 	}
 	
 	public int getNumberOfPages() {
-		int measuresPerPage = measuresPerColumn * columnsPerPage;
+		int measuresPerPage = Settings.measuresPerColumn * Settings.columnsPerPage;
 		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 	}
 	
@@ -166,20 +155,20 @@ public class StepFileRenderer implements Printable {
 		setCurrentGraphics(g);
 		if (stepFile != null) {
 
-			int measuresPerPage = measuresPerColumn * columnsPerPage;
+			int measuresPerPage = Settings.measuresPerColumn * Settings.columnsPerPage;
 			int pages = (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 			for (int i = 0; i < pages; i++) {
-				renderPage(i);
+				renderPage(i, 0, i * PAGE_HEIGHT);
 			}
 		}
 	}
 	
-	private void renderPage(int pageNumber) {		
-		int columnWidth = PRINTABLE_PAGE_WIDTH / columnsPerPage;
+	private void renderPage(int pageNumber, int startX, int startY) {		
+		int columnWidth = PRINTABLE_PAGE_WIDTH / Settings.columnsPerPage;
 		//start at the margins
-		int currentX = (PAGE_WIDTH - PRINTABLE_PAGE_WIDTH) / 2;
-		int currentY = 0 * PAGE_HEIGHT + (PAGE_HEIGHT - PRINTABLE_PAGE_HEIGHT) / 2;
-		int measuresPerPage = measuresPerColumn * columnsPerPage;
+		int currentX = startX + (PAGE_WIDTH - PRINTABLE_PAGE_WIDTH) / 2;
+		int currentY = startY + (PAGE_HEIGHT - PRINTABLE_PAGE_HEIGHT) / 2;
+		int measuresPerPage = Settings.measuresPerColumn * Settings.columnsPerPage;
 		
 		//for testing
 		drawSpaceRect(Color.BLUE, currentX, currentY, PRINTABLE_PAGE_WIDTH, PRINTABLE_PAGE_HEIGHT);
@@ -187,8 +176,8 @@ public class StepFileRenderer implements Printable {
 		//page number
 		currentGraphics.drawString(Integer.toString(pageNumber + 1), currentX, currentY);
 		
-		for (int i = 0; i < columnsPerPage; i++) {
-			renderColumn(measuresPerPage * pageNumber + i * measuresPerColumn, currentX, currentY, columnWidth, PRINTABLE_PAGE_HEIGHT);
+		for (int i = 0; i < Settings.columnsPerPage; i++) {
+			renderColumn(measuresPerPage * pageNumber + i * Settings.measuresPerColumn, currentX, currentY, columnWidth, PRINTABLE_PAGE_HEIGHT);
 			currentX += columnWidth;
 		}
 	}
@@ -198,14 +187,14 @@ public class StepFileRenderer implements Printable {
 		int currentY = startY + COLUMN_MARGIN;
 		int usableWidth = width - 2 * COLUMN_MARGIN;
 		int usableHeight = height - 2 * COLUMN_MARGIN; 
-		int measureHeight = usableHeight / measuresPerColumn;
+		int measureHeight = usableHeight / Settings.measuresPerColumn;
 		
 		List<Measure> measures = difficulty.getMeasures();
 		
 		//for testing
 		drawSpaceRect(Color.GREEN, currentX, currentY, width - 2 * COLUMN_MARGIN, height - 2 * COLUMN_MARGIN);
 		
-		for (int i = 0; i < measuresPerColumn; i++) {
+		for (int i = 0; i < Settings.measuresPerColumn; i++) {
 			if (measureStartIndex + i < measures.size()) {
 				renderMeasure(measures.get(measureStartIndex + i), measureStartIndex + i, currentX, currentY, usableWidth, measureHeight);
 				currentY += measureHeight;
@@ -353,9 +342,10 @@ public class StepFileRenderer implements Printable {
 
 	@Override
 	public int print(Graphics g, PageFormat pageFormat, int page) throws PrinterException {
+		((Graphics2D)g).scale(PRINTABLE_DPI / PAGE_DPI, PRINTABLE_DPI / PAGE_DPI);
 		setCurrentGraphics(g);
 		if (page < getNumberOfPages()) {
-			renderPage(page);
+			renderPage(page, 0, 0);
 		} else {
 			return NO_SUCH_PAGE;
 		}

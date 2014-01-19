@@ -8,23 +8,16 @@ import javax.swing.JSplitPane;
 
 import models.StepFile;
 import models.StepFileDifficultyMap;
+import utilities.Settings;
 import utilities.StepFileReader;
 
 public class MainFrame extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private StepFile currentStepFile;
-	private StepFileDifficultyMap currentDifficulty;
 	
 	private RenderPanel renderPanel;
 	private SelectionInfoPanel selectionInfoPanel;
 	private FileSelectorPanel fileSelectorPanel;
 	
 	public MainFrame() {
-		//readStepFiles();
 			
 		renderPanel = new RenderPanel(this);
 		
@@ -51,14 +44,6 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 	}
 	
-	public StepFile getCurrentStepFile() {
-		return currentStepFile;
-	}
-	
-	public StepFileDifficultyMap getCurrentDifficulty() {
-		return currentDifficulty;
-	}
-	
 	public void openFile(File file) {
 		System.out.println(file);
 		fileSelectorPanel.openFileOrDirectory(file);
@@ -69,22 +54,19 @@ public class MainFrame extends JFrame {
 	
 	public void openStepFile(String path) {
 		StepFileReader reader = new StepFileReader(path);
-		currentStepFile = reader.generateStepFile();
-		currentDifficulty = currentStepFile.getDifficulties().get(0);
+		Settings.currentStepFile = reader.generateStepFile();
+		Settings.currentDifficulty = Settings.currentStepFile.getDifficulties().get(0);
 		
-		selectionInfoPanel.setStepFileAndDifficulty(currentStepFile, currentDifficulty);
-		renderPanel.setStepFileAndDifficulty(currentStepFile, currentDifficulty);
+		selectionInfoPanel.notifyCurrentStepFileChanged();
+		renderPanel.notifyCurrentStepFileChanged();
 	}
 	
 	public void openDifficulty(StepFileDifficultyMap difficulty) {
-		currentDifficulty = difficulty;
-		renderPanel.setDifficulty(difficulty);
+		Settings.currentDifficulty = difficulty;
+		
+		renderPanel.notifyCurrentDifficultyChanged();
+		selectionInfoPanel.notifyCurrentDifficultyChanged();
 	}
-	
-//	private void readStepFiles() {
-//		StepFileReader reader = new StepFileReader("data/COW GIRL.sm");
-//		currentStepFile = reader.generateStepFile();
-//	}
 	
 	public static void main(String[] args) {
 		new MainFrame();

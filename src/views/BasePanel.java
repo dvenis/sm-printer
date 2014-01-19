@@ -8,4 +8,12 @@ public abstract class BasePanel extends JPanel {
 	public BasePanel(MainFrame main) {
 		this.main = main;
 	}
+	
+	public void notifyCurrentStepFileChanged() {
+		
+	}
+	
+	public void notifyCurrentDifficultyChanged() {
+		
+	}
 }
