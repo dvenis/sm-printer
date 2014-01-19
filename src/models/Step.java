@@ -7,7 +7,7 @@ public class Step {
 	public enum Type {
 		NONE, REGULAR, HOLD_START, HOLD_END, ROLL, MINE, LIFT, FAKE,
 		//custom definitions
-		HOLDING, ROLLING
+		HOLDING, ROLLING, ROLL_END
 	}
 	
 	public enum Orientation {
@@ -48,7 +48,7 @@ public class Step {
 			angleFromDown = 0;
 			break;
 		case UP:
-			angleFromDown = Math.PI / 2;
+			angleFromDown = Math.PI;
 			break;
 		default:
 			angleFromDown = Math.PI / 2;

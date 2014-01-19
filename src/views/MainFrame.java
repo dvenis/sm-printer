@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
 	
 		add(centreSplitPane);
 		
-		openStepFile("data/COW GIRL.sm");
+		openStepFile("data/Renaissance.sm");
 		
 		setJMenuBar(new MainMenu(this));
 		
