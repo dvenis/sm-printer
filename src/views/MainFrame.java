@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
 	private FileSelectorPanel fileSelectorPanel;
 	
 	public MainFrame() {
-			
+		
 		renderPanel = new RenderPanel(this);
 		
 		selectionInfoPanel = new SelectionInfoPanel(this);
@@ -69,6 +69,14 @@ public class MainFrame extends JFrame {
 		
 		renderPanel.notifyCurrentDifficultyChanged();
 		selectionInfoPanel.notifyCurrentDifficultyChanged();
+	}
+	
+	public void zoomIn() {
+		renderPanel.zoomIn();
+	}
+	
+	public void zoomOut() {
+		renderPanel.zoomOut();
 	}
 	
 	public static void main(String[] args) {

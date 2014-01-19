@@ -35,7 +35,11 @@ public class StepFileRenderer implements Printable {
 	
 	private final static String NOTES_DIR = "notes/stepmania5/";
 	private final static int STEP_DIM = 128;
-	private final static int HOLD_DIM = 128;
+	
+	private static ImageDimension holdDim;
+	private static ImageDimension stepDim;
+	private static ImageDimension rollDim;
+	
 	private static boolean imagesLoaded = false;
 	private static BufferedImage step4th;
 	private static BufferedImage step8th;
@@ -61,11 +65,16 @@ public class StepFileRenderer implements Printable {
 		if (!imagesLoaded) {
 			try {
 				BufferedImage allNotes = ImageIO.read(new File(NOTES_DIR + "notes.png"));
+				stepDim = new ImageDimension(STEP_DIM, STEP_DIM);
 				grabNoteImages(allNotes);
+				
 				holdBody = ImageIO.read(new File(NOTES_DIR + "hold.png"));
 				holdEnd = ImageIO.read(new File(NOTES_DIR + "hold_cap_bottom.png"));
+				holdDim = new ImageDimension(holdBody.getWidth(), holdBody.getHeight());
+				
 				rollBody = ImageIO.read(new File(NOTES_DIR + "roll.png"));
 				rollEnd = ImageIO.read(new File(NOTES_DIR + "roll_cap_bottom.png"));
+				rollDim = new ImageDimension(rollBody.getWidth(), rollBody.getHeight());
 				
 				imagesLoaded = true;
 			} catch (IOException e) {
@@ -75,14 +84,14 @@ public class StepFileRenderer implements Printable {
 	}
 	
 	private void grabNoteImages(BufferedImage allNotes) {
-		step4th = allNotes.getSubimage(0, 0, STEP_DIM, STEP_DIM);
-		step8th = allNotes.getSubimage(0, STEP_DIM, STEP_DIM, STEP_DIM);
-		step12th = allNotes.getSubimage(0, STEP_DIM * 2, STEP_DIM, STEP_DIM);
-		step16th = allNotes.getSubimage(0, STEP_DIM * 3, STEP_DIM, STEP_DIM);
-		step24th = allNotes.getSubimage(0, STEP_DIM * 4, STEP_DIM, STEP_DIM);
-		step32nd = allNotes.getSubimage(0, STEP_DIM * 5, STEP_DIM, STEP_DIM);
-		step48th = allNotes.getSubimage(0, STEP_DIM * 6, STEP_DIM, STEP_DIM);
-		step64th = allNotes.getSubimage(0, STEP_DIM * 7, STEP_DIM, STEP_DIM);
+		step4th = allNotes.getSubimage(0, 0, stepDim.width, stepDim.height);
+		step8th = allNotes.getSubimage(0, stepDim.height, stepDim.width, stepDim.height);
+		step12th = allNotes.getSubimage(0, stepDim.height * 2, stepDim.width, stepDim.height);
+		step16th = allNotes.getSubimage(0, stepDim.height * 3, stepDim.width, stepDim.height);
+		step24th = allNotes.getSubimage(0, stepDim.height * 4, stepDim.width, stepDim.height);
+		step32nd = allNotes.getSubimage(0, stepDim.height * 5, stepDim.width, stepDim.height);
+		step48th = allNotes.getSubimage(0, stepDim.height * 6, stepDim.width, stepDim.height);
+		step64th = allNotes.getSubimage(0, stepDim.height * 7, stepDim.width, stepDim.height);
 	}
 	
 	public void setZoom(double zoom) {
@@ -96,6 +105,11 @@ public class StepFileRenderer implements Printable {
 	
 	public void zoomOut() {
 		zoom -= ZOOM_TICK;
+		calculateScreenSize();
+	}
+	
+	public void resetZoom() {
+		zoom = 1.0;
 		calculateScreenSize();
 	}
 	
@@ -121,11 +135,6 @@ public class StepFileRenderer implements Printable {
 		}
 	}
 	
-//	public void setStepFile(StepFile stepFile) {
-//		this.stepFile = stepFile;
-//		calculateScreenSize();
-//	}
-	
 	public StepFile getStepFile() {
 		return stepFile;
 	}
@@ -134,9 +143,8 @@ public class StepFileRenderer implements Printable {
 		return difficulty;
 	}
 	
-	public int getNumberOfPages() {
-		int measuresPerPage = Settings.measuresPerColumn * Settings.columnsPerPage;
-		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
+	public int getNumberOfPages() {		
+		return StepFile.calculateNumberOfPages(difficulty, Settings.columnsPerPage, Settings.measuresPerColumn);
 	}
 	
 	private void calculateScreenSize() {
@@ -152,6 +160,7 @@ public class StepFileRenderer implements Printable {
 	}
 	
 	public void render(Graphics g) {
+		((Graphics2D)g).scale(zoom, zoom);
 		setCurrentGraphics(g);
 		if (stepFile != null) {
 
@@ -206,8 +215,6 @@ public class StepFileRenderer implements Printable {
 	
 	private void renderMeasure(Measure measure, int measureNumber, int startX, int startY, int width, int height) {
 		float currentY = startY;
-		currentGraphics.setColor(Color.BLACK);
-		currentGraphics.drawLine(startX, startY + 1, startX + width, startY + 1);
 		
 		//measure number
 		currentGraphics.drawString("Measure: " + Integer.toString(measureNumber + 1), startX, startY);
@@ -265,8 +272,8 @@ public class StepFileRenderer implements Printable {
 			AffineTransform at = new AffineTransform();
 			at.translate(x + stepDim / 2, y + stepDim / 2);
 			at.rotate(step.getAngleFromLeft());
-			at.scale((double) stepDim / STEP_DIM, (double) stepDim / STEP_DIM);
-			at.translate(-STEP_DIM / 2, -STEP_DIM / 2);
+			at.scale((double) stepDim / this.stepDim.width, (double) stepDim / this.stepDim.height);
+			at.translate(-this.stepDim.width / 2, -this.stepDim.height / 2);
 			
 			((Graphics2D)currentGraphics).drawImage(getStepImage(step), at, null);
 		}
@@ -296,42 +303,48 @@ public class StepFileRenderer implements Printable {
 	private void drawHoldStartBack(Step step, int x, int y, int stepDim, int lineHeight) {
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
-			currentGraphics.drawImage(holdBody, x, y + stepDim / 2, x + stepDim, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM / 2, null);
+			currentGraphics.drawImage(holdBody, x, y + stepDim / 2, x + stepDim, y + lineHeight,
+					0, 0, holdDim.width, holdDim.height, null);
 		}
 	}
 	
 	private void drawHoldingBack(Step step, int x, int y, int stepWidth, int lineHeight) {
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
-			currentGraphics.drawImage(holdBody, x, y, x + stepWidth, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+			currentGraphics.drawImage(holdBody, x, y, x + stepWidth, y + lineHeight, 
+					0, 0, holdDim.width, holdDim.height, null);
 		}
 	}
 	
 	private void drawHoldEnd(Step step, int x, int y, int stepWidth) {
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
-			currentGraphics.drawImage(holdEnd, x, y, x + stepWidth, y + stepWidth / 2, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+			currentGraphics.drawImage(holdEnd, x, y, x + stepWidth, y + stepWidth / 2,
+					0, 0, holdDim.width, holdDim.height, null);
 		}
 	}
 	
 	private void drawRollStartBack(Step step, int x, int y, int stepDim, int lineHeight) {
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
-			currentGraphics.drawImage(rollBody, x, y + stepDim / 2, x + stepDim, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM / 2, null);
+			currentGraphics.drawImage(rollBody, x, y + stepDim / 2, x + stepDim, y + lineHeight,
+					0, 0, rollDim.width, rollDim.height, null);
 		}
 	}
 	
 	private void drawRollingBack(Step step, int x, int y, int stepWidth, int lineHeight) {
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
-			currentGraphics.drawImage(rollBody, x, y, x + stepWidth, y + lineHeight, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+			currentGraphics.drawImage(rollBody, x, y, x + stepWidth, y + lineHeight, 
+					0, 0, rollDim.width, rollDim.height, null);
 		}
 	}
 	
 	private void drawRollEnd(Step step, int x, int y, int stepWidth) {
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
-			currentGraphics.drawImage(rollEnd, x, y, x + stepWidth, y + stepWidth / 2, 0, 0, HOLD_DIM, HOLD_DIM/2, null);
+			currentGraphics.drawImage(rollEnd, x, y, x + stepWidth, y + stepWidth / 2, 
+					0, 0, rollDim.width, rollDim.height, null);
 		}
 	}
 	

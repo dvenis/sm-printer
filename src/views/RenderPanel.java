@@ -22,22 +22,41 @@ public class RenderPanel extends BasePanel {
 		setPreferredSize(new Dimension(1584, 1000));
 	}
 	
+	public void zoomIn() {
+		renderer.zoomIn();
+		screenChanged();
+	}
+	
+	public void zoomOut() {
+		renderer.zoomOut();
+		screenChanged();
+	}
+	
+	public void resetZoom() {
+		renderer.resetZoom();
+		screenChanged();
+	}
+	
 	@Override
 	public void notifyCurrentStepFileChanged() {
 		renderer.setStepFileAndDifficulty(Settings.currentStepFile, Settings.currentDifficulty);
-		setPreferredSize(renderer.getScreenSize());
-		repaint();
+		screenChanged();
 	}
 	
 	@Override
 	public void notifyCurrentDifficultyChanged() {
 		renderer.setDifficulty(Settings.currentDifficulty);
-		repaint();
+		screenChanged();
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		g.clearRect(0, 0, (int)renderer.getScreenSize().getWidth(), (int)renderer.getScreenSize().getHeight());
+		g.clearRect(0, 0, getWidth(), getHeight());
 		renderer.render(g);
+	}
+	
+	private void screenChanged() {
+		setPreferredSize(renderer.getScreenSize());
+		repaint();
 	}
 }

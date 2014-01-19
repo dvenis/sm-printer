@@ -3,7 +3,16 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilities.Settings;
+
 public class StepFile {
+	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty,
+											 int columnsPerPage,
+											 int measuresPerColumn) {
+		int measuresPerPage = Settings.measuresPerColumn * Settings.columnsPerPage;
+		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
+	}
+	
 	private String title;
 	private String subtitle;
 	private String artist;
@@ -73,19 +82,6 @@ public class StepFile {
 	public void addDifficulty(StepFileDifficultyMap difficulty) {
 		difficulties.add(difficulty);
 	}
-	
-//	public List<Measure> getMeasures() {
-//		return measures;
-//	}
-//	
-//	public void setMeasures(List<Measure> measures) {
-//		this.measures = measures;
-//	}
-//	
-//	public void addMeasure(Measure newMeasure) {
-//		measures.add(newMeasure);
-//		
-//	}
 	
 	@Override
 	public String toString() {
