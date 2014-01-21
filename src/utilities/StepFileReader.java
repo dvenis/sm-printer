@@ -33,7 +33,7 @@ public class StepFileReader {
 		this.systemStepFile = systemStepFile;
 		
 		metaDataRegex = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
-		stepLineRegex = Pattern.compile("\\d{4,10}");
+		stepLineRegex = Pattern.compile("[0-9MLF]{4,10}"); //huehuehue
 	}
 	
 	public StepFile generateStepFile() {
@@ -159,7 +159,7 @@ public class StepFileReader {
 	}
 	
 	public static void main(String[] args) {
-		StepFileReader reader = new StepFileReader("data/COW GIRL.sm");
+		StepFileReader reader = new StepFileReader("data/Feels Just Like That Night.sm");
 		//StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
 		StepFile file = reader.generateStepFile();
 		System.out.println(file);

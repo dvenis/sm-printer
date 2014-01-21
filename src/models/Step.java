@@ -13,14 +13,10 @@ public class Step {
 	public enum Orientation {
 		LEFT, RIGHT, DOWN, UP
 	}
-	
-	public enum Length {
-		L4TH, L8TH, L12TH, L16TH, L24TH, L32ND, L48TH, L64TH
-	}
 
 	private Type type;
 	private Orientation orientation;
-	private Length length;
+	private StepLine.Timing length;
 	
 	private double angleFromDown;
 	private Color filterColor;
@@ -30,7 +26,7 @@ public class Step {
 		this(type, orientation, null);
 	}
 	
-	public Step(Type type, Orientation orientation, Length length) {
+	public Step(Type type, Orientation orientation, StepLine.Timing length) {
 		this.type = type;
 		this.orientation = orientation;
 		this.length = length;
@@ -75,7 +71,7 @@ public class Step {
 		this.orientation = orientation;
 	}
 	
-	public Length getLength() {
+	public StepLine.Timing getLength() {
 		return length;
 	}
 	

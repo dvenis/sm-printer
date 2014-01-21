@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 		renderPanel = new RenderPanel(this);
 		
 		selectionInfoPanel = new SelectionInfoPanel(this);
-		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Users\\Dan\\EclipseWorkspace"));
+		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Program Files (x86)\\ITG2\\Songs"));
 		
 		JSplitPane westSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fileSelectorPanel, selectionInfoPanel);
 		westSplitPane.setOneTouchExpandable(true);

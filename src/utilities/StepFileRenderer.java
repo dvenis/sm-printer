@@ -39,6 +39,7 @@ public class StepFileRenderer implements Printable {
 	private static ImageDimension holdDim;
 	private static ImageDimension stepDim;
 	private static ImageDimension rollDim;
+	private static ImageDimension mineDim;
 	
 	private static boolean imagesLoaded = false;
 	private static BufferedImage step4th;
@@ -53,6 +54,7 @@ public class StepFileRenderer implements Printable {
 	private static BufferedImage holdEnd;
 	private static BufferedImage rollBody;
 	private static BufferedImage rollEnd;
+	private static BufferedImage mine;
 	
 	private StepFile stepFile;
 	private StepFileDifficultyMap difficulty;
@@ -75,6 +77,9 @@ public class StepFileRenderer implements Printable {
 				rollBody = ImageIO.read(new File(NOTES_DIR + "roll.png"));
 				rollEnd = ImageIO.read(new File(NOTES_DIR + "roll_cap_bottom.png"));
 				rollDim = new ImageDimension(rollBody.getWidth(), rollBody.getHeight());
+				
+				mine = ImageIO.read(new File(NOTES_DIR + "mine.png"));
+				mineDim = new ImageDimension(mine.getWidth(), mine.getHeight());
 				
 				imagesLoaded = true;
 			} catch (IOException e) {
@@ -219,6 +224,7 @@ public class StepFileRenderer implements Printable {
 		//measure number
 		currentGraphics.drawString("Measure: " + Integer.toString(measureNumber + 1), startX, startY);
 		
+		
 		float stepLineHeight = (float) height / measure.getLines().size();
 		//System.out.println("LINES: " + measure.getLines().size());
 		for (StepLine line : measure.getLines()) {
@@ -230,8 +236,15 @@ public class StepFileRenderer implements Printable {
 	private void renderLine(StepLine line, int startX, int startY, int width, int height) {
 		Step[] steps = line.getSteps();
 		int stepWidth = width / steps.length;
-		currentGraphics.setColor(Color.YELLOW);
-		currentGraphics.drawLine(startX, startY, startX + width, startY);
+		
+		if (line.getTiming() == StepLine.Timing.L1ST) { 
+			currentGraphics.setColor(Color.BLACK);
+			currentGraphics.fillRect(startX, startY + stepWidth / 2 - 3, width, 4);
+		} else if (line.getTiming() == StepLine.Timing.L4TH) {
+			currentGraphics.setColor(Color.BLACK);
+			currentGraphics.fillRect(startX, startY + stepWidth / 2 - 1, width, 2);	
+		}
+		
 		for (int i = 0; i < steps.length; i++) {
 			renderStep(steps[i], startX + stepWidth * i, startY, stepWidth, height);
 		}
@@ -262,6 +275,9 @@ public class StepFileRenderer implements Printable {
 		case ROLL_END:
 			drawRollEnd(step, startX, startY, stepDim);
 			break;
+		case MINE:
+			drawMine(step, startX, startY, stepDim, lineHeight);
+			break;
 		}
 	}
 	
@@ -281,6 +297,7 @@ public class StepFileRenderer implements Printable {
 	
 	private BufferedImage getStepImage(Step step) {
 		switch(step.getLength()) {
+		case L1ST:
 		case L4TH:
 			return step4th;
 		case L8TH:
@@ -299,6 +316,15 @@ public class StepFileRenderer implements Printable {
 			return step64th;
 		}
 	}
+	
+	private void drawMine(Step step, int x, int y, int stepDim, int lineHeight) {
+		if (imagesLoaded) {
+			//TODO store the HOLD dimensions properly and keep consistent with step logic
+			currentGraphics.drawImage(mine, x, y, x + stepDim, y + stepDim,
+					0, 0, mineDim.width, mineDim.height, null);
+		}
+	}
+	
 	
 	private void drawHoldStartBack(Step step, int x, int y, int stepDim, int lineHeight) {
 		if (imagesLoaded) {

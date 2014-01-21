@@ -1,57 +1,66 @@
 package models;
 
 public class StepLine {
+	public enum Timing {
+		L1ST, L4TH, L8TH, L12TH, L16TH, L24TH, L32ND, L48TH, L64TH
+	}
+	
 	private Step[] steps;
+	private Timing timing;
 	
 	public StepLine(String rawData, StepLine previousLine, int lineIndex, int numberLinesInMeasure) {
+		timing = calculateLength(lineIndex, numberLinesInMeasure);
+		
 		steps = new Step[rawData.trim().length()];
 		if (previousLine != null && previousLine.steps != null) {
 			for (int i = 0; i < steps.length; i++) {
-				steps[i] = makeStep(rawData.charAt(i), i, previousLine.getSteps()[i], lineIndex, numberLinesInMeasure);
+				steps[i] = makeStep(rawData.charAt(i), i, previousLine.getSteps()[i]);
 			}
 		} else {
 			for (int i = 0; i < steps.length; i++) {
-				steps[i] = makeStep(rawData.charAt(i), i, null, lineIndex, numberLinesInMeasure);
+				steps[i] = makeStep(rawData.charAt(i), i, null);
 			}
+		}
+		if (timing == Timing.L1ST) {
+			System.out.println("1ST: " + lineIndex + " / " + numberLinesInMeasure);
 		}
 	//	System.out.println(rawData);
 	}
 	
-	private Step makeStep(char rawCharacter, int stepIndex, Step previousStep, 
-			int lineIndex, int numberLinesInMeasure) {
+	private Step makeStep(char rawCharacter, int stepIndex, Step previousStep) {
 		Step.Type type = charToType(rawCharacter, previousStep);
 		Step.Orientation orientation = indexToOrientation(stepIndex);
-		Step.Length length = calculateLength(lineIndex, numberLinesInMeasure);
-		return new Step(type, orientation, length);
+		//Step.Length length = calculateLength(lineIndex, numberLinesInMeasure);
+		return new Step(type, orientation, timing);
 	}
 	
 	
-	private Step.Length calculateLength(int lineIndex, int numberLinesInMeasure) {
+	private Timing calculateLength(int lineIndex, int numberLinesInMeasure) {
 		int length;
 		if (lineIndex != 0) {
 			int gcd = getGCD(numberLinesInMeasure, lineIndex);
 			length = numberLinesInMeasure / gcd;
 		} else {
-			length = 4;
+			return Timing.L1ST;
 		}
 
 		switch(length) {
 		case 8:
-			return Step.Length.L8TH;
+			return Timing.L8TH;
 		case 12:
-			return Step.Length.L12TH;
+			return Timing.L12TH;
 		case 16:
-			return Step.Length.L16TH;
+			return Timing.L16TH;
 		case 24:
-			return Step.Length.L24TH;
+			return Timing.L24TH;
 		case 32:
-			return Step.Length.L32ND;
+			return Timing.L32ND;
 		case 48:
-			return Step.Length.L48TH;
+			return Timing.L48TH;
 		case 64:
-			return Step.Length.L64TH;
+			return Timing.L64TH;
 		default:
-			return Step.Length.L4TH;
+			return Timing.L4TH;
 		}
 	}
 	
@@ -121,6 +130,10 @@ public class StepLine {
 	
 	public Step[] getSteps() {
 		return steps;
+	}
+	
+	public Timing getTiming() {
+		return timing;
 	}
 		
 	@Override
