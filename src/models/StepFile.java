@@ -6,12 +6,17 @@ import java.util.List;
 import utilities.Settings;
 
 public class StepFile {
+	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty) {
+		return calculateNumberOfPages(difficulty, Settings.measuresPerColumn, Settings.columnsPerPage);
+	}
+	
 	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty,
 											 int columnsPerPage,
 											 int measuresPerColumn) {
-		int measuresPerPage = Settings.measuresPerColumn * Settings.columnsPerPage;
+		int measuresPerPage = measuresPerColumn * columnsPerPage;
 		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 	}
+
 	
 	private String title;
 	private String subtitle;

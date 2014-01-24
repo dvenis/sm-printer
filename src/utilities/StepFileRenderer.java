@@ -11,10 +11,13 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import entities.Hold;
+import entities.Roll;
 import models.Measure;
 import models.Step;
 import models.StepFile;
@@ -62,6 +65,9 @@ public class StepFileRenderer implements Printable {
 	private Dimension screenSize;
 	
 	private double zoom = 1.0;
+	
+	private Roll testRoll;
+	private Hold[] holds;
 
 	public StepFileRenderer() {
 		if (!imagesLoaded) {
@@ -74,8 +80,11 @@ public class StepFileRenderer implements Printable {
 				holdEnd = ImageIO.read(new File(NOTES_DIR + "hold_cap_bottom.png"));
 				holdDim = new ImageDimension(holdBody.getWidth(), holdBody.getHeight());
 				
+				//TODO
 				rollBody = ImageIO.read(new File(NOTES_DIR + "roll.png"));
 				rollEnd = ImageIO.read(new File(NOTES_DIR + "roll_cap_bottom.png"));
+				Resources.getInstance().rollBody = rollBody;
+				Resources.getInstance().rollEnd = rollEnd;
 				rollDim = new ImageDimension(rollBody.getWidth(), rollBody.getHeight());
 				
 				mine = ImageIO.read(new File(NOTES_DIR + "mine.png"));
@@ -129,6 +138,11 @@ public class StepFileRenderer implements Printable {
 	public void setStepFileAndDifficulty(StepFile stepFile, StepFileDifficultyMap difficulty) {
 		this.stepFile = stepFile;
 		this.difficulty = difficulty;
+		
+		//TODO assumes the difficulty has the same number of steps per line throughout
+		int numberOfSteps = difficulty.getMeasures().get(0).getLines().get(0).getSteps().length;
+		holds = new Hold[numberOfSteps];
+		
 		calculateScreenSize();
 	}
 	
@@ -239,7 +253,7 @@ public class StepFileRenderer implements Printable {
 		
 		if (line.getTiming() == StepLine.Timing.L1ST) { 
 			currentGraphics.setColor(Color.BLACK);
-			currentGraphics.fillRect(startX, startY + stepWidth / 2 - 3, width, 4);
+			currentGraphics.fillRect(startX, startY + stepWidth / 2 - 2, width, 4);
 		} else if (line.getTiming() == StepLine.Timing.L4TH) {
 			currentGraphics.setColor(Color.BLACK);
 			currentGraphics.fillRect(startX, startY + stepWidth / 2 - 1, width, 2);	
@@ -273,12 +287,14 @@ public class StepFileRenderer implements Printable {
 			drawRollingBack(step, startX, startY, stepDim, lineHeight);
 			break;
 		case ROLL_END:
-			drawRollEnd(step, startX, startY, stepDim);
+			drawRollEnd(step, startX, startY, stepDim, lineHeight);
 			break;
 		case MINE:
 			drawMine(step, startX, startY, stepDim, lineHeight);
 			break;
 		}
+		currentGraphics.setColor(Color.yellow);
+		currentGraphics.fillRect(startX - 10, startY - 5, 10, 10);
 	}
 	
 	private void drawRegularStep(Step step, int x, int y, int stepDim) {
@@ -351,6 +367,12 @@ public class StepFileRenderer implements Printable {
 	}
 	
 	private void drawRollStartBack(Step step, int x, int y, int stepDim, int lineHeight) {
+		if (step.getOrientation() == Step.Orientation.LEFT) { 
+			testRoll = new Roll(x, y, stepDim, lineHeight);
+			testRoll.start();
+			return;
+		}
+		
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
 			currentGraphics.drawImage(rollBody, x, y + stepDim / 2, x + stepDim, y + lineHeight,
@@ -359,6 +381,11 @@ public class StepFileRenderer implements Printable {
 	}
 	
 	private void drawRollingBack(Step step, int x, int y, int stepWidth, int lineHeight) {
+		if (step.getOrientation() == Step.Orientation.LEFT) { 
+			//testRoll.extend(lineHeight);
+			return;
+		}
+		
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
 			currentGraphics.drawImage(rollBody, x, y, x + stepWidth, y + lineHeight, 
@@ -366,7 +393,16 @@ public class StepFileRenderer implements Printable {
 		}
 	}
 	
-	private void drawRollEnd(Step step, int x, int y, int stepWidth) {
+	private void drawRollEnd(Step step, int x, int y, int stepWidth, int lineHeight) {
+		if (step.getOrientation() == Step.Orientation.LEFT) {
+			testRoll.extend(lineHeight);
+			testRoll.end();
+			testRoll.draw(currentGraphics);
+			//rolls.add(testRoll);
+			testRoll = null;
+			return;
+		}
+		
 		if (imagesLoaded) {
 			//TODO store the HOLD dimensions properly and keep consistent with step logic
 			currentGraphics.drawImage(rollEnd, x, y, x + stepWidth, y + stepWidth / 2, 
