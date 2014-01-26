@@ -39,6 +39,11 @@ public class Measure extends Container {
 	}
 	
 	@Override
+	public void drawMidground(Graphics g) {
+		drawChildrenMidground(g);
+	}
+	
+	@Override
 	public void drawBackground(Graphics g) {
 		highlightRegion(g, Color.GREEN);
 		drawChildrenBackground(g);		

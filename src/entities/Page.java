@@ -43,6 +43,11 @@ public class Page extends Container {
 	public void draw(Graphics g) {
 		drawChildren(g);
 	}
+	
+	@Override
+	public void drawMidground(Graphics g) {
+		drawChildrenMidground(g);
+	}
 
 	@Override
 	public void drawBackground(Graphics g) {

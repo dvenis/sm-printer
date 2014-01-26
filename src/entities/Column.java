@@ -17,6 +17,13 @@ public class Column extends Container {
 	}
 	
 	private void generateObjects() {
+		if (measures[0] != null) {
+			models.StepLine exampleLine = measures[0].getLines().get(0);
+			currentHolds = new Hold[exampleLine.getSteps().length];
+		} else {
+			currentHolds = new Hold[0];
+		}
+		
 		double measureHeight = (double)(height - 2 * COLUMN_MARGIN) / measures.length;
 		double currentY = y + COLUMN_MARGIN;
 		
@@ -31,6 +38,11 @@ public class Column extends Container {
 	@Override
 	public void draw(Graphics g) {
 		drawChildren(g);
+	}
+	
+	@Override
+	public void drawMidground(Graphics g) {
+		drawChildrenMidground(g);
 	}
 	
 	@Override

@@ -21,6 +21,8 @@ public class Resources {
 	public BufferedImage step24th;
 	public BufferedImage step48th;
 	
+	public BufferedImage mine;
+	
 	public boolean stepAssetsLoaded = false;
 	
 	public static BufferedImage loadImage(String path) {
@@ -52,6 +54,7 @@ public class Resources {
 		r.freezeEnd = loadImage(notesDir + "hold_cap_bottom.png");
 		r.rollBody = loadImage(notesDir + "roll.png");
 		r.rollEnd = loadImage(notesDir + "roll_cap_bottom.png");
+		r.mine = loadImage(notesDir + "mine.png");
 		
 		BufferedImage allNotes = loadImage(notesDir + "notes.png");
 		int stepDim = allNotes.getWidth();

@@ -17,6 +17,14 @@ public abstract class Container extends Entity {
 		}
 	}
 	
+	protected void drawChildrenMidground(Graphics g) {
+		if (children != null) {
+			for (Entity child : children) {
+				child.drawMidground(g);
+			}
+		}
+	}
+	
 	protected void drawChildrenBackground(Graphics g) {
 		if (children != null) {
 			for (Entity child : children) {

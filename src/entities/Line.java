@@ -26,7 +26,7 @@ public class Line extends Container {
 		double currentX = x;
 		double stepWidth = (double)width / steps.length; 
 		for (int i = 0; i < steps.length; i++) {
-			children[i] = new Step(steps[i], (int)currentX, y, (int)stepWidth);
+			children[i] = new Step(steps[i], currentHolds, i, (int)currentX, y, (int)stepWidth);
 			currentX += stepWidth;
 		}
 	}
@@ -34,6 +34,11 @@ public class Line extends Container {
 	@Override
 	public void draw(Graphics g) {
 		drawChildren(g);
+	}
+	
+	@Override
+	public void drawMidground(Graphics g) {
+		drawChildrenMidground(g);
 	}
 
 	@Override
