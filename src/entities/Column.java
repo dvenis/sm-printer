@@ -7,12 +7,13 @@ public class Column extends Container {
 	private final static int COLUMN_MARGIN = 10;
 	
 	private models.Measure[] measures; 
+	private Hold[] currentHolds;
 	
 	public Column(models.Measure[] measures, int x, int y, int width, int height) {
 		super(x, y, width, height);
 		
 		this.measures = measures;
-		//generateObjects();
+		generateObjects();
 	}
 	
 	private void generateObjects() {
@@ -21,7 +22,9 @@ public class Column extends Container {
 		
 		children = new Entity[measures.length];
 		for (int i = 0; i < measures.length; i++) {
-			children[i] = new Measure(measures[i], x + COLUMN_MARGIN, (int)currentY, width - 2 * COLUMN_MARGIN, (int)measureHeight);
+			children[i] = new Measure(measures[i], currentHolds, 
+					x + COLUMN_MARGIN, (int)currentY, width - 2 * COLUMN_MARGIN, (int)measureHeight);
+			currentY += measureHeight;
 		}
 	}
 

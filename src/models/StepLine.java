@@ -21,10 +21,6 @@ public class StepLine {
 				steps[i] = makeStep(rawData.charAt(i), i, null);
 			}
 		}
-		if (timing == Timing.L1ST) {
-			System.out.println("1ST: " + lineIndex + " / " + numberLinesInMeasure);
-		}
-	//	System.out.println(rawData);
 	}
 	
 	private Step makeStep(char rawCharacter, int stepIndex, Step previousStep) {

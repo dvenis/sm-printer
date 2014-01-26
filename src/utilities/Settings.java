@@ -14,4 +14,8 @@ public class Settings {
 	
 	public static StepFile currentStepFile;
 	public static StepFileDifficultyMap currentDifficulty;
+	
+	public static int getMeasuresPerPage() {
+		return measuresPerColumn * columnsPerPage;
+	}
 }

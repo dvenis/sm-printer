@@ -2,16 +2,17 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Arrays;
 
-public class Page extends Entity {
-	private int PAGE_MARGIN = 100;
+public class Page extends Container {
+	private int PAGE_MARGIN = 72;
 	
 	private models.Measure[] measures;
 	private int columnsPerPage;
 	private int measuresPerColumn;
 	private int pageNumber;
 	
-	public Page(models.Measure[] measures, int columnsPerPage, int measuresPerColumn, int pageNumber, 
+	public Page(models.Measure[] measures, int pageNumber, int columnsPerPage, int measuresPerColumn,
 			int x, int y, int width, int height) {
 		super(x, y, width, height);
 		
@@ -19,7 +20,7 @@ public class Page extends Entity {
 		this.columnsPerPage = columnsPerPage;
 		this.measuresPerColumn = measuresPerColumn;
 		this.pageNumber = pageNumber;
-		//generateObjects();
+		generateObjects();
 	}
 	
 	private void generateObjects() {
@@ -29,8 +30,11 @@ public class Page extends Entity {
 		
 		children = new Entity[columnsPerPage];
 		for (int i = 0; i < columnsPerPage; i++) {
-			children[i] = new Column(measures, (int)currentX, y + PAGE_MARGIN, (int)columnWidth, height - 2 * PAGE_MARGIN);
+			models.Measure[] columnMeasures = Arrays.copyOfRange(measures, currentMeasureIndex, currentMeasureIndex + columnsPerPage);
+			children[i] = new Column(columnMeasures, 
+					(int)currentX, y + PAGE_MARGIN, (int)columnWidth, height - 2 * PAGE_MARGIN);
 			currentX += columnWidth;
+			currentMeasureIndex += columnsPerPage;
 		}
 		
 	}
@@ -38,7 +42,7 @@ public class Page extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		highlightRegion(g, Color.YELLOW);
-		
+		drawChildren(g);
 	}
 
 }

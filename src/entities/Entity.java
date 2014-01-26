@@ -9,7 +9,7 @@ public abstract class Entity implements Drawable {
 	protected int width;
 	protected int height;
 	
-	protected Entity[] children;
+	//protected Entity[] children;
 	
 	public Entity(int x, int y, int width, int height) {
 		this.x = x;
@@ -23,9 +23,9 @@ public abstract class Entity implements Drawable {
 		g.fillRect(x, y, width, height);
 	}
 	
-	protected void drawChildren(Graphics g) {
-		for (Entity entity : children) {
-			entity.draw(g);
-		}
-	}
+//	protected void drawChildren(Graphics g) {
+//		for (Entity entity : children) {
+//			entity.draw(g);
+//		}
+//	}
 }
