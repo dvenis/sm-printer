@@ -18,7 +18,30 @@ public class Step extends Entity {
 		
 		this.step = step;
 		if (step.getType() != models.Step.Type.NONE) { 
-			stepImage = Resources.getInstance().step4th;
+			stepImage = getStepImage(step);
+		}
+	}
+	
+	private BufferedImage getStepImage(models.Step step) {
+		Resources r = Resources.getInstance();
+		switch(step.getLength()) {
+		case L1ST:
+		case L4TH:
+			return r.step4th;
+		case L8TH:
+			return r.step8th;
+		case L12TH:
+			return r.step12th;
+		case L16TH:
+			return r.step16th;
+		case L24TH:
+			return r.step24th;
+		case L32ND:
+			return r.step32nd;
+		case L48TH:
+			return r.step48th;
+		default:
+			return r.step64th;
 		}
 	}
 
@@ -35,8 +58,11 @@ public class Step extends Entity {
 			at.translate(-imageWidth / 2, -imageHeight / 2);
 			
 			((Graphics2D)g).drawImage(stepImage, at, null);
-		} else {
-			//highlightRegion(g, Color.GRAY);
 		}
+	}
+
+	@Override
+	public void drawBackground(Graphics g) {
+		highlightRegion(g, Color.GRAY);
 	}
 }

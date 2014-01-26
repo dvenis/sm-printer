@@ -33,7 +33,12 @@ public class Line extends Container {
 
 	@Override
 	public void draw(Graphics g) {
-		//highlightRegion(g, Color.RED);
+		drawChildren(g);
+	}
+
+	@Override
+	public void drawBackground(Graphics g) {
+		highlightRegion(g, Color.RED);
 		
 		if (line.getTiming() == StepLine.Timing.L1ST) { 
 			g.setColor(Color.BLACK);
@@ -43,7 +48,6 @@ public class Line extends Container {
 			g.fillRect(x, y - 1, width, 2);	
 		}
 		
-		drawChildren(g);
+		drawChildrenBackground(g);
 	}
-
 }

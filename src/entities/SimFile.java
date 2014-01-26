@@ -50,5 +50,10 @@ public class SimFile extends Container {
 	public void draw(Graphics g) {
 		drawChildren(g);
 	}
+	
+	@Override
+	public void drawBackground(Graphics g) {
+		drawChildrenBackground(g);
+	}
 
 }

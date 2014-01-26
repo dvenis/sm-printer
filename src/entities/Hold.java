@@ -31,7 +31,11 @@ public abstract class Hold extends Entity implements Holdable{
 
 	@Override
 	public void draw(Graphics g) {
-		
+		//nothing to draw in foreground
+	}
+	
+	@Override
+	public void drawBackground(Graphics g) {
 		double scaledImageHeight = (double) width / body.getWidth() * body.getHeight();
 		double currentX = x;
 		double currentY = y;
@@ -57,6 +61,6 @@ public abstract class Hold extends Entity implements Holdable{
 
 		if (ended) {
 			g.drawImage(end, (int)currentX, (int)currentY, (int)currentX + width, (int)(currentY + scaledImageHeight), 0, 0, end.getWidth(), end.getHeight(), null);
-		}
+		}	
 	}
 }

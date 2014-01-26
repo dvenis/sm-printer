@@ -41,8 +41,12 @@ public class Page extends Container {
 
 	@Override
 	public void draw(Graphics g) {
-		highlightRegion(g, Color.YELLOW);
 		drawChildren(g);
 	}
 
+	@Override
+	public void drawBackground(Graphics g) {
+		highlightRegion(g, Color.YELLOW);
+		drawChildrenBackground(g);
+	}
 }

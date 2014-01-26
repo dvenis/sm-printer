@@ -30,7 +30,12 @@ public class Column extends Container {
 
 	@Override
 	public void draw(Graphics g) {
-		highlightRegion(g, Color.BLUE);
 		drawChildren(g);
+	}
+	
+	@Override
+	public void drawBackground(Graphics g) {
+		highlightRegion(g, Color.BLUE);
+		drawChildrenBackground(g);
 	}
 }

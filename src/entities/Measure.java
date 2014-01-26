@@ -35,10 +35,13 @@ public class Measure extends Container {
 
 	@Override
 	public void draw(Graphics g) {
+		drawChildren(g);
+	}
+	
+	@Override
+	public void drawBackground(Graphics g) {
 		highlightRegion(g, Color.GREEN);
-		if (children != null) {
-			drawChildren(g);
-		}
+		drawChildrenBackground(g);		
 	}
 	
 }
