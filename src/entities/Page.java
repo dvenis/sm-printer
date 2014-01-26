@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.Arrays;
 
 public class Page extends Container {
-	private int PAGE_MARGIN = 72;
+	private int PAGE_MARGIN = 48;
 	
 	private models.Measure[] measures;
 	private int columnsPerPage;
@@ -30,11 +30,11 @@ public class Page extends Container {
 		
 		children = new Entity[columnsPerPage];
 		for (int i = 0; i < columnsPerPage; i++) {
-			models.Measure[] columnMeasures = Arrays.copyOfRange(measures, currentMeasureIndex, currentMeasureIndex + columnsPerPage);
+			models.Measure[] columnMeasures = Arrays.copyOfRange(measures, currentMeasureIndex, currentMeasureIndex + measuresPerColumn);
 			children[i] = new Column(columnMeasures, 
 					(int)currentX, y + PAGE_MARGIN, (int)columnWidth, height - 2 * PAGE_MARGIN);
 			currentX += columnWidth;
-			currentMeasureIndex += columnsPerPage;
+			currentMeasureIndex += measuresPerColumn;
 		}
 		
 	}

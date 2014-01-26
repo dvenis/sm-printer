@@ -13,6 +13,9 @@ import models.Step.Type;
 public class Step extends Entity {
 	protected models.Step step;
 	
+	//same thing as super.width; just a more intuitive name
+	protected int sideLength; 
+	
 	protected Hold hold;
 	protected Hold[] currentHolds;
 	protected int holdIndex;
@@ -20,12 +23,13 @@ public class Step extends Entity {
 	protected BufferedImage stepImage;
 	
 	public Step(models.Step step, Hold[] currentHolds, int holdIndex,
-			int x, int y, int sideLength) {
-		super(x, y, sideLength, sideLength);
+			int x, int y, int sideLength, int lineHeight) {
+		super(x, y, sideLength, lineHeight);
 		
 		this.step = step;
 		this.currentHolds = currentHolds;
 		this.holdIndex = holdIndex;
+		this.sideLength = sideLength;
 		
 		if (step.getType() == models.Step.Type.REGULAR
 				|| step.getType() == models.Step.Type.HOLD_START
@@ -92,9 +96,9 @@ public class Step extends Entity {
 			double imageHeight = (double)stepImage.getHeight();
 			
 			AffineTransform at = new AffineTransform();
-			at.translate(x + width / 2, y + height / 2);
+			at.translate(x + sideLength / 2, y + sideLength / 2);
 			at.rotate(step.getAngleFromLeft());
-			at.scale(width / imageWidth, height / imageHeight);
+			at.scale(sideLength / imageWidth, sideLength / imageHeight);
 			at.translate(-imageWidth / 2, -imageHeight / 2);
 			
 			((Graphics2D)g).drawImage(stepImage, at, null);
@@ -113,6 +117,6 @@ public class Step extends Entity {
 
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Color.GRAY);
+		//nothing to draw in background
 	}
 }

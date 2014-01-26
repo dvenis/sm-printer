@@ -10,6 +10,8 @@ public class Line extends Container {
 	
 	protected Hold[] currentHolds;
 	
+	protected double stepSideLength;
+	
 	public Line(models.StepLine line, Hold[] currentHolds, int x, int y, int width, int height) {
 		super(x, y, width, height);
 		
@@ -23,11 +25,11 @@ public class Line extends Container {
 		models.Step[] steps = line.getSteps();
 		children = new Entity[steps.length];
 		
+		stepSideLength = (double)width / steps.length; 
 		double currentX = x;
-		double stepWidth = (double)width / steps.length; 
 		for (int i = 0; i < steps.length; i++) {
-			children[i] = new Step(steps[i], currentHolds, i, (int)currentX, y, (int)stepWidth);
-			currentX += stepWidth;
+			children[i] = new Step(steps[i], currentHolds, i, (int)currentX, y, (int)stepSideLength, height);
+			currentX += stepSideLength;
 		}
 	}
 
@@ -43,14 +45,14 @@ public class Line extends Container {
 
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Color.RED);
+	//	highlightRegion(g, Color.RED);
 		
 		if (line.getTiming() == StepLine.Timing.L1ST) { 
 			g.setColor(Color.BLACK);
-			g.fillRect(x, y - 2, width, 4);
+			g.fillRect(x, y + (int)(stepSideLength / 2) - 2, width, 4);
 		} else if (line.getTiming() == StepLine.Timing.L4TH) {
 			g.setColor(Color.BLACK);
-			g.fillRect(x, y - 1, width, 2);	
+			g.fillRect(x, y + (int)(stepSideLength / 2) - 1, width, 2);	
 		}
 		
 		drawChildrenBackground(g);
