@@ -6,14 +6,15 @@ import java.awt.print.Paper;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
+import entities.SimFile;
 import models.StepFile;
 import models.StepFileDifficultyMap;
 
 public class Printer {
 	public static void printSimFile(StepFile stepFile, StepFileDifficultyMap difficulty) {
 		PrinterJob job = PrinterJob.getPrinterJob();
-		StepFileRenderer printerRenderer = new StepFileRenderer();
-		printerRenderer.setStepFileAndDifficulty(stepFile, difficulty);
+		SimFile printerRenderer = new SimFile(stepFile, difficulty, Settings.columnsPerPage, Settings.measuresPerColumn,
+				0, 0, 1056, 816);
 		
 		PageFormat defaultFormat = job.defaultPage();
 		defaultFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);
@@ -32,7 +33,7 @@ public class Printer {
 		}
 	}
 	
-	private static Book createBook(StepFileRenderer renderer, PageFormat format) {
+	private static Book createBook(SimFile renderer, PageFormat format) {
 		Book book = new Book();
 		for (int i = 0; i < renderer.getNumberOfPages(); i++) {
 			book.append(renderer, format);
