@@ -35,12 +35,14 @@ public class SimFile extends Container implements Printable {
 	}
 	
 	private void generateObjects() {
+		final String pageHeader = stepFile.getTitle() + " - " + stepFile.getArtist() + " (" + difficulty + ")";
+		
 		models.Measure[] measures = padMeasures(difficulty.getMeasures());
 		int numberOfPages = StepFile.calculateNumberOfPages(difficulty, columnsPerPage, measuresPerColumn);
 		
 		children = new Entity[numberOfPages];
 		for (int i = 0; i < numberOfPages; i++) {
-			children[i] = new Page(measures, i, columnsPerPage, measuresPerColumn, 
+			children[i] = new Page(measures, pageHeader, i, columnsPerPage, measuresPerColumn, 
 					x, i * pageHeight, pageWidth, pageHeight);
 		}
 		
@@ -89,6 +91,7 @@ public class SimFile extends Container implements Printable {
 			System.err.println("WARNING: The print page has a different aspect ratio than the sim file painter");
 		}
 		g2D.scale(xAxisScale, yAxisScale);
+		g2D.translate(0, -pageNumber * pageHeight);
 		Page page = (Page)children[pageNumber];
 		page.drawBackground(g2D);
 		page.drawMidground(g2D);

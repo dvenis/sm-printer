@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
+import utilities.Settings;
+
 public class Measure extends Container {
 	protected models.Measure measure; 
 	protected Hold[] currentHolds;
@@ -45,7 +47,7 @@ public class Measure extends Container {
 	
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Color.GREEN);
+		highlightRegion(g, Settings.measureColor);
 		drawChildrenBackground(g);		
 	}
 	

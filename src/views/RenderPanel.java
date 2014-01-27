@@ -16,8 +16,8 @@ public class RenderPanel extends BasePanel {
 	
 	private final static double PAGE_DPI = 96;
 	private final static double PRINTABLE_DPI = 72;
-	private final static int PAGE_WIDTH = (int)(PAGE_DPI * 11);
-	private final static int PAGE_HEIGHT = (int)(PAGE_DPI * 8.5);
+	private final static int PAGE_WIDTH = (int)(PAGE_DPI * Settings.pageHeightInches);
+	private final static int PAGE_HEIGHT = (int)(PAGE_DPI * Settings.pageWidthInches);
 	
 	private static final double ZOOM_TICK = 1.1;
 	

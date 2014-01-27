@@ -18,7 +18,7 @@ public class Printer {
 		
 		PageFormat defaultFormat = job.defaultPage();
 		defaultFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);
-		defaultFormat.setPaper(getPaper(0.5, 72));
+		defaultFormat.setPaper(getPaper(0.0, 72));
 		
 		job.setPageable(createBook(printerRenderer, defaultFormat));
 		
@@ -44,8 +44,8 @@ public class Printer {
 	private static Paper getPaper(double margin, double dpi) {
 		final double startX = margin * dpi;
 		final double startY = margin * dpi;
-		final double width = (8.5 - 2*margin) * dpi;
-		final double height = (11 - 2*margin) * dpi;
+		final double width = (Settings.pageWidthInches - 2*margin) * dpi;
+		final double height = (Settings.pageHeightInches - 2*margin) * dpi;
 		
 		Paper paper = new Paper();
 		paper.setImageableArea(startX, startY, width, height);

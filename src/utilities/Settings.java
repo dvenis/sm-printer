@@ -1,5 +1,6 @@
 package utilities;
 
+import java.awt.Color;
 import java.io.File;
 
 import models.StepFile;
@@ -14,6 +15,16 @@ public class Settings {
 	
 	public static StepFile currentStepFile;
 	public static StepFileDifficultyMap currentDifficulty;
+	
+	public static double pageWidthInches = 8.5;
+	public static double pageHeightInches = 11;
+	
+	public static Color pageColor = null;//Color.YELLOW;
+	public static Color pageOutlineColor = Color.BLACK;
+	public static Color columnColor = null;//Color.BLUE;
+	public static Color columnOutlineColor = Color.BLACK;
+	public static Color measureColor = null;//Color.GREEN;
+	public static Color measureOutlineColor = Color.BLACK;
 	
 	public static int getMeasuresPerPage() {
 		return measuresPerColumn * columnsPerPage;

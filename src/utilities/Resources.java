@@ -1,5 +1,6 @@
 package utilities;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,9 @@ public class Resources {
 	public BufferedImage mine;
 	
 	public boolean stepAssetsLoaded = false;
+	
+	public Font pageHeader = new Font("Arial", Font.PLAIN, 14);
+	public Font measureNumber = new Font("sans-serif", Font.BOLD, 20);
 	
 	public static BufferedImage loadImage(String path) {
 		return loadImage(new File(path));

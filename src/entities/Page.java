@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Arrays;
 
+import utilities.Resources;
+import utilities.Settings;
+
 public class Page extends Container {
 	private int PAGE_MARGIN = 48;
 	
@@ -11,15 +14,18 @@ public class Page extends Container {
 	private int columnsPerPage;
 	private int measuresPerColumn;
 	private int pageNumber;
+	private String pageHeader;
 	
-	public Page(models.Measure[] measures, int pageNumber, int columnsPerPage, int measuresPerColumn,
+	public Page(models.Measure[] measures, String pageHeader, int pageNumber, int columnsPerPage, int measuresPerColumn,
 			int x, int y, int width, int height) {
 		super(x, y, width, height);
 		
 		this.measures = measures;
 		this.columnsPerPage = columnsPerPage;
 		this.measuresPerColumn = measuresPerColumn;
+		this.pageHeader = pageHeader;
 		this.pageNumber = pageNumber;
+		
 		generateObjects();
 	}
 	
@@ -42,6 +48,11 @@ public class Page extends Container {
 	@Override
 	public void draw(Graphics g) {
 		drawChildren(g);
+		
+		g.setColor(Color.BLACK);
+		g.setFont(Resources.getInstance().pageHeader);
+		g.drawString(pageHeader, x + PAGE_MARGIN, y + PAGE_MARGIN - 10);
+		g.drawString("Page " + (pageNumber + 1), x + width / 2 - 30, y + PAGE_MARGIN - 10);
 	}
 	
 	@Override
@@ -51,7 +62,8 @@ public class Page extends Container {
 
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Color.YELLOW);
+		highlightRegion(g, Settings.pageColor);
+		outlineRegion(g, Settings.pageOutlineColor);
 		drawChildrenBackground(g);
 	}
 }

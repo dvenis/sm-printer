@@ -3,6 +3,8 @@ package entities;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import utilities.Settings;
+
 public class Column extends Container {
 	private final static int COLUMN_MARGIN = 10;
 	
@@ -47,7 +49,8 @@ public class Column extends Container {
 	
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Color.BLUE);
+		highlightRegion(g, Settings.columnColor);
+		outlineRegion(g, Settings.columnOutlineColor);
 		drawChildrenBackground(g);
 	}
 }

@@ -17,8 +17,17 @@ public abstract class Entity implements Drawable {
 	}
 	
 	protected void highlightRegion(Graphics g, Color c) {
-		g.setColor(c);
-		g.fillRect(x, y, width, height);
+		if (c != null) {
+			g.setColor(c);
+			g.fillRect(x, y, width, height);
+		}
+	}
+	
+	protected void outlineRegion(Graphics g, Color c) {
+		if (c != null) {
+			g.setColor(c);
+			g.drawRect(x,  y, width, height);
+		}
 	}
 	
 	public int getX() {
