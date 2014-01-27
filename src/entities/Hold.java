@@ -44,7 +44,8 @@ public abstract class Hold extends Entity implements Holdable{
 			currentY += width / 2.0;
 			usableHeight -= width / 2.0;
 		}
-		if (ended) {
+		//not sure why this works: it just does
+		if (ended && started) {
 			usableHeight -= width / 2.0;
 		}
 

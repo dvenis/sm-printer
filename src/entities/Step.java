@@ -1,6 +1,5 @@
 package entities;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -42,14 +41,15 @@ public class Step extends Entity {
 	}
 	
 	private void updateHolds() {
+		//TODO clean up this atrocity
 		if (step.getType() == Type.ROLL) { 
 			hold = new Roll(x, y, width, height);
 			hold.start();
-			currentHolds[holdIndex] = hold;// new Roll(x, y + width / 2, width, height);
+			currentHolds[holdIndex] = hold;
 		} else if (step.getType() == Type.HOLD_START) {
 			hold = new Freeze(x, y, width, height);
 			hold.start();
-			currentHolds[holdIndex] = hold; //new Freeze(x, y + width / 2, width, height);
+			currentHolds[holdIndex] = hold;
 		} else if (step.getType() == Type.ROLL_END
 				|| step.getType() == Type.HOLD_END) { 
 			if (currentHolds[holdIndex] != null) {
@@ -61,7 +61,14 @@ public class Step extends Entity {
 				|| step.getType() == Type.HOLDING) {
 			if (currentHolds[holdIndex] != null) {
 				currentHolds[holdIndex].extend(height);
-				//hold.extend(height);
+			} else {
+				if (step.getType() == Type.ROLLING){ 
+					hold = new Roll(x, y, width, height);
+					currentHolds[holdIndex] = hold;
+				} else if (step.getType() == Type.HOLDING) { 
+					hold = new Freeze(x, y, width, height);
+					currentHolds[holdIndex] = hold;
+				}
 			}
 		}
 	}
