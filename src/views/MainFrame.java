@@ -71,6 +71,10 @@ public class MainFrame extends JFrame {
 		selectionInfoPanel.notifyCurrentDifficultyChanged();
 	}
 	
+	public void notifyPageDimensionsChanged() {
+		renderPanel.notifyPageDimensionsChanged();
+	}
+	
 	public void zoomIn() {
 		renderPanel.zoomIn();
 	}

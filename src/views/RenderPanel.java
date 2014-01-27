@@ -64,6 +64,13 @@ public class RenderPanel extends BasePanel {
 	}
 	
 	@Override
+	public void notifyPageDimensionsChanged() {
+		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
+				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+		screenChanged();
+	}
+	
+	@Override
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, getWidth(), getHeight());
 		

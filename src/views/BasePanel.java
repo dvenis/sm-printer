@@ -21,4 +21,8 @@ public abstract class BasePanel extends JPanel {
 	public void notifyCurrentDifficultyChanged() {
 		
 	}
+	
+	public void notifyPageDimensionsChanged() {
+		
+	}
 }

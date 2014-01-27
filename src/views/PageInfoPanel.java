@@ -100,6 +100,7 @@ public class PageInfoPanel extends BasePanel implements ChangeListener {
 		Settings.measuresPerColumn = (Integer)measuresSpinner.getModel().getValue();
 		Settings.columnsPerPage = (Integer)columnsSpinner.getModel().getValue();
 		updateInfo();
+		main.notifyPageDimensionsChanged();
 	}
 	
 	
