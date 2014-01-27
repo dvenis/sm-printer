@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
+import utilities.Resources;
 import utilities.Settings;
 
 public class Measure extends Container {
@@ -48,7 +49,13 @@ public class Measure extends Container {
 	@Override
 	public void drawBackground(Graphics g) {
 		highlightRegion(g, Settings.measureColor);
-		drawChildrenBackground(g);		
+		drawChildrenBackground(g);
+		
+		if (measure != null) {
+			g.setColor(Color.BLACK);
+			g.setFont(Resources.getInstance().pageHeader);
+			g.drawString(measure.getMeasureNumber() + "", x, y + 5);
+		}
 	}
 	
 }

@@ -112,8 +112,8 @@ public class StepFileReader {
 		difficulty.setRadarValues(difficultyParts[4].trim());
 		
 		String[] measureData = difficultyParts[5].split(",");
-		for (String measure : measureData) {
-			difficulty.addMeasure(parseMeasure(measure));
+		for (int i = 0; i < measureData.length; i++) {
+			difficulty.addMeasure(parseMeasure(measureData[i], i));
 		}
 		
 		accumulator.addDifficulty(difficulty);
@@ -121,8 +121,8 @@ public class StepFileReader {
 		System.out.println("SET DIFFICULTY: " + difficulty);
 	}
 	
-	private Measure parseMeasure(String measure) {
-		Measure result = new Measure();
+	private Measure parseMeasure(String measure, int measureNumber) {
+		Measure result = new Measure(measureNumber);
 		List<String> rawLines = getRegexMatchingList(stepLineRegex, measure); 
 		int lineIndex = 0;
 		int numberLinesInMeasure = rawLines.size();

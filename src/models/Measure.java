@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 public class Measure {
 	private List<StepLine> lines;
+	private int measureNumber;
 	
-	public Measure() {
+	public Measure(int measureNumber) {
 		lines = new ArrayList<StepLine>();
+		this.measureNumber = measureNumber;
 	}
 	
 	
@@ -25,6 +27,10 @@ public class Measure {
 	
 	public int getNumberOfLines() {
 		return lines.size();
+	}
+	
+	public int getMeasureNumber() {
+		return measureNumber;
 	}
 	
 	@Override
