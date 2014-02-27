@@ -3,7 +3,7 @@ package entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public abstract class Hold extends Entity implements Holdable{
 	protected boolean started = false;
@@ -12,7 +12,7 @@ public abstract class Hold extends Entity implements Holdable{
 	protected BufferedImage body;
 	protected BufferedImage end;
 	
-	public Hold(SettingsInstance settings, int x, int y, int width, int height) {
+	public Hold(Settings settings, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 	}
 	

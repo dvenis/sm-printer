@@ -6,7 +6,7 @@ import java.io.File;
 import models.StepFile;
 import models.StepFileDifficultyMap;
 
-public class SettingsInstance {
+public class Settings {
 	public int measuresPerColumn = 3;
 	public int columnsPerPage = 4;
 	public boolean horizontalOrientation = true;
@@ -36,7 +36,7 @@ public class SettingsInstance {
 		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 	}
 	
-	public SettingsInstance() {
+	public Settings() {
 		
 	}
 }

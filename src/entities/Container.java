@@ -2,7 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public abstract class Container extends Entity {
 	protected Entity[] children;
@@ -11,7 +11,7 @@ public abstract class Container extends Entity {
 //		super(x, y, width, height);
 //	}
 	
-	public Container(SettingsInstance settings, int x, int y, int width, int height) {
+	public Container(Settings settings, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 	}
 	

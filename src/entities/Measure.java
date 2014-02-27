@@ -5,13 +5,13 @@ import java.awt.Graphics;
 import java.util.List;
 
 import utilities.Resources;
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public class Measure extends Container {
 	protected models.Measure measure; 
 	protected Hold[] currentHolds;
 	
-	public Measure(SettingsInstance settings, models.Measure measure, Hold[] currentHolds, int x, int y, int width, int height) {
+	public Measure(Settings settings, models.Measure measure, Hold[] currentHolds, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 		
 		this.measure = measure;

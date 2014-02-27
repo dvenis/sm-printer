@@ -1,10 +1,10 @@
 package entities;
 
 import utilities.Resources;
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public class Freeze extends Hold {
-	public Freeze(SettingsInstance settings, int x, int y, int width, int height) {
+	public Freeze(Settings settings, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 		
 		body = Resources.getInstance().freezeBody;

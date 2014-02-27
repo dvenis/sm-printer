@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.Arrays;
 
 import utilities.Resources;
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public class Page extends Container {
 	private int PAGE_MARGIN = 48;
@@ -14,7 +14,7 @@ public class Page extends Container {
 	private int pageNumber;
 	private String pageHeader;
 	
-	public Page(SettingsInstance settings, models.Measure[] measures, String pageHeader, int pageNumber, int x, int y, int width, int height) {
+	public Page(Settings settings, models.Measure[] measures, String pageHeader, int pageNumber, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 		
 		this.measures = measures;

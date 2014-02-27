@@ -7,13 +7,13 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.List;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public class SimFile extends Container implements Printable {
 	private final int pageWidth;
 	private final int pageHeight;
 	
-	public SimFile(SettingsInstance settings, int x, int y, int pageWidth, int pageHeight) {
+	public SimFile(Settings settings, int x, int y, int pageWidth, int pageHeight) {
 		super(settings, x, y, 0, 0);
 		this.pageWidth = pageWidth;
 		this.pageHeight = pageHeight;

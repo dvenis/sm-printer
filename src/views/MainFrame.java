@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import models.StepFileDifficultyMap;
-import utilities.SettingsInstance;
+import utilities.Settings;
 import utilities.StepFileReader;
 
 public class MainFrame extends JFrame {
@@ -16,9 +16,9 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static SettingsInstance settings;
+	private static Settings settings;
 	
-	public static SettingsInstance getSettings() {
+	public static Settings getSettings() {
 		return settings;
 	}
 	
@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
 	private FileSelectorPanel fileSelectorPanel;
 	
 	public MainFrame() {
-		settings = new SettingsInstance();
+		settings = new Settings();
 		
 		renderPanel = new RenderPanel(this);
 		

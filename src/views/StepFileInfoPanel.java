@@ -9,7 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 import models.StepFileDifficultyMap;
 
 public class StepFileInfoPanel extends BasePanel implements ItemListener {
@@ -86,7 +86,7 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	}
 	
 	private void updateInfo() {
-		SettingsInstance settings = MainFrame.getSettings();
+		Settings settings = MainFrame.getSettings();
 		updateAndHideField(titleLabel, titleFieldLabel, settings.stepFile.getTitle());
 		updateAndHideField(subtitleLabel, subtitleFieldLabel, settings.stepFile.getSubtitle());
 		updateAndHideField(artistLabel, artistFieldLabel, settings.stepFile.getArtist());

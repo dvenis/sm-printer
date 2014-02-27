@@ -9,7 +9,7 @@ import java.awt.print.PrinterJob;
 import entities.SimFile;
 
 public class Printer {
-	public static void printSimFile(SettingsInstance settings) {
+	public static void printSimFile(Settings settings) {
 		PrinterJob job = PrinterJob.getPrinterJob();
 		SimFile printerRenderer = new SimFile(settings, 0, 0, 1056, 816);
 		
@@ -38,7 +38,7 @@ public class Printer {
 		return book;
 	}
 	
-	private static Paper getPaper(SettingsInstance settings, double margin, double dpi) {
+	private static Paper getPaper(Settings settings, double margin, double dpi) {
 		final double startX = margin * dpi;
 		final double startY = margin * dpi;
 		final double width = (settings.pageWidthInches - 2*margin) * dpi;

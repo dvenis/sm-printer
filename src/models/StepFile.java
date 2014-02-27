@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 import views.MainFrame;
 
 public class StepFile {
@@ -12,7 +12,7 @@ public class StepFile {
 	}
 	
 	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty,
-											 SettingsInstance settings) {
+											 Settings settings) {
 		int measuresPerPage = settings.measuresPerColumn * settings.columnsPerPage;
 		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 	}

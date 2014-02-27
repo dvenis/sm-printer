@@ -2,7 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 
 public class Column extends Container {
 	private final static int COLUMN_MARGIN = 10;
@@ -10,7 +10,7 @@ public class Column extends Container {
 	private models.Measure[] measures; 
 	private Hold[] currentHolds;
 	
-	public Column(SettingsInstance settings, models.Measure[] measures, int x, int y, int width, int height) {
+	public Column(Settings settings, models.Measure[] measures, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 		
 		this.measures = measures;

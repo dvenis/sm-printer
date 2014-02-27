@@ -3,7 +3,7 @@ package entities;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import utilities.SettingsInstance;
+import utilities.Settings;
 import views.MainFrame;
 
 public abstract class Entity implements Drawable {
@@ -12,13 +12,13 @@ public abstract class Entity implements Drawable {
 	protected int width;
 	protected int height;
 	
-	protected SettingsInstance settings;
+	protected Settings settings;
 	
 //	public Entity(SettingsInstance settings, int x, int y, int width, int height) {
 //		this(MainFrame.getSettings(), x, y, width, height);
 //	}
 	
-	public Entity(SettingsInstance settings, int x, int y, int width, int height) {
+	public Entity(Settings settings, int x, int y, int width, int height) {
 		this.settings = MainFrame.getSettings();
 		this.x = x;
 		this.y = y;

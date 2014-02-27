@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import utilities.Resources;
-import utilities.SettingsInstance;
+import utilities.Settings;
 import models.Step.Type;
 
 public class Step extends Entity {
@@ -21,7 +21,7 @@ public class Step extends Entity {
 	
 	protected BufferedImage stepImage;
 	
-	public Step(SettingsInstance settings, models.Step step, Hold[] currentHolds, int holdIndex,
+	public Step(Settings settings, models.Step step, Hold[] currentHolds, int holdIndex,
 			int x, int y, int sideLength, int lineHeight) {
 		super(settings, x, y, sideLength, lineHeight);
 		
