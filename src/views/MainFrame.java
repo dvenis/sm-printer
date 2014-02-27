@@ -16,11 +16,7 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static Settings settings;
-	
-	public static Settings getSettings() {
-		return settings;
-	}
+	private Settings settings;
 	
 	private RenderPanel renderPanel;
 	private SelectionInfoPanel selectionInfoPanel;
@@ -55,6 +51,11 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
+	
+	public Settings getSettings() {
+		return settings;
+	}
+	
 	
 	public void openFile(File file) {
 		System.out.println(file);

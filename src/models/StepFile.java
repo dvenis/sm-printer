@@ -7,9 +7,9 @@ import utilities.Settings;
 import views.MainFrame;
 
 public class StepFile {
-	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty) {
-		return calculateNumberOfPages(difficulty, MainFrame.getSettings());
-	}
+//	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty) {
+//		return calculateNumberOfPages(difficulty, MainFrame.getSettings());
+//	}
 	
 	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty,
 											 Settings settings) {

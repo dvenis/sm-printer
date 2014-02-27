@@ -86,7 +86,7 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	}
 	
 	private void updateInfo() {
-		Settings settings = MainFrame.getSettings();
+		Settings settings = main.getSettings();
 		updateAndHideField(titleLabel, titleFieldLabel, settings.stepFile.getTitle());
 		updateAndHideField(subtitleLabel, subtitleFieldLabel, settings.stepFile.getSubtitle());
 		updateAndHideField(artistLabel, artistFieldLabel, settings.stepFile.getArtist());

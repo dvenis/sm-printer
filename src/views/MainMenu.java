@@ -102,7 +102,7 @@ public class MainMenu extends JMenuBar implements ActionListener {
 				main.openFile(file);
 			}
 		} else if (PRINT_COMMAND.equals(e.getActionCommand())) {
-			Printer.printSimFile(MainFrame.getSettings());
+			Printer.printSimFile(main.getSettings());
 		} else if (ZOOM_IN_COMMAND.equals(e.getActionCommand())) {
 			main.zoomIn();
 		} else if (ZOOM_OUT_COMMAND.equals(e.getActionCommand())) {
