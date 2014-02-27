@@ -11,7 +11,8 @@ import entities.SimFile;
 public class Printer {
 	public static void printSimFile(Settings settings) {
 		PrinterJob job = PrinterJob.getPrinterJob();
-		SimFile printerRenderer = new SimFile(settings, 0, 0, 1056, 816);
+		SimFile printerRenderer = new SimFile(settings, 0, 0, 
+				(int)(settings.pageHeightInches * settings.pageDPI), (int)(settings.pageWidthInches * settings.pageDPI));
 		
 		PageFormat defaultFormat = job.defaultPage();
 		defaultFormat.setOrientation(PageFormat.REVERSE_LANDSCAPE);

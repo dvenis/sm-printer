@@ -3,21 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.Settings;
-import views.MainFrame;
-
 public class StepFile {
-//	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty) {
-//		return calculateNumberOfPages(difficulty, MainFrame.getSettings());
-//	}
-	
-	public static int calculateNumberOfPages(StepFileDifficultyMap difficulty,
-											 Settings settings) {
-		int measuresPerPage = settings.measuresPerColumn * settings.columnsPerPage;
-		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
-	}
-
-	
 	private String title;
 	private String subtitle;
 	private String artist;

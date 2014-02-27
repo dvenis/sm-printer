@@ -47,7 +47,7 @@ public class Page extends Container {
 		g.setColor(Color.BLACK);
 		g.setFont(Resources.getInstance().pageHeader);
 		g.drawString(pageHeader, x + PAGE_MARGIN, y + PAGE_MARGIN - 10);
-		g.drawString("Page " + (pageNumber + 1), x + width / 2 - 30, y + PAGE_MARGIN - 10);
+		g.drawString("Page " + (pageNumber + 1) + " of " + settings.getNumberOfPages(), x + width / 2 - 30, y + PAGE_MARGIN - 10);
 	}
 	
 	@Override

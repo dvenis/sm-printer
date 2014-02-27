@@ -19,6 +19,7 @@ public class Settings {
 	
 	public double pageWidthInches = 8.5;
 	public double pageHeightInches = 11;
+	public double pageDPI = 96;
 	
 	public Color pageColor = null;//Color.YELLOW;
 	public Color pageOutlineColor = Color.BLACK;

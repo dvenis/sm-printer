@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import utilities.Settings;
-import views.MainFrame;
 
 public abstract class Entity implements Drawable {
 	protected int x;
@@ -13,10 +12,6 @@ public abstract class Entity implements Drawable {
 	protected int height;
 	
 	protected Settings settings;
-	
-//	public Entity(SettingsInstance settings, int x, int y, int width, int height) {
-//		this(MainFrame.getSettings(), x, y, width, height);
-//	}
 	
 	public Entity(Settings settings, int x, int y, int width, int height) {
 		this.settings = settings;
