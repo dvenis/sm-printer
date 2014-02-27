@@ -8,6 +8,7 @@ import javax.swing.JSplitPane;
 
 import models.StepFileDifficultyMap;
 import utilities.Settings;
+import utilities.SettingsInstance;
 import utilities.StepFileReader;
 
 public class MainFrame extends JFrame {
@@ -16,11 +17,18 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private static SettingsInstance settings;
+	
+	public static SettingsInstance getSettings() {
+		return settings;
+	}
+	
 	private RenderPanel renderPanel;
 	private SelectionInfoPanel selectionInfoPanel;
 	private FileSelectorPanel fileSelectorPanel;
 	
 	public MainFrame() {
+		settings = new SettingsInstance();
 		
 		renderPanel = new RenderPanel(this);
 		
@@ -41,6 +49,8 @@ public class MainFrame extends JFrame {
 		
 		setJMenuBar(new MainMenu(this));
 		
+		setTitle("Simfile Printer");
+		
 		setSize(1000, 800);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -57,15 +67,18 @@ public class MainFrame extends JFrame {
 	
 	public void openStepFile(String path) {
 		StepFileReader reader = new StepFileReader(path);
-		Settings.currentStepFile = reader.generateStepFile();
-		Settings.currentDifficulty = Settings.currentStepFile.getDifficulties().get(0);
+		//Settings.currentStepFile = reader.generateStepFile();
+		//Settings.currentDifficulty = Settings.currentStepFile.getDifficulties().get(0);
+		settings.stepFile = reader.generateStepFile();
+		settings.difficulty = settings.stepFile.getDifficulties().get(0);
 		
 		selectionInfoPanel.notifyCurrentStepFileChanged();
 		renderPanel.notifyCurrentStepFileChanged();
 	}
 	
 	public void openDifficulty(StepFileDifficultyMap difficulty) {
-		Settings.currentDifficulty = difficulty;
+		//Settings.currentDifficulty = difficulty;
+		settings.difficulty = difficulty;
 		
 		renderPanel.notifyCurrentDifficultyChanged();
 		selectionInfoPanel.notifyCurrentDifficultyChanged();

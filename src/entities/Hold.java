@@ -36,6 +36,7 @@ public abstract class Hold extends Entity implements Holdable{
 	
 	@Override
 	public void drawMidground(Graphics g) {
+		//TODO refactor this method to work as expected
 		double scaledImageHeight = (double) width / body.getWidth() * body.getHeight();
 		double currentX = x;
 		double currentY = y;

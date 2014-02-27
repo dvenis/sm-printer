@@ -48,7 +48,7 @@ public class Measure extends Container {
 	
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Settings.measureColor);
+		highlightRegion(g, settings.measureColor);
 		drawChildrenBackground(g);
 		
 		if (measure != null) {

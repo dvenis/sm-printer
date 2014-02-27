@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import utilities.Settings;
+import utilities.SettingsInstance;
 import models.StepFileDifficultyMap;
 
 public class StepFileInfoPanel extends BasePanel implements ItemListener {
@@ -92,12 +93,17 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	}
 	
 	private void updateInfo() {
-		updateAndHideField(titleLabel, titleFieldLabel, Settings.currentStepFile.getTitle());
-		updateAndHideField(subtitleLabel, subtitleFieldLabel, Settings.currentStepFile.getSubtitle());
-		updateAndHideField(artistLabel, artistFieldLabel, Settings.currentStepFile.getArtist());
-		updateAndHideField(creditLabel, creditFieldLabel, Settings.currentStepFile.getCredit());
+//		updateAndHideField(titleLabel, titleFieldLabel, Settings.currentStepFile.getTitle());
+//		updateAndHideField(subtitleLabel, subtitleFieldLabel, Settings.currentStepFile.getSubtitle());
+//		updateAndHideField(artistLabel, artistFieldLabel, Settings.currentStepFile.getArtist());
+//		updateAndHideField(creditLabel, creditFieldLabel, Settings.currentStepFile.getCredit());
+		SettingsInstance settings = MainFrame.getSettings();
+		updateAndHideField(titleLabel, titleFieldLabel, settings.stepFile.getTitle());
+		updateAndHideField(subtitleLabel, subtitleFieldLabel, settings.stepFile.getSubtitle());
+		updateAndHideField(artistLabel, artistFieldLabel, settings.stepFile.getArtist());
+		updateAndHideField(creditLabel, creditFieldLabel, settings.stepFile.getCredit());
 		
-		difficultyList = new DefaultComboBoxModel<StepFileDifficultyMap>(Settings.currentStepFile.getDifficulties().toArray(new StepFileDifficultyMap[0]));
+		difficultyList = new DefaultComboBoxModel<StepFileDifficultyMap>(settings.stepFile.getDifficulties().toArray(new StepFileDifficultyMap[0]));
 		difficultySelector.setModel(difficultyList);
 	}
 	

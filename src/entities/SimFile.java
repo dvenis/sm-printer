@@ -8,6 +8,7 @@ import java.awt.print.PrinterException;
 import java.util.List;
 
 import utilities.Settings;
+import utilities.SettingsInstance;
 import models.StepFile;
 import models.StepFileDifficultyMap;
 
@@ -15,19 +16,27 @@ public class SimFile extends Container implements Printable {
 	private final int pageWidth;
 	private final int pageHeight;
 	
-	private final StepFile stepFile;
-	private final StepFileDifficultyMap difficulty;
-	private final int columnsPerPage;
-	private final int measuresPerColumn;
+//	private final StepFile stepFile;
+//	private final StepFileDifficultyMap difficulty;
+//	private final int columnsPerPage;
+//	private final int measuresPerColumn;
 	
-	public SimFile(StepFile stepFile, StepFileDifficultyMap difficulty, int columnsPerPage, int measuresPerColumn, 
-			int x, int y, int pageWidth, int pageHeight) {
-		super(x, y, 0, 0);
-		
-		this.stepFile = stepFile;
-		this.difficulty = difficulty;
-		this.columnsPerPage = columnsPerPage;
-		this.measuresPerColumn = measuresPerColumn;
+//	public SimFile(StepFile stepFile, StepFileDifficultyMap difficulty, int columnsPerPage, int measuresPerColumn, 
+//			int x, int y, int pageWidth, int pageHeight) {
+//		super(x, y, 0, 0);
+//		
+//		this.stepFile = stepFile;
+//		this.difficulty = difficulty;
+//		this.columnsPerPage = columnsPerPage;
+//		this.measuresPerColumn = measuresPerColumn;
+//		this.pageWidth = pageWidth;
+//		this.pageHeight = pageHeight;
+//		
+//		generateObjects();
+//	}
+	
+	public SimFile(SettingsInstance settings, int x, int y, int pageWidth, int pageHeight) {
+		super(settings, x, y, 0, 0);
 		this.pageWidth = pageWidth;
 		this.pageHeight = pageHeight;
 		
@@ -35,15 +44,14 @@ public class SimFile extends Container implements Printable {
 	}
 	
 	private void generateObjects() {
-		final String pageHeader = stepFile.getTitle() + " - " + stepFile.getArtist() + " (" + difficulty + ")";
+		final String pageHeader = settings.stepFile.getTitle() + " - " + settings.stepFile.getArtist() + " (" + settings.difficulty + ")";
 		
-		models.Measure[] measures = padMeasures(difficulty.getMeasures());
-		int numberOfPages = StepFile.calculateNumberOfPages(difficulty, columnsPerPage, measuresPerColumn);
+		models.Measure[] measures = padMeasures(settings.difficulty.getMeasures());
+		int numberOfPages = settings.getNumberOfPages();
 		
 		children = new Entity[numberOfPages];
 		for (int i = 0; i < numberOfPages; i++) {
-			children[i] = new Page(measures, pageHeader, i, columnsPerPage, measuresPerColumn, 
-					x, i * pageHeight, pageWidth, pageHeight);
+			children[i] = new Page(settings, measures, pageHeader, i, x, i * pageHeight, pageWidth, pageHeight);
 		}
 		
 		width = pageWidth;
@@ -51,7 +59,7 @@ public class SimFile extends Container implements Printable {
 	}
 	
 	private models.Measure[] padMeasures(List<models.Measure> measureList) { 
-		int measureSize = (int)Math.ceil((double)measureList.size() / Settings.getMeasuresPerPage()) * Settings.getMeasuresPerPage();
+		int measureSize = (int)Math.ceil((double)measureList.size() / settings.getMeasuresPerPage()) * settings.getMeasuresPerPage();
 		models.Measure[] result = new models.Measure[measureSize];
 		return measureList.toArray(result);
 	}

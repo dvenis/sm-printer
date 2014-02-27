@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 
 import entities.SimFile;
 import utilities.Resources;
-import utilities.Settings;
 
 public class RenderPanel extends BasePanel {
 	/**
@@ -14,10 +13,10 @@ public class RenderPanel extends BasePanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private final static double PAGE_DPI = 96;
-	private final static double PRINTABLE_DPI = 72;
-	private final static int PAGE_WIDTH = (int)(PAGE_DPI * Settings.pageHeightInches);
-	private final static int PAGE_HEIGHT = (int)(PAGE_DPI * Settings.pageWidthInches);
+	private double pageDPI = 96;
+	private double printableDPI = 72;
+	private int pageWidth = (int)(pageDPI * settings.pageHeightInches);
+	private int pageHeight = (int)(pageDPI * settings.pageWidthInches);
 	
 	private static final double ZOOM_TICK = 1.1;
 	
@@ -51,22 +50,25 @@ public class RenderPanel extends BasePanel {
 	
 	@Override
 	public void notifyCurrentStepFileChanged() {
-		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
-				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+//		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
+//				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+		simFileDrawer = new SimFile(MainFrame.getSettings(), 0, 0, pageWidth, pageHeight);
 		screenChanged();
 	}
 	
 	@Override
 	public void notifyCurrentDifficultyChanged() {
-		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
-				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+//		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
+//				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+		simFileDrawer = new SimFile(MainFrame.getSettings(), 0, 0, pageWidth, pageHeight);
 		screenChanged();
 	}
 	
 	@Override
 	public void notifyPageDimensionsChanged() {
-		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
-				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+//		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
+//				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+		simFileDrawer = new SimFile(MainFrame.getSettings(), 0, 0, pageWidth, pageHeight);
 		screenChanged();
 	}
 	

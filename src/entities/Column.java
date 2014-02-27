@@ -49,8 +49,8 @@ public class Column extends Container {
 	
 	@Override
 	public void drawBackground(Graphics g) {
-		highlightRegion(g, Settings.columnColor);
-		outlineRegion(g, Settings.columnOutlineColor);
+		highlightRegion(g, settings.columnColor);
+		outlineRegion(g, settings.columnOutlineColor);
 		drawChildrenBackground(g);
 	}
 }

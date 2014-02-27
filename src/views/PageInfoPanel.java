@@ -54,7 +54,7 @@ public class PageInfoPanel extends BasePanel implements ChangeListener {
 		
 		c.gridx = 1;
 		columnsSpinner = new JSpinner();
-		SpinnerModel spinnerModel = new SpinnerNumberModel(Settings.columnsPerPage, MIN_COLUMNS_PER_PAGE, MAX_COLUMNS_PER_PAGE, 1);
+		SpinnerModel spinnerModel = new SpinnerNumberModel(settings.columnsPerPage, MIN_COLUMNS_PER_PAGE, MAX_COLUMNS_PER_PAGE, 1);
 		columnsSpinner.setModel(spinnerModel);
 		columnsSpinner.addChangeListener(this);
 		add(columnsSpinner, c);
@@ -66,7 +66,7 @@ public class PageInfoPanel extends BasePanel implements ChangeListener {
 		
 		c.gridx = 1;
 		measuresSpinner = new JSpinner();
-		spinnerModel = new SpinnerNumberModel(Settings.measuresPerColumn, MIN_MEASURES_PER_COLUMN, MAX_MEASURES_PER_COLUMN, 1);
+		spinnerModel = new SpinnerNumberModel(settings.measuresPerColumn, MIN_MEASURES_PER_COLUMN, MAX_MEASURES_PER_COLUMN, 1);
 		measuresSpinner.setModel(spinnerModel);
 		measuresSpinner.addChangeListener(this);
 		add(measuresSpinner, c);
@@ -92,13 +92,14 @@ public class PageInfoPanel extends BasePanel implements ChangeListener {
 	}
 	
 	private void updateInfo() {
-		pagesFieldLabel.setText(Integer.toString(StepFile.calculateNumberOfPages(Settings.currentDifficulty, Settings.columnsPerPage, Settings.measuresPerColumn)));
+		//pagesFieldLabel.setText(Integer.toString(StepFile.calculateNumberOfPages(Settings.currentDifficulty, Settings.columnsPerPage, Settings.measuresPerColumn)));
+		pagesFieldLabel.setText(Integer.toString(settings.getNumberOfPages()));
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		Settings.measuresPerColumn = (Integer)measuresSpinner.getModel().getValue();
-		Settings.columnsPerPage = (Integer)columnsSpinner.getModel().getValue();
+		settings.measuresPerColumn = (Integer)measuresSpinner.getModel().getValue();
+		settings.columnsPerPage = (Integer)columnsSpinner.getModel().getValue();
 		updateInfo();
 		main.notifyPageDimensionsChanged();
 	}

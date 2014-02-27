@@ -10,6 +10,7 @@ public class Settings {
 	public static int measuresPerColumn = 3;
 	public static int columnsPerPage = 4;
 	public static boolean horizontalOrientation = true;
+	public static boolean hideLeadingWhiteSpace = false;
 	
 	public static File currentDirectory;
 	
