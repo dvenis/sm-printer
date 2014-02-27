@@ -14,9 +14,9 @@ public abstract class Entity implements Drawable {
 	
 	protected SettingsInstance settings;
 	
-	public Entity(int x, int y, int width, int height) {
-		this(MainFrame.getSettings(), x, y, width, height);
-	}
+//	public Entity(SettingsInstance settings, int x, int y, int width, int height) {
+//		this(MainFrame.getSettings(), x, y, width, height);
+//	}
 	
 	public Entity(SettingsInstance settings, int x, int y, int width, int height) {
 		this.settings = MainFrame.getSettings();

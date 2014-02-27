@@ -9,7 +9,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
-import utilities.Settings;
 import utilities.SettingsInstance;
 import models.StepFileDifficultyMap;
 
@@ -70,11 +69,6 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 		difficultySelector = new JComboBox<StepFileDifficultyMap>(difficultyList);		
 		difficultySelector.addItemListener(this);
 		add(difficultySelector, c);
-		
-//		setLayout(new BorderLayout());
-//		JScrollPane scrollPane = new JScrollPane();
-//		scrollPane.getViewport().add(infoPane);
-//		add(scrollPane, BorderLayout.CENTER);
 	}
 	
 	private void addLabelAndField(GridBagConstraints c, int row, JLabel label, JLabel field) {
@@ -88,15 +82,10 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	
 	@Override
 	public void notifyCurrentStepFileChanged() {
-		//setStepFileAndDifficulty(Settings.currentStepFile, Settings.currentDifficulty);
 		updateInfo();
 	}
 	
 	private void updateInfo() {
-//		updateAndHideField(titleLabel, titleFieldLabel, Settings.currentStepFile.getTitle());
-//		updateAndHideField(subtitleLabel, subtitleFieldLabel, Settings.currentStepFile.getSubtitle());
-//		updateAndHideField(artistLabel, artistFieldLabel, Settings.currentStepFile.getArtist());
-//		updateAndHideField(creditLabel, creditFieldLabel, Settings.currentStepFile.getCredit());
 		SettingsInstance settings = MainFrame.getSettings();
 		updateAndHideField(titleLabel, titleFieldLabel, settings.stepFile.getTitle());
 		updateAndHideField(subtitleLabel, subtitleFieldLabel, settings.stepFile.getSubtitle());

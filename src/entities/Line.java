@@ -3,6 +3,7 @@ package entities;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import utilities.SettingsInstance;
 import models.StepLine;
 
 public class Line extends Container {
@@ -12,8 +13,8 @@ public class Line extends Container {
 	
 	protected double stepSideLength;
 	
-	public Line(models.StepLine line, Hold[] currentHolds, int x, int y, int width, int height) {
-		super(x, y, width, height);
+	public Line(SettingsInstance settings, models.StepLine line, Hold[] currentHolds, int x, int y, int width, int height) {
+		super(settings, x, y, width, height);
 		
 		this.line = line;
 		this.currentHolds = currentHolds;
@@ -28,7 +29,7 @@ public class Line extends Container {
 		stepSideLength = (double)width / steps.length; 
 		double currentX = x;
 		for (int i = 0; i < steps.length; i++) {
-			children[i] = new Step(steps[i], currentHolds, i, (int)currentX, y, (int)stepSideLength, height);
+			children[i] = new Step(settings, steps[i], currentHolds, i, (int)currentX, y, (int)stepSideLength, height);
 			currentX += stepSideLength;
 		}
 	}

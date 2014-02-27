@@ -7,7 +7,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import models.StepFileDifficultyMap;
-import utilities.Settings;
 import utilities.SettingsInstance;
 import utilities.StepFileReader;
 
@@ -67,8 +66,6 @@ public class MainFrame extends JFrame {
 	
 	public void openStepFile(String path) {
 		StepFileReader reader = new StepFileReader(path);
-		//Settings.currentStepFile = reader.generateStepFile();
-		//Settings.currentDifficulty = Settings.currentStepFile.getDifficulties().get(0);
 		settings.stepFile = reader.generateStepFile();
 		settings.difficulty = settings.stepFile.getDifficulties().get(0);
 		
@@ -77,7 +74,6 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void openDifficulty(StepFileDifficultyMap difficulty) {
-		//Settings.currentDifficulty = difficulty;
 		settings.difficulty = difficulty;
 		
 		renderPanel.notifyCurrentDifficultyChanged();

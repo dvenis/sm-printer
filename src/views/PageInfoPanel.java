@@ -10,9 +10,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import models.StepFile;
-import utilities.Settings;
-
 public class PageInfoPanel extends BasePanel implements ChangeListener {
 	/**
 	 * 
@@ -92,7 +89,6 @@ public class PageInfoPanel extends BasePanel implements ChangeListener {
 	}
 	
 	private void updateInfo() {
-		//pagesFieldLabel.setText(Integer.toString(StepFile.calculateNumberOfPages(Settings.currentDifficulty, Settings.columnsPerPage, Settings.measuresPerColumn)));
 		pagesFieldLabel.setText(Integer.toString(settings.getNumberOfPages()));
 	}
 

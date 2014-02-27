@@ -3,7 +3,6 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.Settings;
 import utilities.SettingsInstance;
 import views.MainFrame;
 

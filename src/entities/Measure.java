@@ -5,14 +5,14 @@ import java.awt.Graphics;
 import java.util.List;
 
 import utilities.Resources;
-import utilities.Settings;
+import utilities.SettingsInstance;
 
 public class Measure extends Container {
 	protected models.Measure measure; 
 	protected Hold[] currentHolds;
 	
-	public Measure(models.Measure measure, Hold[] currentHolds, int x, int y, int width, int height) {
-		super(x, y, width, height);
+	public Measure(SettingsInstance settings, models.Measure measure, Hold[] currentHolds, int x, int y, int width, int height) {
+		super(settings, x, y, width, height);
 		
 		this.measure = measure;
 		this.currentHolds = currentHolds;
@@ -29,7 +29,7 @@ public class Measure extends Container {
 			double lineHeight = (double)height / children.length;
 			
 			for (int i = 0; i < children.length; i++) {
-				children[i] = new Line(lines.get(i), currentHolds,
+				children[i] = new Line(settings, lines.get(i), currentHolds,
 						x, (int)currentY, width, (int)lineHeight);
 				currentY += lineHeight;
 			}

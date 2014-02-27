@@ -7,33 +7,11 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.List;
 
-import utilities.Settings;
 import utilities.SettingsInstance;
-import models.StepFile;
-import models.StepFileDifficultyMap;
 
 public class SimFile extends Container implements Printable {
 	private final int pageWidth;
 	private final int pageHeight;
-	
-//	private final StepFile stepFile;
-//	private final StepFileDifficultyMap difficulty;
-//	private final int columnsPerPage;
-//	private final int measuresPerColumn;
-	
-//	public SimFile(StepFile stepFile, StepFileDifficultyMap difficulty, int columnsPerPage, int measuresPerColumn, 
-//			int x, int y, int pageWidth, int pageHeight) {
-//		super(x, y, 0, 0);
-//		
-//		this.stepFile = stepFile;
-//		this.difficulty = difficulty;
-//		this.columnsPerPage = columnsPerPage;
-//		this.measuresPerColumn = measuresPerColumn;
-//		this.pageWidth = pageWidth;
-//		this.pageHeight = pageHeight;
-//		
-//		generateObjects();
-//	}
 	
 	public SimFile(SettingsInstance settings, int x, int y, int pageWidth, int pageHeight) {
 		super(settings, x, y, 0, 0);

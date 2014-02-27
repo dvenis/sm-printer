@@ -13,7 +13,6 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import utilities.Printer;
-import utilities.Settings;
 
 public class MainMenu extends JMenuBar implements ActionListener {
 	/**

@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import utilities.Resources;
-
+import utilities.SettingsInstance;
 import models.Step.Type;
 
 public class Step extends Entity {
@@ -21,9 +21,9 @@ public class Step extends Entity {
 	
 	protected BufferedImage stepImage;
 	
-	public Step(models.Step step, Hold[] currentHolds, int holdIndex,
+	public Step(SettingsInstance settings, models.Step step, Hold[] currentHolds, int holdIndex,
 			int x, int y, int sideLength, int lineHeight) {
-		super(x, y, sideLength, lineHeight);
+		super(settings, x, y, sideLength, lineHeight);
 		
 		this.step = step;
 		this.currentHolds = currentHolds;
@@ -43,11 +43,11 @@ public class Step extends Entity {
 	private void updateHolds() {
 		//TODO clean up this atrocity
 		if (step.getType() == Type.ROLL) { 
-			hold = new Roll(x, y, width, height);
+			hold = new Roll(settings, x, y, width, height);
 			hold.start();
 			currentHolds[holdIndex] = hold;
 		} else if (step.getType() == Type.HOLD_START) {
-			hold = new Freeze(x, y, width, height);
+			hold = new Freeze(settings, x, y, width, height);
 			hold.start();
 			currentHolds[holdIndex] = hold;
 		} else if (step.getType() == Type.ROLL_END
@@ -63,10 +63,10 @@ public class Step extends Entity {
 				currentHolds[holdIndex].extend(height);
 			} else {
 				if (step.getType() == Type.ROLLING){ 
-					hold = new Roll(x, y, width, height);
+					hold = new Roll(settings, x, y, width, height);
 					currentHolds[holdIndex] = hold;
 				} else if (step.getType() == Type.HOLDING) { 
-					hold = new Freeze(x, y, width, height);
+					hold = new Freeze(settings, x, y, width, height);
 					currentHolds[holdIndex] = hold;
 				}
 			}

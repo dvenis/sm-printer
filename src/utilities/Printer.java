@@ -6,16 +6,11 @@ import java.awt.print.Paper;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
-import views.MainFrame;
 import entities.SimFile;
-import models.StepFile;
-import models.StepFileDifficultyMap;
 
 public class Printer {
 	public static void printSimFile(SettingsInstance settings) {
 		PrinterJob job = PrinterJob.getPrinterJob();
-//		SimFile printerRenderer = new SimFile(stepFile, difficulty, Settings.columnsPerPage, Settings.measuresPerColumn,
-//				0, 0, 1056, 816);
 		SimFile printerRenderer = new SimFile(settings, 0, 0, 1056, 816);
 		
 		PageFormat defaultFormat = job.defaultPage();

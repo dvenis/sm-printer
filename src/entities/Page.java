@@ -5,30 +5,14 @@ import java.awt.Graphics;
 import java.util.Arrays;
 
 import utilities.Resources;
-import utilities.Settings;
 import utilities.SettingsInstance;
 
 public class Page extends Container {
 	private int PAGE_MARGIN = 48;
 	
 	private models.Measure[] measures;
-//	private int columnsPerPage;
-//	private int measuresPerColumn;
 	private int pageNumber;
 	private String pageHeader;
-	
-//	public Page(models.Measure[] measures, String pageHeader, int pageNumber, int columnsPerPage, int measuresPerColumn,
-//			int x, int y, int width, int height) {
-//		super(x, y, width, height);
-//		
-//		this.measures = measures;
-//		this.columnsPerPage = columnsPerPage;
-//		this.measuresPerColumn = measuresPerColumn;
-//		this.pageHeader = pageHeader;
-//		this.pageNumber = pageNumber;
-//		
-//		generateObjects();
-//	}
 	
 	public Page(SettingsInstance settings, models.Measure[] measures, String pageHeader, int pageNumber, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
@@ -48,7 +32,7 @@ public class Page extends Container {
 		children = new Entity[settings.columnsPerPage];
 		for (int i = 0; i < settings.columnsPerPage; i++) {
 			models.Measure[] columnMeasures = Arrays.copyOfRange(measures, currentMeasureIndex, currentMeasureIndex + settings.measuresPerColumn);
-			children[i] = new Column(columnMeasures, 
+			children[i] = new Column(settings, columnMeasures, 
 					(int)currentX, y + PAGE_MARGIN, (int)columnWidth, height - 2 * PAGE_MARGIN);
 			currentX += columnWidth;
 			currentMeasureIndex += settings.measuresPerColumn;

@@ -1,9 +1,8 @@
 package entities;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-import utilities.Settings;
+import utilities.SettingsInstance;
 
 public class Column extends Container {
 	private final static int COLUMN_MARGIN = 10;
@@ -11,8 +10,8 @@ public class Column extends Container {
 	private models.Measure[] measures; 
 	private Hold[] currentHolds;
 	
-	public Column(models.Measure[] measures, int x, int y, int width, int height) {
-		super(x, y, width, height);
+	public Column(SettingsInstance settings, models.Measure[] measures, int x, int y, int width, int height) {
+		super(settings, x, y, width, height);
 		
 		this.measures = measures;
 		generateObjects();
@@ -31,7 +30,7 @@ public class Column extends Container {
 		
 		children = new Entity[measures.length];
 		for (int i = 0; i < measures.length; i++) {
-			children[i] = new Measure(measures[i], currentHolds, 
+			children[i] = new Measure(settings, measures[i], currentHolds, 
 					x + COLUMN_MARGIN, (int)currentY, width - 2 * COLUMN_MARGIN, (int)measureHeight);
 			currentY += measureHeight;
 		}
