@@ -10,13 +10,9 @@ public class StepFile {
 	private String credit;
 	
 	private float bpm;
-	
-	private List<Measure> measures;
 	private List<StepFileDifficultyMap> difficulties;
 	
 	public StepFile() {
-		measures = new ArrayList<Measure>();
-		//TODO get the difficulty maps working
 		difficulties = new ArrayList<StepFileDifficultyMap>();
 	}
 
@@ -50,12 +46,6 @@ public class StepFile {
 
 	public void setCredit(String credit) {
 		this.credit = credit;
-	}
-	
-	public int getStepsPerLine() {
-		//TODO return steps per line, and actually parse it
-		return measures.get(0).getLines().get(0).getSteps().length;
-		//return stepsPerLine;
 	}
 
 	public float getBpm() {
