@@ -15,6 +15,7 @@ import models.Measure;
 import models.StepFile;
 import models.StepFileDifficultyMap;
 import models.StepLine;
+import models.stepmetadata.NotesType;
 
 public class StepFileReader {
 	private static final String STEP_FILE_REGEX = "#.+?;";
@@ -113,7 +114,7 @@ public class StepFileReader {
 		
 		String[] measureData = difficultyParts[5].split(",");
 		for (int i = 0; i < measureData.length; i++) {
-			difficulty.addMeasure(parseMeasure(measureData[i], i));
+			difficulty.addMeasure(parseMeasure(measureData[i], i, difficulty.getNotesType()));
 		}
 		
 		accumulator.addDifficulty(difficulty);
@@ -121,14 +122,14 @@ public class StepFileReader {
 		System.out.println("SET DIFFICULTY: " + difficulty);
 	}
 	
-	private Measure parseMeasure(String measure, int measureNumber) {
+	private Measure parseMeasure(String measure, int measureNumber, NotesType notesType) {
 		Measure result = new Measure(measureNumber);
 		List<String> rawLines = getRegexMatchingList(stepLineRegex, measure); 
 		int lineIndex = 0;
 		int numberLinesInMeasure = rawLines.size();
 		for (String rawLine : rawLines) {
 			//create new step line given the previously added line
-			previouslyAddedLine = new StepLine(rawLine, previouslyAddedLine, lineIndex, numberLinesInMeasure);
+			previouslyAddedLine = new StepLine(rawLine, previouslyAddedLine, notesType, lineIndex, numberLinesInMeasure);
 			result.addLine(previouslyAddedLine);
 			lineIndex++;
 		}

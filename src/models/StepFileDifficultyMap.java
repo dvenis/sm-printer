@@ -3,12 +3,15 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.stepmetadata.NotesType;
+
 public class StepFileDifficultyMap {
-	private String notesType;
 	private String description;
 	private String difficultyClass;
 	private String difficultyMeter;
 	private String radarValues;
+	
+	private NotesType notesType;
 	
 	private List<Measure> measures;
 	
@@ -16,11 +19,15 @@ public class StepFileDifficultyMap {
 		measures = new ArrayList<Measure>();
 	}
 	
-	public String getNotesType() {
+	public NotesType getNotesType() {
 		return notesType;
 	}
 
-	public void setNotesType(String notesType) {
+	public void setNotesType(String metaCode) {
+		this.notesType = NotesType.fromMetaCode(metaCode);
+	}
+	
+	public void setNotesType(NotesType notesType) {
 		this.notesType = notesType;
 	}
 

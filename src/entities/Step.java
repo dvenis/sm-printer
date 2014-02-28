@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import utilities.Resources;
 import utilities.Settings;
-import models.Step.Type;
+import models.stepmetadata.Type;
 
 public class Step extends Entity {
 	protected models.Step step;
@@ -30,11 +30,11 @@ public class Step extends Entity {
 		this.holdIndex = holdIndex;
 		this.sideLength = sideLength;
 		
-		if (step.getType() == models.Step.Type.REGULAR
-				|| step.getType() == models.Step.Type.HOLD_START
-				|| step.getType() == models.Step.Type.ROLL) {
+		if (step.getType() == Type.REGULAR
+				|| step.getType() == Type.HOLD_START
+				|| step.getType() == Type.ROLL) {
 			stepImage = getStepLengthImage(step);
-		} else if (step.getType() == models.Step.Type.MINE){ 
+		} else if (step.getType() == Type.MINE){ 
 			stepImage = Resources.getInstance().mine;
 		}
 		updateHolds();
@@ -104,7 +104,7 @@ public class Step extends Entity {
 			
 			AffineTransform at = new AffineTransform();
 			at.translate(x + sideLength / 2, y + sideLength / 2);
-			at.rotate(step.getAngleFromLeft());
+			at.rotate(step.getOrientation().getRotationAngle());
 			at.scale(sideLength / imageWidth, sideLength / imageHeight);
 			at.translate(-imageWidth / 2, -imageHeight / 2);
 			

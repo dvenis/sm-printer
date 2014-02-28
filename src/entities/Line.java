@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import utilities.Settings;
-import models.StepLine;
+import models.stepmetadata.Timing;
 
 public class Line extends Container {
 	protected models.StepLine line;
@@ -48,10 +48,10 @@ public class Line extends Container {
 	public void drawBackground(Graphics g) {
 	//	highlightRegion(g, Color.RED);
 		
-		if (line.getTiming() == StepLine.Timing.L1ST) { 
+		if (line.getTiming() == Timing.L1ST) { 
 			g.setColor(Color.BLACK);
 			g.fillRect(x, y + (int)(stepSideLength / 2) - 2, width, 4);
-		} else if (line.getTiming() == StepLine.Timing.L4TH) {
+		} else if (line.getTiming() == Timing.L4TH) {
 			g.setColor(Color.BLACK);
 			g.fillRect(x, y + (int)(stepSideLength / 2) - 1, width, 2);	
 		}
