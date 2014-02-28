@@ -1,6 +1,9 @@
-package models.stepmetadata;
+package models.stepmetadata.notestypes;
 
-public class DanceSolo extends NotesType {
+import models.stepmetadata.NotesType;
+import models.stepmetadata.Orientation;
+
+public class DanceSingle extends NotesType {
 
 	@Override
 	public Orientation getStepOrientation(int lineIndex) {
@@ -20,12 +23,12 @@ public class DanceSolo extends NotesType {
 
 	@Override
 	public String getMetaCode() {
-		return "dance-solo";
-	}
-
-	@Override
-	public String toString() {
-		return "Dance Solo";
+		return "dance-single";
 	}
 	
+	@Override
+	public String toString() {
+		return "Dance Single";
+	}
+
 }

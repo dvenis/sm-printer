@@ -1,4 +1,7 @@
-package models.stepmetadata;
+package models.stepmetadata.notestypes;
+
+import models.stepmetadata.NotesType;
+import models.stepmetadata.Orientation;
 
 public class DanceCouple extends NotesType {
 
