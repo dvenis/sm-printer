@@ -5,7 +5,7 @@ import models.stepmetadata.Orientation;
 
 public class DanceSolo extends NotesType {
 
-	public DanceSolo(PlayType playType) {
+	public DanceSolo(GameMode playType) {
 		super(playType);
 	}
 

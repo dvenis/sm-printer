@@ -5,7 +5,7 @@ import models.stepmetadata.Orientation;
 
 public class PumpSingle extends NotesType {
 
-	public PumpSingle(PlayType playType) {
+	public PumpSingle(GameMode playType) {
 		super(playType);
 	}
 

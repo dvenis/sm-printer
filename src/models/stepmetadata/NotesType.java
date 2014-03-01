@@ -10,16 +10,16 @@ import models.stepmetadata.notestypes.PumpSingle;
 
 public abstract class NotesType {
 	protected static final NotesType[] notesTypes = new NotesType[] {
-		new DanceSingle(PlayType.DANCE),
-		new DanceDouble(PlayType.DANCE),
-		new DanceCouple(PlayType.DANCE),
-		new DanceSolo(PlayType.DANCE),
-		new PumpSingle(PlayType.PUMP),
-		new PumpDouble(PlayType.PUMP),
-		new PumpCouple(PlayType.PUMP),
+		new DanceSingle(GameMode.DANCE),
+		new DanceDouble(GameMode.DANCE),
+		new DanceCouple(GameMode.DANCE),
+		new DanceSolo(GameMode.DANCE),
+		new PumpSingle(GameMode.PUMP),
+		new PumpDouble(GameMode.PUMP),
+		new PumpCouple(GameMode.PUMP),
 	};
 	
-	public static enum PlayType { DANCE, PUMP };
+	public static enum GameMode { DANCE, PUMP };
 	
 	public static NotesType fromMetaCode(String name) {
 		for (NotesType notesType : notesTypes) {
@@ -31,14 +31,14 @@ public abstract class NotesType {
 		return null;
 	}
 	
-	public NotesType(PlayType playType) {
-		this.playType = playType;
+	public NotesType(GameMode gameMode) {
+		this.gameMode = gameMode;
 	}
 	
-	protected PlayType playType;
+	protected GameMode gameMode;
 	
-	public PlayType getPlayType() {
-		return playType;
+	public GameMode getGameMode() {
+		return gameMode;
 	}
 	
 	public abstract String getMetaCode(); //code found inside the simfile

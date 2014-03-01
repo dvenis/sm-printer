@@ -43,7 +43,7 @@ public class Resources {
 	}
 	
 	public ResourceProvider getProvider(NotesType notesType) {
-		switch (notesType.getPlayType()) {
+		switch (notesType.getGameMode()) {
 		case DANCE:
 			return danceResourceProvider;
 		case PUMP:
