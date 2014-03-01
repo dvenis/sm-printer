@@ -3,17 +3,26 @@ package entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import utilities.Resources;
 import utilities.Settings;
 
 public abstract class Hold extends Entity implements Holdable{
 	protected boolean started = false;
 	protected boolean ended = false;
 	
+	protected models.Step step;
+	
 	protected BufferedImage body;
 	protected BufferedImage end;
 	
-	public Hold(Settings settings, int x, int y, int width, int height) {
+	public Hold(Settings settings, models.Step step, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
+		
+		this.step = step;
+		body = Resources.getInstance().getProvider(settings.difficulty.getNotesType())
+				.getHoldBackgroundImage(step.getType(), step.getOrientation(), step.getTiming());
+		end = Resources.getInstance().getProvider(settings.difficulty.getNotesType())
+				.getHoldEndBackgroundImage(step.getType(), step.getOrientation(), step.getTiming());
 	}
 	
 	@Override

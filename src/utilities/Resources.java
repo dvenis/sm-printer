@@ -4,10 +4,19 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import models.stepmetadata.NotesType;
+
 public class Resources {
+	
+	public DanceResourceProvider danceResourceProvider;
+	
+	public BufferedImage empty;
+	
 	public BufferedImage freezeBody;
 	public BufferedImage freezeEnd;
 	public BufferedImage rollBody;
@@ -28,6 +37,20 @@ public class Resources {
 	
 	public Font pageHeader = new Font("Arial", Font.PLAIN, 14);
 	public Font measureNumber = new Font("sans-serif", Font.BOLD, 20);
+	
+	private Resources() {
+		danceResourceProvider = new DanceResourceProvider();
+	}
+	
+	public ResourceProvider getProvider(NotesType notesType) {
+		switch (notesType.getPlayType()) {
+		case DANCE:
+			return danceResourceProvider;
+		case PUMP:
+			return null;
+		}
+		return null;
+	}
 	
 	public static BufferedImage loadImage(String path) {
 		return loadImage(new File(path));
@@ -70,6 +93,8 @@ public class Resources {
 		r.step32nd = allNotes.getSubimage(0, stepDim * 5, stepDim, stepDim);
 		r.step48th = allNotes.getSubimage(0, stepDim * 6, stepDim, stepDim);
 		r.step64th = allNotes.getSubimage(0, stepDim * 7, stepDim, stepDim);
+		
+		r.empty = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
 		
 		r.stepAssetsLoaded = true;
 	}

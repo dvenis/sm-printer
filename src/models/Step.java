@@ -32,8 +32,11 @@ public class Step {
 		this.orientation = orientation;
 	}
 	
-	public Timing getLength() {
+	public Timing getTiming() {
 		return timing;
 	}
 	
+	public void setTiming(Timing timing) {
+		this.timing = timing;
+	}
 }

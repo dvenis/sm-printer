@@ -58,7 +58,7 @@ public class StepLine {
 		switch (step.getType()) {
 		case REGULAR:
 			return "#";
-		case HOLD_START:
+		case FREEZE_START:
 			return "%";
 		case HOLDING:
 			return "|";

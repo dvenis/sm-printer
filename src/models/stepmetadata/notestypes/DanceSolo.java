@@ -5,6 +5,10 @@ import models.stepmetadata.Orientation;
 
 public class DanceSolo extends NotesType {
 
+	public DanceSolo(PlayType playType) {
+		super(playType);
+	}
+
 	@Override
 	public Orientation getStepOrientation(int lineIndex) {
 		switch(lineIndex) {

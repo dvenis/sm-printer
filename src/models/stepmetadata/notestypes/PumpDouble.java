@@ -5,6 +5,10 @@ import models.stepmetadata.Orientation;
 
 public class PumpDouble extends NotesType {
 
+	public PumpDouble(PlayType playType) {
+		super(playType);
+	}
+
 	@Override
 	public Orientation getStepOrientation(int lineIndex) {
 		switch(lineIndex) {
