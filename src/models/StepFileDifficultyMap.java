@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import models.stepmetadata.NotesType;
 
@@ -14,9 +15,32 @@ public class StepFileDifficultyMap {
 	private NotesType notesType;
 	
 	private List<Measure> measures;
+	private List<Measure> trimmedMeasures;
 	
 	public StepFileDifficultyMap() {
 		measures = new ArrayList<Measure>();
+	}
+	
+	public void trimMeasures() {
+		trimmedMeasures = new ArrayList<Measure>(measures);
+		
+		ListIterator<Measure> itr = trimmedMeasures.listIterator();
+		while (itr.hasNext()) {
+			if (itr.next().isEmpty()) {
+				itr.remove();
+			} else {
+				break;
+			}
+		}
+		
+		itr = trimmedMeasures.listIterator(trimmedMeasures.size());
+		while (itr.hasPrevious()) {
+			if (itr.previous().isEmpty()) {
+				itr.remove();
+			} else {
+				break;
+			}
+		}
 	}
 	
 	public NotesType getNotesType() {
@@ -67,12 +91,24 @@ public class StepFileDifficultyMap {
 		return measures;
 	}
 	
+	public List<Measure> getTrimmedMeasures() {
+		return trimmedMeasures;
+	}
+	
 	public void addMeasure(Measure measure) {
 		measures.add(measure);
+//		//don't want to take out measures empty measures in the middle of the song
+//		if (!measure.isEmpty() || trimmedMeasures.size() > 0) {
+//			trimmedMeasures.add(measure);
+//		}
 	}
 	
 	public int getNumberOfMeasures() {
 		return measures.size();
+	}
+	
+	public int getNumberOfMeasuresTrimmed() {
+		return trimmedMeasures.size();
 	}
 	
 	@Override

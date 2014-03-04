@@ -58,19 +58,11 @@ public class StepFileReader {
 	}
 	
 	private String[] splitStepFile(String fileData) {
-		//Pattern p = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
 		return getRegexMatchingList(metaDataRegex, fileData).toArray(new String[0]);
-//		List<String> splitData = new ArrayList<String>();
-//		Matcher metaDataMatcher = p.matcher(fileData);
-//		while (metaDataMatcher.find()) {
-//			splitData.add(metaDataMatcher.group());
-//		}
-//		return splitData.toArray(new String[0]);
 	}
 	
 	private void generateMetaData(String[] stepFileParts, StepFile accumulator) {
 		for (String part : stepFileParts) {
-			//System.out.println(part);
 			setDataBasedOnTag(part, accumulator);
 		}
 	}
@@ -112,14 +104,17 @@ public class StepFileReader {
 		difficulty.setDifficultyMeter(difficultyParts[3].trim());
 		difficulty.setRadarValues(difficultyParts[4].trim());
 		
-		String[] measureData = difficultyParts[5].split(",");
-		for (int i = 0; i < measureData.length; i++) {
-			difficulty.addMeasure(parseMeasure(measureData[i], i, difficulty.getNotesType()));
+		if (difficulty.getNotesType() != null) {
+			String[] measureData = difficultyParts[5].split(",");
+			for (int i = 0; i < measureData.length; i++) {
+				difficulty.addMeasure(parseMeasure(measureData[i], i, difficulty.getNotesType()));
+			}
+			
+			difficulty.trimMeasures();
+			accumulator.addDifficulty(difficulty);
+			
+			System.out.println("SET DIFFICULTY: " + difficulty);
 		}
-		
-		accumulator.addDifficulty(difficulty);
-		
-		System.out.println("SET DIFFICULTY: " + difficulty);
 	}
 	
 	private Measure parseMeasure(String measure, int measureNumber, NotesType notesType) {

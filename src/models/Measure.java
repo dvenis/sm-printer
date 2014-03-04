@@ -7,6 +7,8 @@ public class Measure {
 	private List<StepLine> lines;
 	private int measureNumber;
 	
+	private boolean isEmpty = true;
+	
 	public Measure(int measureNumber) {
 		lines = new ArrayList<StepLine>();
 		this.measureNumber = measureNumber;
@@ -23,6 +25,7 @@ public class Measure {
 	
 	public void addLine(StepLine line) {
 		lines.add(line);
+		isEmpty = line.isEmpty() && isEmpty;
 	}
 	
 	public int getNumberOfLines() {
@@ -31,6 +34,10 @@ public class Measure {
 	
 	public int getMeasureNumber() {
 		return measureNumber;
+	}
+	
+	public boolean isEmpty() {
+		return isEmpty;
 	}
 	
 	@Override

@@ -10,6 +10,8 @@ public class StepLine {
 	private Step[] steps;
 	private Timing timing;
 	
+	private boolean isEmpty = true;
+	
 	public StepLine(String rawData, StepLine previousLine, NotesType notesType,
 			int lineIndex, int numberLinesInMeasure) {
 		timing = Timing.fromLineIndexAndMeasureSize(lineIndex, numberLinesInMeasure);
@@ -29,6 +31,9 @@ public class StepLine {
 	private Step makeStep(char rawCharacter, int stepIndex, NotesType notesType, Step previousStep) {
 		Type type = Type.fromChar(rawCharacter, previousStep);
 		Orientation orientation = notesType.getStepOrientation(stepIndex);
+		if (type != Type.NONE) {
+			isEmpty = false;
+		}
 		return new Step(type, orientation, timing);
 	}
 	
@@ -38,6 +43,10 @@ public class StepLine {
 	
 	public Timing getTiming() {
 		return timing;
+	}
+	
+	public boolean isEmpty() {
+		return isEmpty;
 	}
 		
 	//debug strings

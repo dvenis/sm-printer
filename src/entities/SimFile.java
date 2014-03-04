@@ -24,7 +24,13 @@ public class SimFile extends Container implements Printable {
 	private void generateObjects() {
 		final String pageHeader = settings.stepFile.getTitle() + " - " + settings.stepFile.getArtist() + " (" + settings.difficulty + ")";
 		
-		models.Measure[] measures = padMeasures(settings.difficulty.getMeasures());
+		models.Measure[] measures;
+		if (settings.hideLeadingAndTrailingWhiteSpace) {
+			 measures = padMeasures(settings.difficulty.getTrimmedMeasures());
+		} else {
+			measures = padMeasures(settings.difficulty.getMeasures());
+		}
+		
 		int numberOfPages = settings.getNumberOfPages();
 		
 		children = new Entity[numberOfPages];

@@ -85,6 +85,13 @@ public class MainFrame extends JFrame {
 		renderPanel.notifyPageDimensionsChanged();
 	}
 	
+	public void invertMeasureTrimming() {
+		settings.hideLeadingAndTrailingWhiteSpace = !settings.hideLeadingAndTrailingWhiteSpace;
+		
+		renderPanel.notifyCurrentDifficultyChanged();
+		selectionInfoPanel.notifyCurrentDifficultyChanged();
+	}
+	
 	public void zoomIn() {
 		renderPanel.zoomIn();
 	}

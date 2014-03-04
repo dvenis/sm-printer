@@ -10,7 +10,7 @@ public class Settings {
 	public int measuresPerColumn = 3;
 	public int columnsPerPage = 4;
 	public boolean horizontalOrientation = true;
-	public boolean hideLeadingWhiteSpace = false;
+	public boolean hideLeadingAndTrailingWhiteSpace = true;
 	
 	public File currentDirectory;
 	
@@ -21,11 +21,11 @@ public class Settings {
 	public double pageHeightInches = 11;
 	public double pageDPI = 96;
 	
-	public Color pageColor = null;//Color.YELLOW;
+	public Color pageColor = null;
 	public Color pageOutlineColor = Color.BLACK;
-	public Color columnColor = null;//Color.BLUE;
+	public Color columnColor = null;
 	public Color columnOutlineColor = Color.BLACK;
-	public Color measureColor = null;//Color.GREEN;
+	public Color measureColor = null;
 	public Color measureOutlineColor = Color.BLACK;
 	
 	public int getMeasuresPerPage() {
@@ -34,6 +34,9 @@ public class Settings {
 	
 	public int getNumberOfPages() {
 		int measuresPerPage = measuresPerColumn * columnsPerPage;
+		if (hideLeadingAndTrailingWhiteSpace) {
+			return (int)Math.ceil((double)difficulty.getNumberOfMeasuresTrimmed() / measuresPerPage); 
+		}
 		return (int)Math.ceil((double)difficulty.getNumberOfMeasures() / measuresPerPage); 
 	}
 	

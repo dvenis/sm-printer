@@ -72,7 +72,7 @@ public class MainMenu extends JMenuBar implements ActionListener {
 		menuItem.setActionCommand(ZOOM_OUT_COMMAND);
 		viewMenu.add(menuItem);
 		
-		menuItem = new JCheckBoxMenuItem("Hide Leading and Trailing Empty Measures");
+		menuItem = new JCheckBoxMenuItem("Hide Leading and Trailing Empty Measures", main.getSettings().hideLeadingAndTrailingWhiteSpace);
 		menuItem.addActionListener(this);
 		menuItem.setActionCommand(HIDE_LEADING_AND_TRALING_MEASURES_COMMAND);
 		viewMenu.add(menuItem);
@@ -107,6 +107,8 @@ public class MainMenu extends JMenuBar implements ActionListener {
 			main.zoomIn();
 		} else if (ZOOM_OUT_COMMAND.equals(e.getActionCommand())) {
 			main.zoomOut();
+		} else if (HIDE_LEADING_AND_TRALING_MEASURES_COMMAND.equals(e.getActionCommand())) {
+			main.invertMeasureTrimming();
 		} else if (ABOUT_COMMAND.equals(e.getActionCommand())) {
 			
 		}
