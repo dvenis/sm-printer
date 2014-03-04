@@ -14,15 +14,6 @@ public class PumpResourceProvider implements ResourceProvider {
 	private BufferedImage rollEnd;
 	
 	private BufferedImage[][] steps;
-	
-//	private BufferedImage step4th;
-//	private BufferedImage step8th;
-//	private BufferedImage step16th;
-//	private BufferedImage step32nd;
-//	private BufferedImage step64th;
-//	private BufferedImage step12th;
-//	private BufferedImage step24th;
-//	private BufferedImage step48th;
 //	
 	private BufferedImage mine;
 	
@@ -49,14 +40,6 @@ public class PumpResourceProvider implements ResourceProvider {
 		
 		BufferedImage allNotes = Resources.loadImage(notesDir + "pump_notes.png");
 		int stepDim = allNotes.getWidth() / 2;
-//		step4th = allNotes.getSubimage(0, 0, stepDim, stepDim);
-//		step8th = allNotes.getSubimage(0, stepDim, stepDim, stepDim);
-//		step12th = allNotes.getSubimage(0, stepDim * 2, stepDim, stepDim);
-//		step16th = allNotes.getSubimage(0, stepDim * 3, stepDim, stepDim);
-//		step24th = allNotes.getSubimage(0, stepDim * 4, stepDim, stepDim);
-//		step32nd = allNotes.getSubimage(0, stepDim * 5, stepDim, stepDim);
-//		step48th = allNotes.getSubimage(0, stepDim * 6, stepDim, stepDim);
-//		step64th = allNotes.getSubimage(0, stepDim * 7, stepDim, stepDim);
 		steps = Resources.getImageSubImages(allNotes, stepDim, stepDim);
 		
 		isLoaded = true;
@@ -66,15 +49,6 @@ public class PumpResourceProvider implements ResourceProvider {
 	public boolean isLoaded() {
 		return isLoaded;
 	}
-
-//	private BufferedImage step4th;
-//	private BufferedImage step8th;
-//	private BufferedImage step16th;
-//	private BufferedImage step32nd;
-//	private BufferedImage step64th;
-//	private BufferedImage step12th;
-//	private BufferedImage step24th;
-//	private BufferedImage step48th;
 	
 	@Override
 	public BufferedImage getStepImage(Type type, Orientation orientation, Timing timing) {
@@ -122,7 +96,7 @@ public class PumpResourceProvider implements ResourceProvider {
 		case ROLL_END:
 			return rollBody;
 		default:
-			return parent.empty;
+			return empty;
 		}
 	}
 
@@ -138,7 +112,7 @@ public class PumpResourceProvider implements ResourceProvider {
 		case ROLL_END:
 			return rollEnd;
 		default:
-			return parent.empty;
+			return empty;
 		}
 	}
 

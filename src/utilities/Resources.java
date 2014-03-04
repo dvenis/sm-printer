@@ -4,8 +4,6 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -17,24 +15,6 @@ public class Resources {
 	private PumpResourceProvider pumpResourceProvider;
 	
 	public String notesDir = "notes/stepmania5/";
-	
-	public BufferedImage empty;
-	
-//	public BufferedImage freezeBody;
-//	public BufferedImage freezeEnd;
-//	public BufferedImage rollBody;
-//	public BufferedImage rollEnd;
-//	
-//	public BufferedImage step4th;
-//	public BufferedImage step8th;
-//	public BufferedImage step16th;
-//	public BufferedImage step32nd;
-//	public BufferedImage step64th;
-//	public BufferedImage step12th;
-//	public BufferedImage step24th;
-//	public BufferedImage step48th;
-	
-	public BufferedImage mine;
 	
 	public boolean stepAssetsLoaded = false;
 	

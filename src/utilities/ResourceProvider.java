@@ -7,6 +7,8 @@ import models.stepmetadata.Timing;
 import models.stepmetadata.Type;
 
 public interface ResourceProvider {
+	static BufferedImage empty = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+	
 	public void loadImagesIfNotLoaded();
 	public boolean isLoaded();
 	

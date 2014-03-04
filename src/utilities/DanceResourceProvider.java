@@ -12,19 +12,9 @@ public class DanceResourceProvider implements ResourceProvider {
 	private BufferedImage freezeEnd;
 	private BufferedImage rollBody;
 	private BufferedImage rollEnd;
+	private BufferedImage mine;
 	
 	private BufferedImage[] steps;
-	
-//	private BufferedImage step4th;
-//	private BufferedImage step8th;
-//	private BufferedImage step16th;
-//	private BufferedImage step32nd;
-//	private BufferedImage step64th;
-//	private BufferedImage step12th;
-//	private BufferedImage step24th;
-//	private BufferedImage step48th;
-	
-	private BufferedImage mine;
 	
 	private boolean isLoaded = false;
 	private Resources parent;
@@ -50,14 +40,6 @@ public class DanceResourceProvider implements ResourceProvider {
 		BufferedImage allNotes = Resources.loadImage(notesDir + "notes.png");
 		int stepDim = allNotes.getWidth();
 		steps = Resources.getImageSubImages(allNotes, stepDim);
-//		step4th = allNotes.getSubimage(0, 0, stepDim, stepDim);
-//		step8th = allNotes.getSubimage(0, stepDim, stepDim, stepDim);
-//		step12th = allNotes.getSubimage(0, stepDim * 2, stepDim, stepDim);
-//		step16th = allNotes.getSubimage(0, stepDim * 3, stepDim, stepDim);
-//		step24th = allNotes.getSubimage(0, stepDim * 4, stepDim, stepDim);
-//		step32nd = allNotes.getSubimage(0, stepDim * 5, stepDim, stepDim);
-//		step48th = allNotes.getSubimage(0, stepDim * 6, stepDim, stepDim);
-//		step64th = allNotes.getSubimage(0, stepDim * 7, stepDim, stepDim);
 		
 		isLoaded = true;
 	}
@@ -113,7 +95,7 @@ public class DanceResourceProvider implements ResourceProvider {
 		case ROLL_END:
 			return rollBody;
 		default:
-			return parent.empty;
+			return empty;
 		}
 	}
 
@@ -129,7 +111,7 @@ public class DanceResourceProvider implements ResourceProvider {
 		case ROLL_END:
 			return rollEnd;
 		default:
-			return parent.empty;
+			return empty;
 		}
 	}
 
