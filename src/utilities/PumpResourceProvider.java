@@ -6,14 +6,14 @@ import models.stepmetadata.Orientation;
 import models.stepmetadata.Timing;
 import models.stepmetadata.Type;
 
-public class DanceResourceProvider implements ResourceProvider {
+public class PumpResourceProvider implements ResourceProvider {
 	
 	private BufferedImage freezeBody;
 	private BufferedImage freezeEnd;
 	private BufferedImage rollBody;
 	private BufferedImage rollEnd;
 	
-	private BufferedImage[] steps;
+	private BufferedImage[][] steps;
 	
 //	private BufferedImage step4th;
 //	private BufferedImage step8th;
@@ -23,13 +23,13 @@ public class DanceResourceProvider implements ResourceProvider {
 //	private BufferedImage step12th;
 //	private BufferedImage step24th;
 //	private BufferedImage step48th;
-	
+//	
 	private BufferedImage mine;
 	
 	private boolean isLoaded = false;
 	private Resources parent;
 	
-	public DanceResourceProvider(Resources parent) {
+	public PumpResourceProvider(Resources parent) {
 		this.parent = parent;
 	}
 	
@@ -47,9 +47,8 @@ public class DanceResourceProvider implements ResourceProvider {
 		rollEnd = Resources.loadImage(notesDir + "roll_cap_bottom.png");
 		mine = Resources.loadImage(notesDir + "mine.png");
 		
-		BufferedImage allNotes = Resources.loadImage(notesDir + "notes.png");
-		int stepDim = allNotes.getWidth();
-		steps = Resources.getImageSubImages(allNotes, stepDim);
+		BufferedImage allNotes = Resources.loadImage(notesDir + "pump_notes.png");
+		int stepDim = allNotes.getWidth() / 2;
 //		step4th = allNotes.getSubimage(0, 0, stepDim, stepDim);
 //		step8th = allNotes.getSubimage(0, stepDim, stepDim, stepDim);
 //		step12th = allNotes.getSubimage(0, stepDim * 2, stepDim, stepDim);
@@ -58,6 +57,7 @@ public class DanceResourceProvider implements ResourceProvider {
 //		step32nd = allNotes.getSubimage(0, stepDim * 5, stepDim, stepDim);
 //		step48th = allNotes.getSubimage(0, stepDim * 6, stepDim, stepDim);
 //		step64th = allNotes.getSubimage(0, stepDim * 7, stepDim, stepDim);
+		steps = Resources.getImageSubImages(allNotes, stepDim, stepDim);
 		
 		isLoaded = true;
 	}
@@ -67,6 +67,15 @@ public class DanceResourceProvider implements ResourceProvider {
 		return isLoaded;
 	}
 
+//	private BufferedImage step4th;
+//	private BufferedImage step8th;
+//	private BufferedImage step16th;
+//	private BufferedImage step32nd;
+//	private BufferedImage step64th;
+//	private BufferedImage step12th;
+//	private BufferedImage step24th;
+//	private BufferedImage step48th;
+	
 	@Override
 	public BufferedImage getStepImage(Type type, Orientation orientation, Timing timing) {
 		switch (type) {
@@ -77,21 +86,21 @@ public class DanceResourceProvider implements ResourceProvider {
 			switch (timing) {
 			case L1ST:
 			case L4TH:
-				return steps[0];
+				return (orientation == Orientation.CENTER)? steps[0][0] : steps[0][1];
 			case L8TH:
-				return steps[1];
+				return (orientation == Orientation.CENTER)? steps[1][0] : steps[1][1];
 			case L12TH:
-				return steps[2];
+				return (orientation == Orientation.CENTER)? steps[2][0] : steps[2][1];
 			case L16TH:
-				return steps[3];
+				return (orientation == Orientation.CENTER)? steps[3][0] : steps[3][1];
 			case L24TH:
-				return steps[4];
+				return (orientation == Orientation.CENTER)? steps[4][0] : steps[4][1];
 			case L32ND:
-				return steps[5];
+				return (orientation == Orientation.CENTER)? steps[5][0] : steps[5][1];
 			case L48TH:
-				return steps[6];
+				return (orientation == Orientation.CENTER)? steps[6][0] : steps[6][1];
 			default:
-				return steps[7];
+				return (orientation == Orientation.CENTER)? steps[7][0] : steps[7][1];
 			}
 		//mine image
 		case MINE:

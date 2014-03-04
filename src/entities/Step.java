@@ -30,7 +30,7 @@ public class Step extends Entity {
 		this.holdIndex = holdIndex;
 		this.sideLength = sideLength;
 		
-		this.stepImage = Resources.getInstance().danceResourceProvider.getStepImage(
+		this.stepImage = Resources.getInstance().getProvider(settings.difficulty.getNotesType()).getStepImage(
 				step.getType(), step.getOrientation(), step.getTiming());
 
 		updateHolds();

@@ -27,7 +27,7 @@ public class RenderPanel extends BasePanel {
 	public RenderPanel(MainFrame main) {
 		super(main);
 		
-		Resources.loadStepAssetsIfNotLoaded();
+		Resources.getInstance().loadStepAssetsIfNotLoaded();
 		
 		setVisible(true);
 		setPreferredSize(new Dimension(1584, 1000));

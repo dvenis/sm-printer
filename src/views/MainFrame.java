@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 	
 		add(centreSplitPane);
 		
-		openStepFile("data/Renaissance.sm");
+		openStepFile("data/101 - Ignition Starts - Banya.sm");
 		
 		setJMenuBar(new MainMenu(this));
 		
