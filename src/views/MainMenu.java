@@ -1,16 +1,31 @@
 package views;
 
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import utilities.Printer;
 
@@ -86,6 +101,7 @@ public class MainMenu extends JMenuBar implements ActionListener {
 		
 		menuItem = new JMenuItem("About");
 		menuItem.addActionListener(this);
+		menuItem.setActionCommand(ABOUT_COMMAND);
 		helpMenu.add(menuItem);
 		
 		return helpMenu;
@@ -110,8 +126,40 @@ public class MainMenu extends JMenuBar implements ActionListener {
 		} else if (HIDE_LEADING_AND_TRALING_MEASURES_COMMAND.equals(e.getActionCommand())) {
 			main.invertMeasureTrimming();
 		} else if (ABOUT_COMMAND.equals(e.getActionCommand())) {
-			
+			JOptionPane.showMessageDialog(null, new AboutDialog(), "About", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
+	}
+	
+	private class AboutDialog extends JPanel {
+		private static final String text1 = "<html>SimFile Printer version 0.0.1 created May 2014. "
+				+ "<p><p>SimFile Printer is distributed freely as open source software under the MIT license."
+				+ "More information is available <a href='http://opensource.org/licenses/MIT'>here</a></html>";
+		
+		public AboutDialog() {
+			JTextPane textPane = new JTextPane();
+			textPane.setEditable(false);
+			textPane.setBackground(new Color(238, 238, 238));
+			textPane.setPreferredSize(new Dimension(300, 200));
+			textPane.setContentType("text/html");
+			textPane.setText(text1);
+			textPane.addHyperlinkListener(new HyperlinkListener() {
+
+				@Override
+				public void hyperlinkUpdate(HyperlinkEvent e) {
+					if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+						try {
+							Desktop.getDesktop().browse(e.getURL().toURI());
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						} catch (URISyntaxException e2) {
+							e2.printStackTrace();
+						}
+		            }
+				}
+			});
+			
+			add(textPane);
+		}
 	}
 }
