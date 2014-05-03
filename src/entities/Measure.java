@@ -22,7 +22,7 @@ public class Measure extends Container {
 	
 	private void generateChildren() {
 		if (measure != null) {
-			List<models.StepLine> lines = measure.getLines();
+			List<models.SimFileLine> lines = measure.getLines();
 			children = new Entity[lines.size()];
 			
 			double currentY = y;

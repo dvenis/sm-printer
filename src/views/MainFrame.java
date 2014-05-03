@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import models.StepFileDifficultyMap;
+import models.SimFileDifficulty;
 import utilities.Settings;
 import utilities.StepFileReader;
 
@@ -97,7 +97,7 @@ public class MainFrame extends JFrame {
 		renderPanel.notifyCurrentStepFileChanged();
 	}
 	
-	public void openDifficulty(StepFileDifficultyMap difficulty) {
+	public void openDifficulty(SimFileDifficulty difficulty) {
 		settings.difficulty = difficulty;
 		
 		renderPanel.notifyCurrentDifficultyChanged();

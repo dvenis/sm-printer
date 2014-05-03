@@ -12,9 +12,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import models.Measure;
-import models.StepFile;
-import models.StepFileDifficultyMap;
-import models.StepLine;
+import models.SimFile;
+import models.SimFileDifficulty;
+import models.SimFileLine;
 import models.stepmetadata.NotesType;
 
 public class StepFileReader {
@@ -24,7 +24,7 @@ public class StepFileReader {
 	private Pattern metaDataRegex;
 	private Pattern stepLineRegex;
 	
-	private StepLine previouslyAddedLine = null;
+	private SimFileLine previouslyAddedLine = null;
 	
 	public StepFileReader(String stepFilePath) {
 		this(new File(stepFilePath));
@@ -37,8 +37,8 @@ public class StepFileReader {
 		stepLineRegex = Pattern.compile("[0-9MLF]{4,10}"); //huehuehue
 	}
 	
-	public StepFile generateStepFile() {
-		StepFile result = new StepFile();
+	public SimFile generateStepFile() {
+		SimFile result = new SimFile();
 		String[] fileParts = splitStepFile(readStepFileData());
 		if (fileParts != null) {			
 			generateMetaData(fileParts, result);
@@ -61,13 +61,13 @@ public class StepFileReader {
 		return getRegexMatchingList(metaDataRegex, fileData).toArray(new String[0]);
 	}
 	
-	private void generateMetaData(String[] stepFileParts, StepFile accumulator) {
+	private void generateMetaData(String[] stepFileParts, SimFile accumulator) {
 		for (String part : stepFileParts) {
 			setDataBasedOnTag(part, accumulator);
 		}
 	}
 	
-	private void setDataBasedOnTag(String part, StepFile accumulator) {
+	private void setDataBasedOnTag(String part, SimFile accumulator) {
 		switch (getTag(part)) {
 		case "#TITLE":
 			accumulator.setTitle(stripTag(part));
@@ -86,7 +86,7 @@ public class StepFileReader {
 		}
 	}
 	
-	private void generateStepData(String notes, StepFile accumulator) {
+	private void generateStepData(String notes, SimFile accumulator) {
 		previouslyAddedLine = null;
 		//for all note data
 		notes = stripTag(notes);
@@ -97,7 +97,7 @@ public class StepFileReader {
 			return;
 		}
 		
-		StepFileDifficultyMap difficulty = new StepFileDifficultyMap();
+		SimFileDifficulty difficulty = new SimFileDifficulty();
 		difficulty.setNotesType(difficultyParts[0].trim());
 		difficulty.setDescription(difficultyParts[1].trim());
 		difficulty.setDifficultyClass(difficultyParts[2].trim());
@@ -126,7 +126,7 @@ public class StepFileReader {
 		int numberLinesInMeasure = rawLines.size();
 		for (String rawLine : rawLines) {
 			//create new step line given the previously added line
-			previouslyAddedLine = new StepLine(rawLine, previouslyAddedLine, notesType, lineIndex, numberLinesInMeasure);
+			previouslyAddedLine = new SimFileLine(rawLine, previouslyAddedLine, notesType, lineIndex, numberLinesInMeasure);
 			result.addLine(previouslyAddedLine);
 			lineIndex++;
 		}
@@ -159,7 +159,7 @@ public class StepFileReader {
 	public static void main(String[] args) {
 		StepFileReader reader = new StepFileReader("data/Feels Just Like That Night.sm");
 		//StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
-		StepFile file = reader.generateStepFile();
+		SimFile file = reader.generateStepFile();
 		System.out.println(file);
 		for (Measure m : file.getDifficulties().get(0).getMeasures()) {
 			System.out.println(m);

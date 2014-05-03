@@ -2,8 +2,8 @@ package utilities;
 
 import java.awt.Color;
 
-import models.StepFile;
-import models.StepFileDifficultyMap;
+import models.SimFile;
+import models.SimFileDifficulty;
 
 public class Settings {
 	public int measuresPerColumn = 3;
@@ -11,8 +11,8 @@ public class Settings {
 	public boolean horizontalOrientation = true;
 	public boolean hideLeadingAndTrailingWhiteSpace = true;
 	
-	public StepFile stepFile;
-	public StepFileDifficultyMap difficulty;
+	public SimFile stepFile;
+	public SimFileDifficulty difficulty;
 	
 	public double pageWidthInches = 8.5;
 	public double pageHeightInches = 11;

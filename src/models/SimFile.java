@@ -1,21 +1,20 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class StepFile {
+public class SimFile {
 	private String title;
 	private String subtitle;
 	private String artist;
 	private String credit;
 	
 	private float bpm;
-	private List<StepFileDifficultyMap> difficulties;
+	private List<SimFileDifficulty> difficulties;
 	
-	public StepFile() {
-		difficulties = new ArrayList<StepFileDifficultyMap>();
+	public SimFile() {
+		difficulties = new ArrayList<SimFileDifficulty>();
 	}
 
 	public String getTitle() {
@@ -58,11 +57,11 @@ public class StepFile {
 		this.bpm = bpm;
 	}
 	
-	public List<StepFileDifficultyMap> getDifficulties() {
+	public List<SimFileDifficulty> getDifficulties() {
 		return difficulties;
 	}
 	
-	public void addDifficulty(StepFileDifficultyMap difficulty) {
+	public void addDifficulty(SimFileDifficulty difficulty) {
 		difficulties.add(difficulty);
 	}
 	

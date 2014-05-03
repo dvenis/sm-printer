@@ -10,7 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import utilities.Settings;
-import models.StepFileDifficultyMap;
+import models.SimFileDifficulty;
 
 public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	/**
@@ -27,8 +27,8 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	private JLabel creditLabel;
 	private JLabel creditFieldLabel;
 	
-	private JComboBox<StepFileDifficultyMap> difficultySelector;
-	private DefaultComboBoxModel<StepFileDifficultyMap> difficultyList;
+	private JComboBox<SimFileDifficulty> difficultySelector;
+	private DefaultComboBoxModel<SimFileDifficulty> difficultyList;
 	
 	public StepFileInfoPanel(MainFrame main) {	
 		super(main);
@@ -65,8 +65,8 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 		c.gridy = 4;
 		c.gridx = 0;
 		c.gridwidth = 2;
-		difficultyList = new DefaultComboBoxModel<StepFileDifficultyMap>();
-		difficultySelector = new JComboBox<StepFileDifficultyMap>(difficultyList);		
+		difficultyList = new DefaultComboBoxModel<SimFileDifficulty>();
+		difficultySelector = new JComboBox<SimFileDifficulty>(difficultyList);		
 		difficultySelector.addItemListener(this);
 		add(difficultySelector, c);
 	}
@@ -92,7 +92,7 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 		updateAndHideField(artistLabel, artistFieldLabel, settings.stepFile.getArtist());
 		updateAndHideField(creditLabel, creditFieldLabel, settings.stepFile.getCredit());
 		
-		difficultyList = new DefaultComboBoxModel<StepFileDifficultyMap>(settings.stepFile.getDifficulties().toArray(new StepFileDifficultyMap[0]));
+		difficultyList = new DefaultComboBoxModel<SimFileDifficulty>(settings.stepFile.getDifficulties().toArray(new SimFileDifficulty[0]));
 		difficultySelector.setModel(difficultyList);
 	}
 	
@@ -110,7 +110,7 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	@Override
 	public void itemStateChanged(ItemEvent event) {
 		if (event.getStateChange() == ItemEvent.SELECTED) {
-			StepFileDifficultyMap difficulty = (StepFileDifficultyMap)event.getItem();
+			SimFileDifficulty difficulty = (SimFileDifficulty)event.getItem();
 			main.openDifficulty(difficulty);
 			System.out.println("opened " + difficulty);
 		}		

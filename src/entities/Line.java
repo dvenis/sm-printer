@@ -7,13 +7,13 @@ import utilities.Settings;
 import models.stepmetadata.Timing;
 
 public class Line extends Container {
-	protected models.StepLine line;
+	protected models.SimFileLine line;
 	
 	protected Hold[] currentHolds;
 	
 	protected double stepSideLength;
 	
-	public Line(Settings settings, models.StepLine line, Hold[] currentHolds, int x, int y, int width, int height) {
+	public Line(Settings settings, models.SimFileLine line, Hold[] currentHolds, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);
 		
 		this.line = line;

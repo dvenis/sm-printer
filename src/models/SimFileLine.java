@@ -5,14 +5,14 @@ import models.stepmetadata.Type;
 import models.stepmetadata.Orientation;
 import models.stepmetadata.Timing;
 
-public class StepLine {
+public class SimFileLine {
 	
 	private Step[] steps;
 	private Timing timing;
 	
 	private boolean isEmpty = true;
 	
-	public StepLine(String rawData, StepLine previousLine, NotesType notesType,
+	public SimFileLine(String rawData, SimFileLine previousLine, NotesType notesType,
 			int lineIndex, int numberLinesInMeasure) {
 		timing = Timing.fromLineIndexAndMeasureSize(lineIndex, numberLinesInMeasure);
 		

@@ -19,7 +19,7 @@ public class Column extends Container {
 	
 	private void generateObjects() {
 		if (measures[0] != null) {
-			models.StepLine exampleLine = measures[0].getLines().get(0);
+			models.SimFileLine exampleLine = measures[0].getLines().get(0);
 			currentHolds = new Hold[exampleLine.getSteps().length];
 		} else {
 			currentHolds = new Hold[0];

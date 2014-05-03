@@ -4,26 +4,26 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Measure {
-	private List<StepLine> lines;
+	private List<SimFileLine> lines;
 	private int measureNumber;
 	
 	private boolean isEmpty = true;
 	
 	public Measure(int measureNumber) {
-		lines = new ArrayList<StepLine>();
+		lines = new ArrayList<SimFileLine>();
 		this.measureNumber = measureNumber;
 	}
 	
 	
-	public List<StepLine> getLines() {
+	public List<SimFileLine> getLines() {
 		return lines;
 	}
 	
-	public void setLines(List<StepLine> lines) {
+	public void setLines(List<SimFileLine> lines) {
 		this.lines = lines;
 	}
 	
-	public void addLine(StepLine line) {
+	public void addLine(SimFileLine line) {
 		lines.add(line);
 		isEmpty = line.isEmpty() && isEmpty;
 	}
@@ -43,7 +43,7 @@ public class Measure {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (StepLine line : lines) {
+		for (SimFileLine line : lines) {
 			sb.append(line).append("\n");
 		}
 		sb.append("----");
