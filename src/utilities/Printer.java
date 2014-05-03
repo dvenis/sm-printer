@@ -9,7 +9,7 @@ import java.awt.print.PrinterJob;
 import entities.SimFile;
 
 public class Printer {
-	public static void printSimFile(Settings settings) {
+	public static PrinterJob getPrinterJob(Settings settings) {
 		PrinterJob job = PrinterJob.getPrinterJob();
 		SimFile printerRenderer = new SimFile(settings, 0, 0, 
 				(int)(settings.pageHeightInches * settings.pageDPI), (int)(settings.pageWidthInches * settings.pageDPI));
@@ -20,15 +20,7 @@ public class Printer {
 		
 		job.setPageable(createBook(printerRenderer, defaultFormat));
 		
-		boolean doPrint = job.printDialog();
-		if (doPrint) {
-			try {
-				job.print();
-			} catch (PrinterException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		return job;
 	}
 	
 	private static Book createBook(SimFile renderer, PageFormat format) {
