@@ -4,6 +4,13 @@ import java.awt.BorderLayout;
 
 import javax.swing.border.EmptyBorder;
 
+/**
+ * A panel that contains info about a selected sim file. 
+ * 
+ * @author Dan
+ *
+ */
+
 public class SelectionInfoPanel extends BasePanel {
 	/**
 	 * 

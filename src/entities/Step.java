@@ -9,6 +9,13 @@ import utilities.Resources;
 import utilities.Settings;
 import models.stepmetadata.Type;
 
+/**
+ * An entity representing a single step on a step chart.
+ * 
+ * @author Dan
+ *
+ */
+
 public class Step extends Entity {
 	protected models.Step step;
 	

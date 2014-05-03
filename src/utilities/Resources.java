@@ -9,6 +9,14 @@ import javax.imageio.ImageIO;
 
 import models.stepmetadata.NotesType;
 
+/**
+ * A utility class that manages resource providers. Requests loads and initializations
+ * from resource providers, and also returns the propeer resource provider given a game mode.
+ * 
+ * @author Dan
+ *
+ */
+
 public class Resources {
 	
 	private DanceResourceProvider danceResourceProvider;
@@ -81,36 +89,6 @@ public class Resources {
 		danceResourceProvider.loadImagesIfNotLoaded();
 		pumpResourceProvider.loadImagesIfNotLoaded();
 	}
-	
-//	public static void loadStepAssetsIfNotLoaded() {
-//		final String notesDir = "notes/stepmania5/";
-//		final Resources r = getInstance();
-//		
-//		if (r.stepAssetsLoaded) {
-//			return;
-//		}
-//
-//		r.freezeBody = loadImage(notesDir + "hold.png");
-//		r.freezeEnd = loadImage(notesDir + "hold_cap_bottom.png");
-//		r.rollBody = loadImage(notesDir + "roll.png");
-//		r.rollEnd = loadImage(notesDir + "roll_cap_bottom.png");
-//		r.mine = loadImage(notesDir + "mine.png");
-//		
-//		BufferedImage allNotes = loadImage(notesDir + "notes.png");
-//		int stepDim = allNotes.getWidth();
-//		r.step4th = allNotes.getSubimage(0, 0, stepDim, stepDim);
-//		r.step8th = allNotes.getSubimage(0, stepDim, stepDim, stepDim);
-//		r.step12th = allNotes.getSubimage(0, stepDim * 2, stepDim, stepDim);
-//		r.step16th = allNotes.getSubimage(0, stepDim * 3, stepDim, stepDim);
-//		r.step24th = allNotes.getSubimage(0, stepDim * 4, stepDim, stepDim);
-//		r.step32nd = allNotes.getSubimage(0, stepDim * 5, stepDim, stepDim);
-//		r.step48th = allNotes.getSubimage(0, stepDim * 6, stepDim, stepDim);
-//		r.step64th = allNotes.getSubimage(0, stepDim * 7, stepDim, stepDim);
-//		
-//		r.empty = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
-//		
-//		r.stepAssetsLoaded = true;
-//	}
 	
 	//singleton pattern declarations
 	private static class ResourcesHolder {

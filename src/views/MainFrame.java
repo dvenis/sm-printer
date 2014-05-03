@@ -11,6 +11,15 @@ import models.SimFileDifficulty;
 import utilities.Settings;
 import utilities.SimFileReader;
 
+/**
+ * The main frame of the application. Contains all application panels, and initializations.
+ * Contains a global settings instance that can be used in all panels. Every panel contains
+ * a reference to an instance of the MainFrame.
+ * 
+ * @author Dan
+ *
+ */
+
 public class MainFrame extends JFrame {
 	/**
 	 * 

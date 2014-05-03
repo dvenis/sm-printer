@@ -6,6 +6,13 @@ import models.stepmetadata.Orientation;
 import models.stepmetadata.Timing;
 import models.stepmetadata.Type;
 
+/**
+ * A resource provider for the pump game mode.
+ * 
+ * @author Dan
+ *
+ */
+
 public class PumpResourceProvider implements ResourceProvider {
 	
 	private BufferedImage freezeBody;

@@ -1,5 +1,12 @@
 package models.stepmetadata;
 
+/**
+ * Enum that has a member for each orientation of a step on a dance pad.
+ * 
+ * @author Dan
+ *
+ */
+
 public enum Orientation {
 	LEFT(Math.PI / 2), RIGHT(3 * Math.PI / 2), DOWN(0), UP(Math.PI),
 	//pump it up

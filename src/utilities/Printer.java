@@ -8,6 +8,13 @@ import java.awt.print.PrinterJob;
 
 import entities.SimFile;
 
+/**
+ * Utility used for actually printing the sim files. Uses the java printing services.
+ * 
+ * @author Dan
+ *
+ */
+
 public class Printer {
 	public static PrinterJob getPrinterJob(Settings settings) {
 		PrinterJob job = PrinterJob.getPrinterJob();

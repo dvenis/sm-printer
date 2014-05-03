@@ -1,5 +1,12 @@
 package models.stepmetadata;
 
+/**
+ * Enum that contains a member for each supported timing length of a step.
+ * 
+ * @author Dan
+ *
+ */
+
 public enum Timing {
 	
 	L1ST, L4TH, L8TH, L12TH, L16TH, L24TH, L32ND, L48TH, L64TH;

@@ -13,6 +13,15 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+/**
+ * A panel that contains a tree-like structure for selecting which sim files
+ * to open in the application. Select a single directory as the base, and all
+ * child directories will be shown and can be navigated through.
+ * 
+ * @author Dan
+ *
+ */
+
 public class FileSelectorPanel extends BasePanel implements TreeSelectionListener {
 	/**
 	 * 

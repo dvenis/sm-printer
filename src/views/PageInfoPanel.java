@@ -10,6 +10,14 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * A panel provides controls to change the page metrics of a step chart, as well
+ * as displaying information about the page setup of the step chart.
+ * 
+ * @author Dan
+ *
+ */
+
 public class PageInfoPanel extends BasePanel implements ChangeListener {
 	/**
 	 * 

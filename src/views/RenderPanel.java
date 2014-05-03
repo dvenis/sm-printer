@@ -7,6 +7,14 @@ import java.awt.Graphics2D;
 import entities.SimFile;
 import utilities.Resources;
 
+/**
+ * The panel that handles the rendering of the step charts in a scrollable
+ * area.
+ * 
+ * @author Dan
+ *
+ */
+
 public class RenderPanel extends BasePanel {
 	/**
 	 * 
@@ -18,7 +26,6 @@ public class RenderPanel extends BasePanel {
 	private static final int START_Y = 20;
 	
 	private double pageDPI = 96;
-	private double printableDPI = 72;
 	private int pageWidth = (int)(pageDPI * settings.pageHeightInches);
 	private int pageHeight = (int)(pageDPI * settings.pageWidthInches);
 	

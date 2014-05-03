@@ -2,6 +2,15 @@ package models.stepmetadata;
 
 import models.Step;
 
+/**
+ * An enum that contains a member for each supported type of step. Most of the step
+ * types are exactly what is read from a sim file, however some of the types are used
+ * to make the sim file parsing process simpler.
+ * 
+ * @author Dan
+ *
+ */
+
 public enum Type {
 	NONE, REGULAR, FREEZE_START, FREEZE_END, ROLL_START, MINE, LIFT, FAKE,
 	//custom definitions

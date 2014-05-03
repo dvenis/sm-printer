@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A model for all the data within a sim file. Sim files contain multiple difficulties,
+ * each can be of a different game mode. Meta data that is not specific to a difficulty
+ * is modelled here.
+ *  
+ * @author Dan
+ *
+ */
+
 public class SimFile {
 	private String title;
 	private String subtitle;

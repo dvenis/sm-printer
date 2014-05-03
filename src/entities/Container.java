@@ -4,12 +4,17 @@ import java.awt.Graphics;
 
 import utilities.Settings;
 
+/**
+ * A container that holds other entities within itself. Has methods to draw the foreground, midground and
+ * background of the contained entities. 
+ * 
+ * @author Dan
+ *
+ */
+
 public abstract class Container extends Entity {
 	protected Entity[] children;
 	
-//	public Container(int x, int y, int width, int height) {
-//		super(x, y, width, height);
-//	}
 	
 	public Container(Settings settings, int x, int y, int width, int height) {
 		super(settings, x, y, width, height);

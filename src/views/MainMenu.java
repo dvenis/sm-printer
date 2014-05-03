@@ -26,6 +26,14 @@ import javax.swing.event.HyperlinkListener;
 
 import utilities.Printer;
 
+/**
+ * The menu bar at the top of the application. Handles all actions that are
+ * invoked on the menu.
+ * 
+ * @author Dan
+ *
+ */
+
 public class MainMenu extends JMenuBar implements ActionListener {
 	/**
 	 * 

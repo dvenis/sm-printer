@@ -5,6 +5,15 @@ import models.stepmetadata.Type;
 import models.stepmetadata.Orientation;
 import models.stepmetadata.Timing;
 
+/**
+ * A model for a single line in a step chart. Contains several steps, the number
+ * depending on what game mode the line is for. There is a line at every fraction
+ * of a beat.
+ * 
+ * @author Dan
+ *
+ */
+
 public class SimFileLine {
 	
 	private Step[] steps;
