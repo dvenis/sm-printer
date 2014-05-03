@@ -8,20 +8,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.HyperlinkEvent;
@@ -132,17 +127,23 @@ public class MainMenu extends JMenuBar implements ActionListener {
 	}
 	
 	private class AboutDialog extends JPanel {
-		private static final String text1 = "<html>SimFile Printer version 0.0.1 created May 2014. "
-				+ "<p><p>SimFile Printer is distributed freely as open source software under the MIT license."
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		private static final String text = "<html>SimFile Printer version 0.0.1 created May 2014. "
+				+ "Source code is available on <a href='https://github.com/UberZoonie/sm-printer'>github</a>."
+				+ "<p>SimFile Printer is distributed freely as open source software under the MIT license. "
 				+ "More information is available <a href='http://opensource.org/licenses/MIT'>here</a></html>";
 		
 		public AboutDialog() {
 			JTextPane textPane = new JTextPane();
 			textPane.setEditable(false);
 			textPane.setBackground(new Color(238, 238, 238));
-			textPane.setPreferredSize(new Dimension(300, 200));
+			textPane.setPreferredSize(new Dimension(350, 110));
 			textPane.setContentType("text/html");
-			textPane.setText(text1);
+			textPane.setText(text);
 			textPane.addHyperlinkListener(new HyperlinkListener() {
 
 				@Override
