@@ -17,7 +17,7 @@ import models.SimFileDifficulty;
 import models.SimFileLine;
 import models.stepmetadata.NotesType;
 
-public class StepFileReader {
+public class SimFileReader {
 	private static final String STEP_FILE_REGEX = "#.+?;";
 	
 	private File systemStepFile;
@@ -26,27 +26,27 @@ public class StepFileReader {
 	
 	private SimFileLine previouslyAddedLine = null;
 	
-	public StepFileReader(String stepFilePath) {
+	public SimFileReader(String stepFilePath) {
 		this(new File(stepFilePath));
 	}
 	
-	public StepFileReader(File systemStepFile) {
+	public SimFileReader(File systemStepFile) {
 		this.systemStepFile = systemStepFile;
 		
 		metaDataRegex = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
 		stepLineRegex = Pattern.compile("[0-9MLF]{4,10}"); //huehuehue
 	}
 	
-	public SimFile generateStepFile() {
+	public SimFile generateSimFile() {
 		SimFile result = new SimFile();
-		String[] fileParts = splitStepFile(readStepFileData());
+		String[] fileParts = splitSimFile(readSimFileData());
 		if (fileParts != null) {			
 			generateMetaData(fileParts, result);
 		}
 		return result;
 	}
 	
-	private String readStepFileData() {
+	private String readSimFileData() {
 		String result = null;
 		try {
 			byte[] fileBytes = Files.readAllBytes(Paths.get(systemStepFile.getAbsolutePath()));
@@ -57,7 +57,7 @@ public class StepFileReader {
 		return result;
 	}
 	
-	private String[] splitStepFile(String fileData) {
+	private String[] splitSimFile(String fileData) {
 		return getRegexMatchingList(metaDataRegex, fileData).toArray(new String[0]);
 	}
 	
@@ -157,9 +157,9 @@ public class StepFileReader {
 	}
 	
 	public static void main(String[] args) {
-		StepFileReader reader = new StepFileReader("data/Feels Just Like That Night.sm");
+		SimFileReader reader = new SimFileReader("data/Feels Just Like That Night.sm");
 		//StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
-		SimFile file = reader.generateStepFile();
+		SimFile file = reader.generateSimFile();
 		System.out.println(file);
 		for (Measure m : file.getDifficulties().get(0).getMeasures()) {
 			System.out.println(m);

@@ -8,7 +8,7 @@ import javax.swing.JSplitPane;
 
 import models.SimFileDifficulty;
 import utilities.Settings;
-import utilities.StepFileReader;
+import utilities.SimFileReader;
 
 public class MainFrame extends JFrame {
 	/**
@@ -89,8 +89,8 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void openStepFile(String path) {
-		StepFileReader reader = new StepFileReader(path);
-		settings.stepFile = reader.generateStepFile();
+		SimFileReader reader = new SimFileReader(path);
+		settings.stepFile = reader.generateSimFile();
 		settings.difficulty = settings.stepFile.getDifficulties().get(0);
 		
 		selectionInfoPanel.notifyCurrentStepFileChanged();
