@@ -3,6 +3,15 @@ package models;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * A model for all the data contained within a single measure of a step chart. A measure
+ * is equivalent to a musical measure in the song: contains a set number of beats, and
+ * step lines for each beat step (or fraction of a beat).
+ * 
+ * @author Dan
+ *
+ */
+
 public class Measure {
 	private List<SimFileLine> lines;
 	private int measureNumber;

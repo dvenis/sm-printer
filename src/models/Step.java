@@ -4,6 +4,13 @@ import models.stepmetadata.Timing;
 import models.stepmetadata.Type;
 import models.stepmetadata.Orientation;
 
+/**
+ * A model for a single step of any orientation, type, game mode or timing.
+ * 
+ * @author Dan
+ *
+ */
+
 public class Step {
 
 	private Type type;

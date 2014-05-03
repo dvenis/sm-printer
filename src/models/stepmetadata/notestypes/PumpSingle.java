@@ -3,6 +3,13 @@ package models.stepmetadata.notestypes;
 import models.stepmetadata.NotesType;
 import models.stepmetadata.Orientation;
 
+/**
+ * Implementation of NotesType for the pump single game mode. (5 buttons, 1 player)
+ * 
+ * @author Dan
+ *
+ */
+
 public class PumpSingle extends NotesType {
 
 	public PumpSingle(GameMode playType) {

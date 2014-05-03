@@ -3,6 +3,13 @@ package models.stepmetadata.notestypes;
 import models.stepmetadata.NotesType;
 import models.stepmetadata.Orientation;
 
+/**
+ * Implementation of NotesType for the dance double game mode. (8 buttons, 1 player)
+ * 
+ * @author Dan
+ *
+ */
+
 public class DanceDouble extends NotesType {
 
 	public DanceDouble(GameMode playType) {

@@ -3,6 +3,13 @@ package models.stepmetadata.notestypes;
 import models.stepmetadata.NotesType;
 import models.stepmetadata.Orientation;
 
+/**
+ * Implementation of NotesType for the dance solo game mode. (4 buttons, 1 player)
+ * 
+ * @author Dan
+ *
+ */
+
 public class DanceSolo extends NotesType {
 
 	public DanceSolo(GameMode playType) {

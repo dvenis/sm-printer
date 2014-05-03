@@ -6,6 +6,14 @@ import java.util.ListIterator;
 
 import models.stepmetadata.NotesType;
 
+/**
+ * A model for a single difficulty in a sim file. Contains step data, and meta data
+ * specific to the difficulty.
+ * 
+ * @author Dan
+ *
+ */
+
 public class SimFileDifficulty implements Comparable<SimFileDifficulty> {
 	private String description;
 	private String difficultyClass;

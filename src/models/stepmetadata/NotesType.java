@@ -8,6 +8,15 @@ import models.stepmetadata.notestypes.PumpCouple;
 import models.stepmetadata.notestypes.PumpDouble;
 import models.stepmetadata.notestypes.PumpSingle;
 
+/**
+ * Deals with the individual requirements for each game mode. All supported NotesTypes are
+ * subclasses from this class, and implement their own methods for dealing with orientation
+ * and line length.
+ * 
+ * @author Dan
+ *
+ */
+
 public abstract class NotesType implements Comparable<NotesType> {
 	protected static final NotesType[] notesTypes = new NotesType[] {
 		new DanceSingle(GameMode.DANCE),

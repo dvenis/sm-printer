@@ -3,6 +3,13 @@ package models.stepmetadata.notestypes;
 import models.stepmetadata.NotesType;
 import models.stepmetadata.Orientation;
 
+/**
+ * Implementation of NotesType for the pump couple game mode. (10 buttons, 2 players)
+ * 
+ * @author Dan
+ *
+ */
+
 public class PumpCouple extends NotesType {
 
 	public PumpCouple(GameMode playType) {
