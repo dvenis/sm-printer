@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -39,9 +40,11 @@ public class FileSelectorPanel extends BasePanel implements TreeSelectionListene
 			tree = new JTree(new DefaultMutableTreeNode("Open a directory or file through the menu!"));
 		}
 		tree.addTreeSelectionListener(this);
-	    JScrollPane scrollpane = new JScrollPane(tree);
+	    tree.setBorder(new EmptyBorder(8, 6, 8, 6));
+		
+	    JScrollPane scrollPane = new JScrollPane(tree);
 	    
-	    add(BorderLayout.CENTER, scrollpane);
+	    add(BorderLayout.CENTER, scrollPane);
 	    validate();
 	    repaint();
 	}

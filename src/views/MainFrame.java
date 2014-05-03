@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.UIManager;
 
 import models.SimFileDifficulty;
 import utilities.Settings;
@@ -23,10 +24,15 @@ public class MainFrame extends JFrame {
 	private FileSelectorPanel fileSelectorPanel;
 	
 	public MainFrame() {
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			//could not set look and feel; no problem, do nothing
+		}
+		
 		settings = new Settings();
-		
 		renderPanel = new RenderPanel(this);
-		
 		selectionInfoPanel = new SelectionInfoPanel(this);
 		
 		String directory = getDirectoryToOpen();
@@ -35,6 +41,7 @@ public class MainFrame extends JFrame {
 		} else {
 			fileSelectorPanel = new FileSelectorPanel(this, null);
 		}
+		
 		
 		
 		JSplitPane westSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fileSelectorPanel, selectionInfoPanel);
@@ -46,7 +53,6 @@ public class MainFrame extends JFrame {
 		centreSplitPane.setDividerLocation(200);
 	
 		add(centreSplitPane);
-		
 
 		setJMenuBar(new MainMenu(this));
 		
