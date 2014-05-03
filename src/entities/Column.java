@@ -4,6 +4,12 @@ import java.awt.Graphics;
 
 import utilities.Settings;
 
+/**
+ * An entity containing step data for a column in a page. Each page is separated into multiple columns.
+ * @author Dan
+ *
+ */
+
 public class Column extends Container {
 	private final static int COLUMN_MARGIN = 10;
 	

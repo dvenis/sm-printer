@@ -7,6 +7,13 @@ import java.util.List;
 import utilities.Resources;
 import utilities.Settings;
 
+/**
+ * An entity that represents a single measure in a step chart. Each column contains multiple
+ * measures, each containing multiple step lines.
+ * @author Dan
+ *
+ */
+
 public class Measure extends Container {
 	protected models.Measure measure; 
 	protected Hold[] currentHolds;
