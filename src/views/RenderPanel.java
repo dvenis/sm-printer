@@ -13,12 +13,14 @@ public class RenderPanel extends BasePanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private static final double ZOOM_TICK = 1.1;
+	private static final int START_X = 20;
+	private static final int START_Y = 20;
+	
 	private double pageDPI = 96;
 	private double printableDPI = 72;
 	private int pageWidth = (int)(pageDPI * settings.pageHeightInches);
 	private int pageHeight = (int)(pageDPI * settings.pageWidthInches);
-	
-	private static final double ZOOM_TICK = 1.1;
 	
 	private double zoom = 1.0;
 	
@@ -52,7 +54,7 @@ public class RenderPanel extends BasePanel {
 	public void notifyCurrentStepFileChanged() {
 //		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
 //				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
-		simFileDrawer = new SimFile(main.getSettings(), 0, 0, pageWidth, pageHeight);
+		simFileDrawer = new SimFile(main.getSettings(), START_X, START_Y, pageWidth, pageHeight);
 		screenChanged();
 	}
 	
@@ -60,7 +62,7 @@ public class RenderPanel extends BasePanel {
 	public void notifyCurrentDifficultyChanged() {
 //		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
 //				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
-		simFileDrawer = new SimFile(main.getSettings(), 0, 0, pageWidth, pageHeight);
+		simFileDrawer = new SimFile(main.getSettings(), START_X, START_Y, pageWidth, pageHeight);
 		screenChanged();
 	}
 	
@@ -68,7 +70,7 @@ public class RenderPanel extends BasePanel {
 	public void notifyPageDimensionsChanged() {
 //		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
 //				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
-		simFileDrawer = new SimFile(main.getSettings(), 0, 0, pageWidth, pageHeight);
+		simFileDrawer = new SimFile(main.getSettings(), START_X, START_Y, pageWidth, pageHeight);
 		screenChanged();
 	}
 	

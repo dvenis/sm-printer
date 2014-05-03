@@ -8,7 +8,7 @@ import models.stepmetadata.notestypes.PumpCouple;
 import models.stepmetadata.notestypes.PumpDouble;
 import models.stepmetadata.notestypes.PumpSingle;
 
-public abstract class NotesType {
+public abstract class NotesType implements Comparable<NotesType> {
 	protected static final NotesType[] notesTypes = new NotesType[] {
 		new DanceSingle(GameMode.DANCE),
 		new DanceDouble(GameMode.DANCE),
@@ -39,6 +39,11 @@ public abstract class NotesType {
 	
 	public GameMode getGameMode() {
 		return gameMode;
+	}
+	
+	@Override
+	public int compareTo(NotesType notesType) {
+		return toString().compareTo(notesType.toString());
 	}
 	
 	public abstract String getMetaCode(); //code found inside the simfile

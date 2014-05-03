@@ -1,7 +1,6 @@
 package utilities;
 
 import java.awt.Color;
-import java.io.File;
 
 import models.StepFile;
 import models.StepFileDifficultyMap;
@@ -11,8 +10,6 @@ public class Settings {
 	public int columnsPerPage = 4;
 	public boolean horizontalOrientation = true;
 	public boolean hideLeadingAndTrailingWhiteSpace = true;
-	
-	public File currentDirectory;
 	
 	public StepFile stepFile;
 	public StepFileDifficultyMap difficulty;

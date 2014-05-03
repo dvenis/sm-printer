@@ -115,6 +115,8 @@ public class StepFileReader {
 			
 			System.out.println("SET DIFFICULTY: " + difficulty);
 		}
+		
+		accumulator.sortDifficulties();
 	}
 	
 	private Measure parseMeasure(String measure, int measureNumber, NotesType notesType) {

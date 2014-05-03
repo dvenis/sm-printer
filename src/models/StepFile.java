@@ -1,6 +1,8 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class StepFile {
@@ -62,6 +64,10 @@ public class StepFile {
 	
 	public void addDifficulty(StepFileDifficultyMap difficulty) {
 		difficulties.add(difficulty);
+	}
+	
+	public void sortDifficulties() {
+		Collections.sort(difficulties);
 	}
 	
 	@Override

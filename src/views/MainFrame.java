@@ -28,20 +28,26 @@ public class MainFrame extends JFrame {
 		renderPanel = new RenderPanel(this);
 		
 		selectionInfoPanel = new SelectionInfoPanel(this);
-		fileSelectorPanel = new FileSelectorPanel(this, new File("C:\\Program Files (x86)\\ITG2\\Songs"));
+		
+		String directory = getDirectoryToOpen();
+		if (directory != null) {
+			fileSelectorPanel = new FileSelectorPanel(this, new File(directory));
+		} else {
+			fileSelectorPanel = new FileSelectorPanel(this, null);
+		}
+		
 		
 		JSplitPane westSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fileSelectorPanel, selectionInfoPanel);
 		westSplitPane.setOneTouchExpandable(true);
-		westSplitPane.setDividerLocation(500);
+		westSplitPane.setDividerLocation(450);
 		
 		JSplitPane centreSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, westSplitPane, new JScrollPane(renderPanel));
 		centreSplitPane.setOneTouchExpandable(true);
-		centreSplitPane.setDividerLocation(150);
+		centreSplitPane.setDividerLocation(200);
 	
 		add(centreSplitPane);
 		
-		openStepFile("data/101 - Ignition Starts - Banya.sm");
-		
+
 		setJMenuBar(new MainMenu(this));
 		
 		setTitle("Simfile Printer");
@@ -50,6 +56,23 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	private String getDirectoryToOpen() {
+		final String[] directories = {
+				"C:/Program Files (x86)/StepMania 5/Songs/",
+				"C:/Program Files (x86)/StepMania3.95/Songs/",
+				"C:/Program Files (x86)/StepMania3.9b/Songs/",
+				"C:/Program Files (x86)/OpenITG/Songs/",
+				"C:/Program Files (x86)/ITG2/Songs/"
+		};
+		
+		for (String directory : directories) {
+			if (new File(directory).exists()) {
+				return directory;
+			}
+		}
+		return null;
 	}
 	
 	public Settings getSettings() {

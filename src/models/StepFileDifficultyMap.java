@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 import models.stepmetadata.NotesType;
 
-public class StepFileDifficultyMap {
+public class StepFileDifficultyMap implements Comparable<StepFileDifficultyMap> {
 	private String description;
 	private String difficultyClass;
 	private String difficultyMeter;
@@ -113,6 +113,15 @@ public class StepFileDifficultyMap {
 	
 	@Override
 	public String toString() {
-		return notesType + " - " + difficultyClass;
+		return notesType + " - " + difficultyClass + " (" + difficultyMeter + ")";
+	}
+
+	@Override
+	public int compareTo(StepFileDifficultyMap difficulty) {
+		int temp;
+		if ((temp = notesType.compareTo(difficulty.getNotesType())) != 0) {
+			return temp;
+		}
+		return Integer.parseInt(difficultyMeter) - Integer.parseInt(difficulty.getDifficultyMeter());
 	}
 }
