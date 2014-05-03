@@ -12,6 +12,14 @@ import javax.swing.JLabel;
 import utilities.Settings;
 import models.SimFileDifficulty;
 
+/**
+ * A panel that displays the meta data on the currently selected sim file. Also provides
+ * controls to access different difficulties within a sim file.
+ * 
+ * @author Dan
+ *
+ */
+
 public class SimFileInfoPanel extends BasePanel implements ItemListener {
 	/**
 	 * 

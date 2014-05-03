@@ -4,6 +4,14 @@ import javax.swing.JPanel;
 
 import utilities.Settings;
 
+/**
+ * A base class that all panels within the application extend. Contains notification
+ * methods that are used when certain states are changed.
+ * 
+ * @author Dan
+ *
+ */
+
 public abstract class BasePanel extends JPanel {
 	/**
 	 * 
