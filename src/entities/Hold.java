@@ -10,6 +10,7 @@ import utilities.Settings;
  * An entity that represents any of the types of holds in stepmania. Holds are a
  * repeated graphic that extends until the hold is complete. Holds that are ended
  * using the <code>end</code> method have their tails shown as a special graphic.
+ * 
  * @author Dan
  *
  */

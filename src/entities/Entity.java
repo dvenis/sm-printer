@@ -8,6 +8,7 @@ import utilities.Settings;
 /**
  * An object that knows of its position on the screen and knows how to draw itself. All the graphical objects
  * on the printing area are drawn by an entity.
+ * 
  * @author Dan
  *
  */

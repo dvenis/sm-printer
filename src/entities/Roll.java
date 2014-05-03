@@ -5,6 +5,7 @@ import utilities.Settings;
 /**
  * An entity that represents the "roll" step in step mania. The "roll" type requires
  * the user to press the button repeatedly while the hold is active.
+ * 
  * @author Dan
  *
  */

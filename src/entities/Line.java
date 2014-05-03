@@ -9,6 +9,7 @@ import models.stepmetadata.Timing;
 /**
  * An entity that represents one line on a step chart. Each measure contains multiple lines
  * (or rows) that display specific timing button presses.
+ * 
  * @author Dan
  *
  */

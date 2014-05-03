@@ -7,6 +7,7 @@ import utilities.Settings;
 /**
  * A container that holds other entities within itself. Has methods to draw the foreground, midground and
  * background of the contained entities. 
+ * 
  * @author Dan
  *
  */

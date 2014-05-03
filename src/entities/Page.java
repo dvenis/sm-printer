@@ -11,6 +11,7 @@ import utilities.Settings;
  * A single page that contains all the graphics that from one page on the step chart.
  * These pages are a one to one mapping of the pages that are printed using the print
  * command. Draws text for the step chart title and the page number.
+ * 
  * @author Dan
  *
  */

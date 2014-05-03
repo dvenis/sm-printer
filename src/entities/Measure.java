@@ -10,6 +10,7 @@ import utilities.Settings;
 /**
  * An entity that represents a single measure in a step chart. Each column contains multiple
  * measures, each containing multiple step lines.
+ * 
  * @author Dan
  *
  */

@@ -11,6 +11,7 @@ import models.stepmetadata.Type;
 
 /**
  * An entity representing a single step on a step chart.
+ * 
  * @author Dan
  *
  */

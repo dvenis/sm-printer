@@ -12,6 +12,7 @@ import utilities.Settings;
 /**
  * An entity that represents the highest level of objects that draw the step chart.
  * The overall structure of the sim file is: SimFile > Column > Measure > Line > Step/Hold.
+ * 
  * @author Dan
  *
  */

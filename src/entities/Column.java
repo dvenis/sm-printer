@@ -6,6 +6,7 @@ import utilities.Settings;
 
 /**
  * An entity containing step data for a column in a page. Each page is separated into multiple columns.
+ * 
  * @author Dan
  *
  */

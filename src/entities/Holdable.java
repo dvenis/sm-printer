@@ -3,6 +3,7 @@ package entities;
 /**
  * An object that represents a step that is held. Holds have starts, ends and 
  * can be extends as the sim file is parsed.
+ * 
  * @author Dan
  *
  */
