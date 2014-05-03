@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import utilities.Settings;
 import models.SimFileDifficulty;
 
-public class StepFileInfoPanel extends BasePanel implements ItemListener {
+public class SimFileInfoPanel extends BasePanel implements ItemListener {
 	/**
 	 * 
 	 */
@@ -26,11 +26,13 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	private JLabel artistFieldLabel;
 	private JLabel creditLabel;
 	private JLabel creditFieldLabel;
+	private JLabel bpmLabel;
+	private JLabel bpmFieldLabel;
 	
 	private JComboBox<SimFileDifficulty> difficultySelector;
 	private DefaultComboBoxModel<SimFileDifficulty> difficultyList;
 	
-	public StepFileInfoPanel(MainFrame main) {	
+	public SimFileInfoPanel(MainFrame main) {	
 		super(main);
 		
 		setLayout(new GridBagLayout());
@@ -61,8 +63,12 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 		creditFieldLabel = new JLabel();
 		addLabelAndField(c, 3, creditLabel, creditFieldLabel);
 		
+		bpmLabel = new JLabel("BPM: ");
+		bpmFieldLabel = new JLabel();
+		addLabelAndField(c, 4, bpmLabel, bpmFieldLabel);
+		
 		c.weighty = 1;
-		c.gridy = 4;
+		c.gridy = 5;
 		c.gridx = 0;
 		c.gridwidth = 2;
 		difficultyList = new DefaultComboBoxModel<SimFileDifficulty>();
@@ -81,18 +87,19 @@ public class StepFileInfoPanel extends BasePanel implements ItemListener {
 	
 	
 	@Override
-	public void notifyCurrentStepFileChanged() {
+	public void notifyCurrentSimFileChanged() {
 		updateInfo();
 	}
 	
 	private void updateInfo() {
 		Settings settings = main.getSettings();
-		updateAndHideField(titleLabel, titleFieldLabel, settings.stepFile.getTitle());
-		updateAndHideField(subtitleLabel, subtitleFieldLabel, settings.stepFile.getSubtitle());
-		updateAndHideField(artistLabel, artistFieldLabel, settings.stepFile.getArtist());
-		updateAndHideField(creditLabel, creditFieldLabel, settings.stepFile.getCredit());
+		updateAndHideField(titleLabel, titleFieldLabel, settings.simFile.getTitle());
+		updateAndHideField(subtitleLabel, subtitleFieldLabel, settings.simFile.getSubtitle());
+		updateAndHideField(artistLabel, artistFieldLabel, settings.simFile.getArtist());
+		updateAndHideField(creditLabel, creditFieldLabel, settings.simFile.getCredit());
+		updateAndHideField(bpmLabel, bpmFieldLabel, settings.simFile.getDisplayBPM());
 		
-		difficultyList = new DefaultComboBoxModel<SimFileDifficulty>(settings.stepFile.getDifficulties().toArray(new SimFileDifficulty[0]));
+		difficultyList = new DefaultComboBoxModel<SimFileDifficulty>(settings.simFile.getDifficulties().toArray(new SimFileDifficulty[0]));
 		difficultySelector.setModel(difficultyList);
 	}
 	

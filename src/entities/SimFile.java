@@ -22,7 +22,7 @@ public class SimFile extends Container implements Printable {
 	}
 	
 	private void generateObjects() {
-		final String pageHeader = settings.stepFile.getTitle() + " - " + settings.stepFile.getArtist() + " (" + settings.difficulty + ")";
+		final String pageHeader = settings.simFile.getTitle() + " - " + settings.simFile.getArtist() + " (" + settings.difficulty + ")";
 		
 		models.Measure[] measures;
 		if (settings.hideLeadingAndTrailingWhiteSpace) {

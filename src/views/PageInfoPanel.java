@@ -79,7 +79,7 @@ public class PageInfoPanel extends BasePanel implements ChangeListener {
 	}
 	
 	@Override
-	public void notifyCurrentStepFileChanged() {
+	public void notifyCurrentSimFileChanged() {
 		updateInfo();
 	}
 	

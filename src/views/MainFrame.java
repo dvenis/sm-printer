@@ -84,17 +84,17 @@ public class MainFrame extends JFrame {
 		System.out.println(file);
 		fileSelectorPanel.openFileOrDirectory(file);
 		if (file.isFile()) {
-			openStepFile(file.getAbsolutePath());
+			openSimFile(file.getAbsolutePath());
 		}
 	}
 	
-	public void openStepFile(String path) {
+	public void openSimFile(String path) {
 		SimFileReader reader = new SimFileReader(path);
-		settings.stepFile = reader.generateSimFile();
-		settings.difficulty = settings.stepFile.getDifficulties().get(0);
+		settings.simFile = reader.generateSimFile();
+		settings.difficulty = settings.simFile.getDifficulties().get(0);
 		
-		selectionInfoPanel.notifyCurrentStepFileChanged();
-		renderPanel.notifyCurrentStepFileChanged();
+		selectionInfoPanel.notifyCurrentSimFileChanged();
+		renderPanel.notifyCurrentSimFileChanged();
 	}
 	
 	public void openDifficulty(SimFileDifficulty difficulty) {

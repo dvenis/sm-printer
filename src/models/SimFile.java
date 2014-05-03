@@ -9,8 +9,8 @@ public class SimFile {
 	private String subtitle;
 	private String artist;
 	private String credit;
+	private String displayBPM;
 	
-	private float bpm;
 	private List<SimFileDifficulty> difficulties;
 	
 	public SimFile() {
@@ -48,13 +48,13 @@ public class SimFile {
 	public void setCredit(String credit) {
 		this.credit = credit;
 	}
-
-	public float getBpm() {
-		return bpm;
+	
+	public String getDisplayBPM() {
+		return displayBPM;
 	}
-
-	public void setBpm(float bpm) {
-		this.bpm = bpm;
+	
+	public void setDisplayBPM(String displayBPM) {
+		this.displayBPM = displayBPM;
 	}
 	
 	public List<SimFileDifficulty> getDifficulties() {

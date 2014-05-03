@@ -20,7 +20,7 @@ import models.stepmetadata.NotesType;
 public class SimFileReader {
 	private static final String STEP_FILE_REGEX = "#.+?;";
 	
-	private File systemStepFile;
+	private File systemSimFile;
 	private Pattern metaDataRegex;
 	private Pattern stepLineRegex;
 	
@@ -30,8 +30,8 @@ public class SimFileReader {
 		this(new File(stepFilePath));
 	}
 	
-	public SimFileReader(File systemStepFile) {
-		this.systemStepFile = systemStepFile;
+	public SimFileReader(File systemSimFile) {
+		this.systemSimFile = systemSimFile;
 		
 		metaDataRegex = Pattern.compile(STEP_FILE_REGEX, Pattern.DOTALL);
 		stepLineRegex = Pattern.compile("[0-9MLF]{4,10}"); //huehuehue
@@ -49,7 +49,7 @@ public class SimFileReader {
 	private String readSimFileData() {
 		String result = null;
 		try {
-			byte[] fileBytes = Files.readAllBytes(Paths.get(systemStepFile.getAbsolutePath()));
+			byte[] fileBytes = Files.readAllBytes(Paths.get(systemSimFile.getAbsolutePath()));
 			result = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(fileBytes)).toString();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -81,9 +81,46 @@ public class SimFileReader {
 		case "#CREDIT":
 			accumulator.setCredit(stripTag(part));
 			break;
+		case "#BPMS":
+			parseDisplayBPM(stripTag(part), accumulator);
+			break;
+		case "#DISPLAYBPM":
+			accumulator.setDisplayBPM(stripTag(part));
+			break;
 		case "#NOTES":
 			generateStepData(part, accumulator);
+			break;
 		}
+	}
+	
+	private void parseDisplayBPM(String bpmValues, SimFile accumulator) {
+		final String[] bpmCodes = bpmValues.split(",");
+		double min = Integer.MAX_VALUE;
+		String minText = "";
+		double max = Integer.MIN_VALUE;
+		String maxText = "";
+		
+		for (String bpmCode : bpmCodes) {
+			String bpmText = bpmCode.substring(bpmCode.indexOf('=') + 1);
+			double bpm = Double.parseDouble(bpmText);
+			if (bpm < min) {
+				min = bpm;
+				minText = bpmText;
+			}
+			if (bpm > max) {
+				max = bpm;
+				maxText = bpmText;
+			}
+		}
+		
+		String displayBPM;
+		if (max == min) {
+			displayBPM = minText;
+		} else {
+			displayBPM = minText + " - " + maxText;
+		}
+		
+		accumulator.setDisplayBPM(displayBPM);
 	}
 	
 	private void generateStepData(String notes, SimFile accumulator) {
@@ -158,7 +195,6 @@ public class SimFileReader {
 	
 	public static void main(String[] args) {
 		SimFileReader reader = new SimFileReader("data/Feels Just Like That Night.sm");
-		//StepFileReader reader = new StepFileReader("data/BREAK DOWN!.sm");
 		SimFile file = reader.generateSimFile();
 		System.out.println(file);
 		for (Measure m : file.getDifficulties().get(0).getMeasures()) {

@@ -86,7 +86,7 @@ public class FileSelectorPanel extends BasePanel implements TreeSelectionListene
 		if (node.getUserObject() instanceof NodeItem) {
 			File selectedFile = ((NodeItem)node.getUserObject()).file;
 			if (selectedFile.isFile()) {
-				main.openStepFile(selectedFile.getAbsolutePath());
+				main.openSimFile(selectedFile.getAbsolutePath());
 			}
 		}
 	}

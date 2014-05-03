@@ -51,25 +51,19 @@ public class RenderPanel extends BasePanel {
 	}
 	
 	@Override
-	public void notifyCurrentStepFileChanged() {
-//		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
-//				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
+	public void notifyCurrentSimFileChanged() {
 		simFileDrawer = new SimFile(main.getSettings(), START_X, START_Y, pageWidth, pageHeight);
 		screenChanged();
 	}
 	
 	@Override
 	public void notifyCurrentDifficultyChanged() {
-//		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
-//				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
 		simFileDrawer = new SimFile(main.getSettings(), START_X, START_Y, pageWidth, pageHeight);
 		screenChanged();
 	}
 	
 	@Override
 	public void notifyPageDimensionsChanged() {
-//		simFileDrawer = new SimFile(Settings.currentStepFile, Settings.currentDifficulty,
-//				Settings.columnsPerPage, Settings.measuresPerColumn, 0, 0, PAGE_WIDTH, PAGE_HEIGHT);
 		simFileDrawer = new SimFile(main.getSettings(), START_X, START_Y, pageWidth, pageHeight);
 		screenChanged();
 	}

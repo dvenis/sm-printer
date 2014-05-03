@@ -11,7 +11,7 @@ public class Settings {
 	public boolean horizontalOrientation = true;
 	public boolean hideLeadingAndTrailingWhiteSpace = true;
 	
-	public SimFile stepFile;
+	public SimFile simFile;
 	public SimFileDifficulty difficulty;
 	
 	public double pageWidthInches = 8.5;

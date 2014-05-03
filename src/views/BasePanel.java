@@ -18,7 +18,7 @@ public abstract class BasePanel extends JPanel {
 		this.settings = main.getSettings();
 	}
 	
-	public void notifyCurrentStepFileChanged() {
+	public void notifyCurrentSimFileChanged() {
 		
 	}
 	

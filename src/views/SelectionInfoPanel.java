@@ -11,7 +11,7 @@ public class SelectionInfoPanel extends BasePanel {
 	private static final long serialVersionUID = 1L;
 	
 	private PageInfoPanel pageInfoPanel;
-	private StepFileInfoPanel stepFileInfoPanel;
+	private SimFileInfoPanel stepFileInfoPanel;
 	
 	public SelectionInfoPanel(MainFrame main) {
 		super(main);
@@ -19,7 +19,7 @@ public class SelectionInfoPanel extends BasePanel {
 		pageInfoPanel = new PageInfoPanel(main);
 		pageInfoPanel.setBorder(new EmptyBorder(10, 10, 5, 10));
 		
-		stepFileInfoPanel = new StepFileInfoPanel(main);
+		stepFileInfoPanel = new SimFileInfoPanel(main);
 		stepFileInfoPanel.setBorder(new EmptyBorder(5, 10, 10, 10));
 		
 		setLayout(new BorderLayout());
@@ -28,8 +28,8 @@ public class SelectionInfoPanel extends BasePanel {
 	}
 
 	@Override
-	public void notifyCurrentStepFileChanged() {
-		pageInfoPanel.notifyCurrentStepFileChanged();
-		stepFileInfoPanel.notifyCurrentStepFileChanged();
+	public void notifyCurrentSimFileChanged() {
+		pageInfoPanel.notifyCurrentSimFileChanged();
+		stepFileInfoPanel.notifyCurrentSimFileChanged();
 	}
 }
