@@ -5,6 +5,13 @@ import java.awt.Color;
 import models.SimFile;
 import models.SimFileDifficulty;
 
+/**
+ * A simple class that models settings application settings. 
+ * 
+ * @author Dan
+ *
+ */
+
 public class Settings {
 	public int measuresPerColumn = 3;
 	public int columnsPerPage = 4;

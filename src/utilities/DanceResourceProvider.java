@@ -6,6 +6,13 @@ import models.stepmetadata.Orientation;
 import models.stepmetadata.Timing;
 import models.stepmetadata.Type;
 
+/**
+ * A resource provider for assets of the dance game mode.
+ * 
+ * @author Dan
+ *
+ */
+
 public class DanceResourceProvider implements ResourceProvider {
 	
 	private BufferedImage freezeBody;

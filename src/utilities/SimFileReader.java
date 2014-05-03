@@ -17,6 +17,13 @@ import models.SimFileDifficulty;
 import models.SimFileLine;
 import models.stepmetadata.NotesType;
 
+/**
+ * The utility that reads and parses sim files, and creates the proper models.
+ * 
+ * @author Dan
+ *
+ */
+
 public class SimFileReader {
 	private static final String STEP_FILE_REGEX = "#.+?;";
 	
@@ -191,14 +198,5 @@ public class SimFileReader {
 			matches.add(match.group());
 		}
 		return matches;
-	}
-	
-	public static void main(String[] args) {
-		SimFileReader reader = new SimFileReader("data/Feels Just Like That Night.sm");
-		SimFile file = reader.generateSimFile();
-		System.out.println(file);
-		for (Measure m : file.getDifficulties().get(0).getMeasures()) {
-			System.out.println(m);
-		}
 	}
 }

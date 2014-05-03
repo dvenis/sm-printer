@@ -6,6 +6,16 @@ import models.stepmetadata.Orientation;
 import models.stepmetadata.Timing;
 import models.stepmetadata.Type;
 
+/**
+ * An object that provides assets to steps that request them. The step does not care what
+ * type of game mode it exists in, and the decision on what image to provide is left to
+ * each implementation of the resource provider. By providing the step type, orientation
+ * and timing, the resource provider can return the proper image.
+ * 
+ * @author Dan
+ *
+ */
+
 public interface ResourceProvider {
 	static BufferedImage empty = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
 	
