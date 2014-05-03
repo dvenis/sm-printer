@@ -1,5 +1,7 @@
 package views;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -65,6 +67,8 @@ public class MainFrame extends JFrame {
 
 		setJMenuBar(new MainMenu(this));
 		
+		Image img = Toolkit.getDefaultToolkit().createImage("icon.png");
+		setIconImage(img);
 		setTitle("Simfile Printer");
 		
 		setSize(1000, 800);
